@@ -1,0 +1,5 @@
+# netbeans
+/build
+/dist
+/nbproject
+build.xml
