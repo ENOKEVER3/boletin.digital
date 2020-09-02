@@ -5,7 +5,13 @@
  */
 package Forms;
 
+import Classes.Categories;
 import Classes.User;
+import Classes.UsersCategories;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,6 +64,11 @@ public class ManageUser extends javax.swing.JFrame {
         confirmPasswordField = new javax.swing.JPasswordField();
         jLabel11 = new javax.swing.JLabel();
         phoneField = new javax.swing.JTextField();
+        adminCheckBox = new javax.swing.JCheckBox();
+        teacherCheckBox = new javax.swing.JCheckBox();
+        preceptorCheckBox = new javax.swing.JCheckBox();
+        studentCheckBox = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -140,6 +151,16 @@ public class ManageUser extends javax.swing.JFrame {
             }
         });
 
+        adminCheckBox.setText("Administrador");
+
+        teacherCheckBox.setText("Profesor");
+
+        preceptorCheckBox.setText("Preseptor");
+
+        studentCheckBox.setText("Alumno");
+
+        jLabel13.setText("Categoría:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -153,9 +174,7 @@ public class ManageUser extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel10)
                             .addComponent(jLabel8)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
@@ -168,24 +187,32 @@ public class ManageUser extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(exitManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING, 0, 124, Short.MAX_VALUE)
-                                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tutorField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lastnameField, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel7)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING, 0, 124, Short.MAX_VALUE)
+                                        .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(tutorField, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(lastnameField, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel7)))
+                                    .addComponent(jLabel10)
+                                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel11))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel12)
                                     .addComponent(jLabel6)
                                     .addComponent(optionalEmailField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                    .addComponent(confirmPasswordField)))
-                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(confirmPasswordField)
+                                    .addComponent(preceptorCheckBox)
+                                    .addComponent(adminCheckBox)
+                                    .addComponent(teacherCheckBox)
+                                    .addComponent(studentCheckBox)
+                                    .addComponent(jLabel13))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -229,15 +256,27 @@ public class ManageUser extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tutorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tutorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(studentCheckBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(teacherCheckBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(preceptorCheckBox)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(adminCheckBox)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createManageUser)
@@ -282,7 +321,13 @@ public class ManageUser extends javax.swing.JFrame {
         
         if(user.save()){
             JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-            cleanFields();
+            try {   
+                setCategories();
+            } catch (ParseException ex) {
+                Logger.getLogger(ManageUser.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            cleanFields();     
+            
         } else {
             if(user.getErrorCode() == 1062) {
                 JOptionPane.showMessageDialog(null, "El nombre de usario ingresado no está disponible");
@@ -356,6 +401,7 @@ public class ManageUser extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox adminCheckBox;
     private javax.swing.JButton changeManageUser;
     private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JButton createManageUser;
@@ -367,6 +413,7 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -380,6 +427,9 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JTextField optionalEmailField;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField phoneField;
+    private javax.swing.JCheckBox preceptorCheckBox;
+    private javax.swing.JCheckBox studentCheckBox;
+    private javax.swing.JCheckBox teacherCheckBox;
     private javax.swing.JTextField tutorField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
@@ -395,5 +445,15 @@ public class ManageUser extends javax.swing.JFrame {
         phoneField.setText("");
         genderField.setSelectedIndex(0);
         tutorField.setText("");
+    }
+
+    private void setCategories() throws ParseException {
+        UsersCategories usersCategories = new UsersCategories();
+        
+        if(studentCheckBox.isSelected()) User.addCategorie(Categories.STUDENT, usernameField.getText());
+        if(teacherCheckBox.isSelected()) User.addCategorie(Categories.TEACHER, usernameField.getText());
+        if(preceptorCheckBox.isSelected()) User.addCategorie(Categories.PRECEPTOR, usernameField.getText());
+        if(adminCheckBox.isSelected()) User.addCategorie(Categories.ADMIN, usernameField.getText());
+        
     }
 }
