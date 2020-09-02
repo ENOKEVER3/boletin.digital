@@ -13,6 +13,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -187,6 +188,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="USUARIOS"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manageUserActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="manageCourse">
       <Properties>

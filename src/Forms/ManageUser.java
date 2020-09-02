@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package newPackage;
+package Forms;
+
+import Classes.User;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +20,8 @@ public class ManageUser extends javax.swing.JFrame {
     public ManageUser() {
         initComponents();
     }
+    
+    Menu menuInstance = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,26 +35,32 @@ public class ManageUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        nameManageUser = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        surnameManageUser = new javax.swing.JTextField();
+        lastnameField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        mailManageUser = new javax.swing.JTextField();
+        emailField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        mail2ManageUser = new javax.swing.JTextField();
+        optionalEmailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        passwordManageUser = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel9 = new javax.swing.JLabel();
-        phoneManageUser = new javax.swing.JTextField();
+        tutorField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox();
+        genderField = new javax.swing.JComboBox();
         createManageUser = new javax.swing.JButton();
         changeManageUser = new javax.swing.JButton();
         exitManageUser = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        usernameField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        passwordField = new javax.swing.JPasswordField();
+        confirmPasswordField = new javax.swing.JPasswordField();
+        jLabel11 = new javax.swing.JLabel();
+        phoneField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Administración de usuarios");
@@ -63,9 +74,9 @@ public class ManageUser extends javax.swing.JFrame {
 
         jLabel5.setText("Correo:");
 
-        mailManageUser.addActionListener(new java.awt.event.ActionListener() {
+        emailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mailManageUserActionPerformed(evt);
+                emailFieldActionPerformed(evt);
             }
         });
 
@@ -76,22 +87,58 @@ public class ManageUser extends javax.swing.JFrame {
 
         jLabel8.setText("Teléfono:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jLabel9.setText("-");
+        tutorField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tutorFieldKeyTyped(evt);
+            }
+        });
 
         jLabel10.setText("Sexo:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        genderField.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                           ", "Masculino", "Femenino", "Otro" }));
 
         createManageUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         createManageUser.setText("CREAR");
+        createManageUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createManageUserActionPerformed(evt);
+            }
+        });
 
         changeManageUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         changeManageUser.setText("MODIFICAR");
+        changeManageUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeManageUserActionPerformed(evt);
+            }
+        });
 
         exitManageUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         exitManageUser.setText("SALIR");
+        exitManageUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitManageUserActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Confirmar Contraseña:");
+
+        jLabel9.setText("Usuario:");
+
+        jButton1.setText("COMPROBAR DISPONIBILIDAD");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Tutor:");
+
+        phoneField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                phoneFieldKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,106 +147,226 @@ public class ManageUser extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(passwordManageUser, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(mailManageUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                    .addComponent(surnameManageUser, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nameManageUser, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addComponent(jLabel5)))
+                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(mail2ManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.LEADING, 0, 64, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(phoneManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(createManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(changeManageUser)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(exitManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(createManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(changeManageUser)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(exitManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING, 0, 124, Short.MAX_VALUE)
+                                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tutorField, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lastnameField, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                                        .addComponent(jLabel5)
+                                        .addComponent(jLabel7)))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel6)
+                                    .addComponent(optionalEmailField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                    .addComponent(confirmPasswordField)))
+                            .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nameManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(surnameManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mailManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(mail2ManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(optionalEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(passwordManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9)
-                    .addComponent(phoneManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tutorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createManageUser)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(changeManageUser)
                         .addComponent(exitManageUser)))
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mailManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mailManageUserActionPerformed
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_mailManageUserActionPerformed
+    }//GEN-LAST:event_emailFieldActionPerformed
 
+    private void changeManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeManageUserActionPerformed
+        ModifyUser modifyUser = new ModifyUser();
+        modifyUser.setVisible(true);
+        modifyUser.menuInstance = menuInstance;
+        dispose();
+    }//GEN-LAST:event_changeManageUserActionPerformed
+
+    private void exitManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManageUserActionPerformed
+        menuInstance.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_exitManageUserActionPerformed
+
+    private void createManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createManageUserActionPerformed
+        if (emptyLoginFields()) return;
+        
+        User user = new User();
+        user.setUsername(usernameField.getText());
+        user.setName(nameField.getText());
+        user.setLastname(lastnameField.getText());
+        user.setEmail(emailField.getText());
+        user.setOptionalEmail(optionalEmailField.getText());
+        user.setPassword(new String(passwordField.getPassword()).toString());
+        user.setPhone(Integer.parseInt(phoneField.getText()));
+        user.setGender(genderField.getSelectedItem().toString());
+        user.setTutor(tutorField.getText());
+        
+        if(user.save()){
+            JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+            cleanFields();
+        } else {
+            if(user.getErrorCode() == 1062) {
+                JOptionPane.showMessageDialog(null, "El nombre de usario ingresado no está disponible");
+                usernameField.setText("");
+                usernameField.requestFocus();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Se ha producido un error (código: " + String.valueOf(user.getErrorCode()) + ")");
+            }
+        }
+    }//GEN-LAST:event_createManageUserActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if(usernameField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre de usuario");
+        } else if (User.checkUsername(usernameField.getText())){
+            JOptionPane.showMessageDialog(null, "El nombre de usuario no está disponible");
+        } else {
+            JOptionPane.showMessageDialog(null, "El nombre de usuario está disponible");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void phoneFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phoneFieldKeyTyped
+        if(!(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) evt.consume();
+    }//GEN-LAST:event_phoneFieldKeyTyped
+
+    private void tutorFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tutorFieldKeyTyped
+
+    }//GEN-LAST:event_tutorFieldKeyTyped
+
+
+    private boolean emptyLoginFields() {
+        if(usernameField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre de usuario, por favor."); 
+            return true;
+        }
+        if(nameField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre, por favor."); 
+            return true;
+        }
+        if(lastnameField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el apellido, por favor."); 
+            return true;
+        }
+        if(emailField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el correo, por favor."); 
+            return true;
+        }
+        if(String.valueOf(passwordField.getPassword()).isEmpty()) { 
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña, por favor.");
+            return true; 
+        }
+        if(String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
+            JOptionPane.showMessageDialog(null, "Confirme la contraseña, por favor.");
+            return true; 
+        }
+        if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+            return true; 
+        }
+        if(tutorField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono, por favor."); 
+            return true;
+        }
+        if(genderField.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(null, "Ingrese el genéro, por favor."); 
+            return true;
+        }
+        return false;
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton changeManageUser;
+    private javax.swing.JPasswordField confirmPasswordField;
     private javax.swing.JButton createManageUser;
+    private javax.swing.JTextField emailField;
     private javax.swing.JButton exitManageUser;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox genderField;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -208,11 +375,25 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField mail2ManageUser;
-    private javax.swing.JTextField mailManageUser;
-    private javax.swing.JTextField nameManageUser;
-    private javax.swing.JTextField passwordManageUser;
-    private javax.swing.JTextField phoneManageUser;
-    private javax.swing.JTextField surnameManageUser;
+    private javax.swing.JTextField lastnameField;
+    private javax.swing.JTextField nameField;
+    private javax.swing.JTextField optionalEmailField;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField phoneField;
+    private javax.swing.JTextField tutorField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
+
+    private void cleanFields() {
+        usernameField.setText("");
+        nameField.setText("");
+        lastnameField.setText("");
+        emailField.setText("");
+        optionalEmailField.setText("");
+        passwordField.setText("");
+        confirmPasswordField.setText("");
+        phoneField.setText("");
+        genderField.setSelectedIndex(0);
+        tutorField.setText("");
+    }
 }

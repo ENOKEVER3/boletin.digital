@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package newPackage;
+package Forms;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Menu extends javax.swing.JFrame {
     public Menu() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,6 +46,7 @@ public class Menu extends javax.swing.JFrame {
         jButton5.setText("CURSOS");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Menú");
@@ -76,6 +77,11 @@ public class Menu extends javax.swing.JFrame {
 
         manageUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         manageUser.setText("USUARIOS");
+        manageUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageUserActionPerformed(evt);
+            }
+        });
 
         manageCourse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         manageCourse.setText("CURSOS");
@@ -151,6 +157,13 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void manageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUserActionPerformed
+        ManageUser manageUser = new ManageUser();
+        manageUser.setVisible(true);
+        manageUser.menuInstance = this;
+        this.setVisible(false);
+    }//GEN-LAST:event_manageUserActionPerformed
 
     /**
      * @param args the command line arguments

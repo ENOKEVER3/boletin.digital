@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package newPackage;
+package Forms;
 
 /**
  *
@@ -17,6 +17,8 @@ public class ModifyUser extends javax.swing.JFrame {
     public ModifyUser() {
         initComponents();
     }
+    
+    Menu menuInstance = null;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +60,7 @@ public class ModifyUser extends javax.swing.JFrame {
         saveModifyUser = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Modificar usuario");
@@ -119,6 +122,11 @@ public class ModifyUser extends javax.swing.JFrame {
 
         exitModifyUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         exitModifyUser.setText("SALIR");
+        exitModifyUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitModifyUserActionPerformed(evt);
+            }
+        });
 
         saveModifyUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         saveModifyUser.setText("GUARDAR");
@@ -265,6 +273,11 @@ public class ModifyUser extends javax.swing.JFrame {
     private void newMail2ModifyUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newMail2ModifyUserActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newMail2ModifyUserActionPerformed
+
+    private void exitModifyUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitModifyUserActionPerformed
+        menuInstance.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_exitModifyUserActionPerformed
 
     
 

@@ -103,6 +103,9 @@ public class Login extends javax.swing.JFrame {
                 String password = rs.getString("PER_CONTRASENA");
                 if(password.equals(String.valueOf(passwordField.getPassword()))){
                     JOptionPane.showMessageDialog(null, "Se ha logeado correctamente."); // successful login
+                    Menu menu = new Menu();
+                    menu.setVisible(true);
+                    dispose();
                 } else {    
                     retryLogin(); // incorrect password
                 }
