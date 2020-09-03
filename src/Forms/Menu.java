@@ -235,7 +235,7 @@ public class Menu extends javax.swing.JFrame {
                 seeCoursesButton.setEnabled(true);
             } 
           
-            if(categorie == 2 || categorie == 4) {
+            if(categorie == 2) {
                 loadMarksButton.setEnabled(true);
             }
             
