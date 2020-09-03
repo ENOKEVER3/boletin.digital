@@ -5,6 +5,10 @@
  */
 package Forms;
 
+import Classes.User;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author acer
@@ -14,9 +18,19 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    public static String currentUsername;
+    public static int currentUserCode;
+    public static ArrayList currentUserCategories = new ArrayList();
+    
+    public Menu(int usercode, String username, ArrayList userCategories) {
+        currentUserCode = usercode;
+        currentUsername = username;
+        currentUserCategories = userCategories;
+        
         initComponents();
+        enableButtonsByUserCategories(currentUserCategories);
     }
+   
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,16 +44,16 @@ public class Menu extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        seeNote = new javax.swing.JButton();
-        seeCourse = new javax.swing.JButton();
+        seeMarksButton = new javax.swing.JButton();
+        seeCoursesButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        loadNote = new javax.swing.JButton();
-        loadSubject = new javax.swing.JButton();
+        loadMarksButton = new javax.swing.JButton();
+        loadSubjectsButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        manageSubjet = new javax.swing.JButton();
-        manageUser = new javax.swing.JButton();
-        manageCourse = new javax.swing.JButton();
-        managePermit = new javax.swing.JButton();
+        manageSubjectsButton = new javax.swing.JButton();
+        manageUsersButton = new javax.swing.JButton();
+        manageCoursesButton = new javax.swing.JButton();
+        managePermissionsButton = new javax.swing.JButton();
         exitMenu = new javax.swing.JButton();
 
         jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -54,42 +68,60 @@ public class Menu extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Ver:");
 
-        seeNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        seeNote.setText("NOTAS ");
+        seeMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        seeMarksButton.setText("NOTAS ");
+        seeMarksButton.setEnabled(false);
 
-        seeCourse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        seeCourse.setText("CURSOS");
+        seeCoursesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        seeCoursesButton.setText("CURSOS");
+        seeCoursesButton.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Cargar:");
 
-        loadNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        loadNote.setText("NOTAS");
+        loadMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        loadMarksButton.setText("NOTAS");
+        loadMarksButton.setEnabled(false);
 
-        loadSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        loadSubject.setText("MATERIAS");
+        loadSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        loadSubjectsButton.setText("MATERIAS");
+        loadSubjectsButton.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Administrar:");
 
-        manageSubjet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        manageSubjet.setText("MATERIAS");
+        manageSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        manageSubjectsButton.setText("MATERIAS");
+        manageSubjectsButton.setEnabled(false);
 
-        manageUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        manageUser.setText("USUARIOS");
-        manageUser.addActionListener(new java.awt.event.ActionListener() {
+        manageUsersButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        manageUsersButton.setText("USUARIOS");
+        manageUsersButton.setEnabled(false);
+        manageUsersButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manageUserActionPerformed(evt);
+                manageUsersButtonActionPerformed(evt);
             }
         });
 
-        manageCourse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        manageCourse.setText("CURSOS");
+        manageCoursesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        manageCoursesButton.setText("CURSOS");
+        manageCoursesButton.setEnabled(false);
 
-        managePermit.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        managePermit.setText("PERMISOS");
+        managePermissionsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        managePermissionsButton.setText("PERMISOS");
+        managePermissionsButton.setEnabled(false);
 
         exitMenu.setText("SALIR");
+        exitMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                exitMenuMouseClicked(evt);
+            }
+        });
+        exitMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitMenuActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,18 +137,18 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(manageUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                            .addComponent(manageUsersButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(seeNote, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(loadNote, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(manageCourse, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(seeMarksButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(loadMarksButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(manageCoursesButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(manageSubjet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(seeCourse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(loadSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(managePermit, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
+                            .addComponent(manageSubjectsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(seeCoursesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(loadSubjectsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(managePermissionsButton, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE))))
                 .addGap(92, 92, 92))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -132,24 +164,24 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(seeNote)
-                    .addComponent(seeCourse))
+                    .addComponent(seeMarksButton)
+                    .addComponent(seeCoursesButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(loadNote)
-                    .addComponent(loadSubject))
+                    .addComponent(loadMarksButton)
+                    .addComponent(loadSubjectsButton))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(manageSubjet)
-                    .addComponent(manageCourse))
+                    .addComponent(manageSubjectsButton)
+                    .addComponent(manageCoursesButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(manageUser)
-                    .addComponent(managePermit))
+                    .addComponent(manageUsersButton)
+                    .addComponent(managePermissionsButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(exitMenu)
                 .addGap(6, 6, 6))
@@ -158,12 +190,20 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void manageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUserActionPerformed
+    private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed
         ManageUser manageUser = new ManageUser();
         manageUser.setVisible(true);
         manageUser.menuInstance = this;
         this.setVisible(false);
-    }//GEN-LAST:event_manageUserActionPerformed
+    }//GEN-LAST:event_manageUsersButtonActionPerformed
+
+    private void exitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuActionPerformed
+        if(JOptionPane.showConfirmDialog(null, "Está seguro de salir?") == 0) dispose();
+    }//GEN-LAST:event_exitMenuActionPerformed
+
+    private void exitMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMenuMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_exitMenuMouseClicked
 
     /**
      * @param args the command line arguments
@@ -176,13 +216,40 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JButton loadNote;
-    private javax.swing.JButton loadSubject;
-    private javax.swing.JButton manageCourse;
-    private javax.swing.JButton managePermit;
-    private javax.swing.JButton manageSubjet;
-    private javax.swing.JButton manageUser;
-    private javax.swing.JButton seeCourse;
-    private javax.swing.JButton seeNote;
+    private javax.swing.JButton loadMarksButton;
+    private javax.swing.JButton loadSubjectsButton;
+    private javax.swing.JButton manageCoursesButton;
+    private javax.swing.JButton managePermissionsButton;
+    private javax.swing.JButton manageSubjectsButton;
+    private javax.swing.JButton manageUsersButton;
+    private javax.swing.JButton seeCoursesButton;
+    private javax.swing.JButton seeMarksButton;
     // End of variables declaration//GEN-END:variables
+
+    private void enableButtonsByUserCategories(ArrayList currentUserCategories) {
+        for(int i = 0; i < currentUserCategories.size(); i++) {
+            int categorie = (int) currentUserCategories.get(i);    
+            
+            if(categorie == 1 || categorie == 2 || categorie == 4) {
+                seeMarksButton.setEnabled(true);
+                seeCoursesButton.setEnabled(true);
+            } 
+          
+            if(categorie == 2 || categorie == 4) {
+                loadMarksButton.setEnabled(true);
+            }
+            
+            if(categorie == 3 || categorie == 4) {
+                seeCoursesButton.setEnabled(true);
+                manageCoursesButton.setEnabled(true);
+                manageSubjectsButton.setEnabled(true);
+                loadSubjectsButton.setEnabled(true);
+            }   
+            
+            if(categorie == 4) {
+                manageUsersButton.setEnabled(true);
+                managePermissionsButton.setEnabled(true);
+            }
+        }
+    }
 }

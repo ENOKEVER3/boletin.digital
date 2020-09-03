@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -119,7 +120,7 @@ public class User {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
 
-        String query = "SELECT * FROM `PERSONAS` WHERE `PER_USUARIO` LIKE '" + username + "'";
+        String query = "SELECT * FROM `PERSONAS` WHERE `PER_USUARIO`='" + username + "'";
         
         try {
             connection = bs.getConnection();
@@ -184,7 +185,7 @@ public class User {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
         
-        int percod = getUsercodeByUsername(username);
+        int percod = getUserCodeByUsername(username);
         
         String query = "INSERT INTO `PERSONAS_CATEGORIAS` (`PERCAT_CATCOD`, `PERCAT_PERCOD`, `PERCAT_FECHAINICIO`, `PERCAT_FECHAFIN`) VALUES (?, ?, ?, ?);";
         
@@ -212,7 +213,7 @@ public class User {
         }   
     }
 
-    static public int getUsercodeByUsername(String username) {
+    static public int getUserCodeByUsername(String username) {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
  
@@ -240,6 +241,37 @@ public class User {
         }
         
         return 0;
+    }
+    
+    public static ArrayList getUserCategoriesByUsercode(int usercode) {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+
+        ArrayList userCategories = new ArrayList();
+        
+        String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_PERCOD`='" + usercode + "'";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.execute();
+            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            
+            while(rs.next()){
+                userCategories.add(rs.getInt("PERCAT_CATCOD"));
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return userCategories;
     }
     
 }

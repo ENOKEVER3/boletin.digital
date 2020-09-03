@@ -1,11 +1,13 @@
 package Forms;
 
+import Classes.User;
 import Utils.Config;
 
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,9 +33,20 @@ public class Login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("BIENVENIDO");
+
+        usernameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameFieldKeyPressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Usuario:");
@@ -45,6 +58,17 @@ public class Login extends javax.swing.JFrame {
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
+            }
+        });
+        loginButton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginButtonKeyPressed(evt);
+            }
+        });
+
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
             }
         });
 
@@ -86,44 +110,24 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        if (emptyLoginFields()) return;
-       
-        BasicDataSource bs = Config.setDBParams();
-        Connection connection = null;
-
-        String query = "SELECT * FROM `PERSONAS` WHERE `PER_USUARIO` LIKE '" + usernameField.getText() + "'";
-        
-        try {
-            connection = bs.getConnection();
-            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-            preparedStatemnet.execute();
-            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-            
-            if(rs.next()){
-                String password = rs.getString("PER_CONTRASENA");
-                if(password.equals(String.valueOf(passwordField.getPassword()))){
-                    JOptionPane.showMessageDialog(null, "Se ha logeado correctamente."); // successful login
-                    Menu menu = new Menu();
-                    menu.setVisible(true);
-                    dispose();
-                } else {    
-                    retryLogin(); // incorrect password
-                }
-            } else {
-                retryLogin(); // non-existent user 
-            }      
-            
-        } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
-        } finally {
-            if(connection != null) try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
+        tryLogin();
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        
+    }//GEN-LAST:event_formKeyPressed
+
+    private void usernameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameFieldKeyPressed
+        //if(evt.getKeyChar() == 10) tryLogin();
+    }//GEN-LAST:event_usernameFieldKeyPressed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if(evt.getKeyChar() == 10) tryLogin();
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
+        if(evt.getKeyChar() == 10) tryLogin();
+    }//GEN-LAST:event_loginButtonKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -152,5 +156,46 @@ public class Login extends javax.swing.JFrame {
         }
         
         return false;
+    }
+
+    private void tryLogin() {
+        if (emptyLoginFields()) return;
+       
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+
+        String query = "SELECT * FROM `PERSONAS` WHERE `PER_USUARIO`='" + usernameField.getText() + "'";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.execute();
+            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            
+            if(rs.next()){
+                String password = rs.getString("PER_CONTRASENA");
+                if(password.equals(String.valueOf(passwordField.getPassword()))){
+                    int usercode = User.getUserCodeByUsername(usernameField.getText());
+                    ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
+                     
+                    Menu menu = new Menu(usercode, usernameField.getText(), userCategories);        
+                    menu.setVisible(true);
+                    dispose();
+                } else {    
+                    retryLogin(); // incorrect password
+                }
+            } else {
+                retryLogin(); // non-existent user 
+            }      
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

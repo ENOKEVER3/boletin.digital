@@ -315,7 +315,7 @@ public class ManageUser extends javax.swing.JFrame {
         user.setEmail(emailField.getText());
         user.setOptionalEmail(optionalEmailField.getText());
         user.setPassword(new String(passwordField.getPassword()).toString());
-        user.setPhone(Integer.parseInt(phoneField.getText()));
+        user.setPhone(Long.parseLong(phoneField.getText()));
         user.setGender(genderField.getSelectedItem().toString());
         user.setTutor(tutorField.getText());
         
@@ -361,41 +361,46 @@ public class ManageUser extends javax.swing.JFrame {
 
     private boolean emptyLoginFields() {
         if(usernameField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre de usuario, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre de usuario"); 
             return true;
         }
         if(nameField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre"); 
             return true;
         }
         if(lastnameField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el apellido, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el apellido"); 
             return true;
         }
         if(emailField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el correo, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el correo"); 
             return true;
         }
         if(String.valueOf(passwordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Ingrese la contraseña, por favor.");
+            JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
             return true; 
         }
         if(String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Confirme la contraseña, por favor.");
+            JOptionPane.showMessageDialog(null, "Confirme la contraseña");
             return true; 
         }
         if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden.");
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
             return true; 
         }
         if(tutorField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono"); 
             return true;
         }
         if(genderField.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Ingrese el genéro, por favor."); 
+            JOptionPane.showMessageDialog(null, "Ingrese el genéro"); 
             return true;
         }
+        if (!studentCheckBox.isSelected() && !teacherCheckBox.isSelected() && !preceptorCheckBox.isSelected() && !adminCheckBox.isSelected()) {
+            JOptionPane.showMessageDialog(null, "Indique al menos una categoría del usuario"); 
+            return true;
+        }
+            
         return false;
     }
     
