@@ -161,41 +161,15 @@ public class Login extends javax.swing.JFrame {
     private void tryLogin() {
         if (emptyLoginFields()) return;
        
-        BasicDataSource bs = Config.setDBParams();
-        Connection connection = null;
+        if(User.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword()))) {
+            int usercode = User.getUserCodeByUsername(usernameField.getText());
+            ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
 
-        String query = "SELECT * FROM `PERSONAS` WHERE `PER_USUARIO`='" + usernameField.getText() + "'";
-        
-        try {
-            connection = bs.getConnection();
-            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-            preparedStatemnet.execute();
-            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-            
-            if(rs.next()){
-                String password = rs.getString("PER_CONTRASENA");
-                if(password.equals(String.valueOf(passwordField.getPassword()))){
-                    int usercode = User.getUserCodeByUsername(usernameField.getText());
-                    ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-                     
-                    Menu menu = new Menu(usercode, usernameField.getText(), userCategories);        
-                    menu.setVisible(true);
-                    dispose();
-                } else {    
-                    retryLogin(); // incorrect password
-                }
-            } else {
-                retryLogin(); // non-existent user 
-            }      
-            
-        } catch (SQLException e) {
-            System.out.println("ERROR: " + e);
-        } finally {
-            if(connection != null) try {
-                connection.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+            Menu menu = new Menu(usercode, usernameField.getText(), userCategories);        
+            menu.setVisible(true);
+            dispose();
+        } else {
+            retryLogin();
+        }   
     }
 }

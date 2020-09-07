@@ -24,7 +24,8 @@ import org.apache.commons.dbcp2.BasicDataSource;
  *
  * @author lagos
  */
-public class User {
+public class User {  
+
     private String username;
     private String name;
     private String lastname;
@@ -33,7 +34,6 @@ public class User {
     private String password;
     private long phone;
     private String gender;
-    private String tutor;
     private int errorCode;
     
     public String getUsername() {
@@ -99,14 +99,6 @@ public class User {
     public void setGender(String gender) {
         this.gender = gender;
     }
-
-    public String getTutor() {
-        return tutor;
-    }
-
-    public void setTutor(String tutor) {
-        this.tutor = tutor;
-    }
     
     public int getErrorCode() {
         return errorCode;
@@ -149,7 +141,7 @@ public class User {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
 
-        String query = "INSERT INTO `PERSONAS` (`PER_COD`, `PER_USUARIO`, `PER_NOMBRE`, `PER_APELLIDO`, `PER_CONTRASENA`, `PER_CORREO`, `PER_CORREO2`, `PER_TELEFONO`, `PER_SEXO`, `PER_TUTOR`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO `PERSONAS` (`PER_COD`, `PER_USUARIO`, `PER_NOMBRE`, `PER_APELLIDO`, `PER_CONTRASENA`, `PER_CORREO`, `PER_CORREO2`, `PER_TELEFONO`, `PER_SEXO`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);";
         
         try {
             connection = bs.getConnection();
@@ -162,10 +154,43 @@ public class User {
             preparedStatemnet.setString(6, getOptionalEmail());
             preparedStatemnet.setLong(7, getPhone());
             preparedStatemnet.setString(8, getGender());
-            preparedStatemnet.setString(9, getTutor());
             preparedStatemnet.execute();
             
                       
+            return true;
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e.getMessage());
+            errorCode = e.getErrorCode();
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return false; 
+    }
+    
+    public boolean modify() {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+
+        String query = "UPDATE PERSONAS SET PER_NOMBRE=?,PER_APELLIDO=?,PER_CONTRASENA=?,PER_CORREO=?,PER_CORREO2=?,PER_TELEFONO=?,PER_SEXO=? WHERE `PER_COD`=" + String.valueOf(getUserCodeByUsername(getUsername())) + ";";
+     
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, getName());
+            preparedStatement.setString(2, getLastname());
+            preparedStatement.setString(3, getPassword());
+            preparedStatement.setString(4, getEmail());
+            preparedStatement.setString(5, getOptionalEmail());
+            preparedStatement.setLong(6, getPhone());
+            preparedStatement.setString(7, getGender());
+            preparedStatement.execute();
+
+            
             return true;
         } catch (SQLException e) {
             System.out.println("ERROR: " + e.getMessage());
@@ -187,6 +212,8 @@ public class User {
         
         int percod = getUserCodeByUsername(username);
         
+        if(checkPreviusCategorie(catcod, username)) return;
+        
         String query = "INSERT INTO `PERSONAS_CATEGORIAS` (`PERCAT_CATCOD`, `PERCAT_PERCOD`, `PERCAT_FECHAINICIO`, `PERCAT_FECHAFIN`) VALUES (?, ?, ?, ?);";
         
         try {
@@ -200,6 +227,33 @@ public class User {
             preparedStatemnet.setInt(2, percod);
             preparedStatemnet.setDate(3, todayDate);
             preparedStatemnet.setDate(4, neverDate);
+            preparedStatemnet.execute();
+                      
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e.getMessage());
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }   
+    }
+    
+    public static void removeCategorie(int catcod, String username) throws ParseException {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+        
+        int percod = getUserCodeByUsername(username);
+        
+        String query = "UPDATE PERSONAS_CATEGORIAS SET PERCAT_FECHAFIN=? WHERE PERCAT_CATCOD=" + catcod + " AND PERCAT_PERCOD=" + getUserCodeByUsername(username) + ";";
+        
+        try {
+            java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+            
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.setDate(1, todayDate);
             preparedStatemnet.execute();
                       
         } catch (SQLException e) {
@@ -248,14 +302,16 @@ public class User {
         Connection connection = null;
 
         ArrayList userCategories = new ArrayList();
+        java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
         
-        String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_PERCOD`='" + usercode + "'";
+        String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_PERCOD`='" + usercode + "' AND `PERCAT_FECHAFIN` > ?;";
         
         try {
             connection = bs.getConnection();
-            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-            preparedStatemnet.execute();
-            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDate(1, todayDate);
+            preparedStatement.execute();
+            ResultSet rs = (ResultSet) preparedStatement.getResultSet();
             
             while(rs.next()){
                 userCategories.add(rs.getInt("PERCAT_CATCOD"));
@@ -274,4 +330,89 @@ public class User {
         return userCategories;
     }
     
+    private static boolean checkPreviusCategorie(int catcod, String username) throws ParseException {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+        
+        String query = "UPDATE PERSONAS_CATEGORIAS SET PERCAT_FECHAFIN=? WHERE `PERCAT_PERCOD`=" + getUserCodeByUsername(username) + " AND `PERCAT_CATCOD`=" + catcod + ";";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDate(1, neverDate);
+            preparedStatement.execute();
+            
+            return true;
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return false;
+    }
+    
+    public static boolean changePassword(String username, String password) {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+        
+        
+        String query = "UPDATE PERSONAS SET PER_CONTRASENA=? WHERE `PER_USUARIO`='" + username + "';";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, password);
+            preparedStatement.execute();
+            
+            return true;
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return false;
+    }
+    
+    public static boolean checkPassword(String username, String password) {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+
+        String query = "SELECT * FROM `PERSONAS` WHERE PER_USUARIO='" + username + "' AND PER_CONTRASENA='"+ password + "';";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.execute();
+            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return false;
+    }
 }

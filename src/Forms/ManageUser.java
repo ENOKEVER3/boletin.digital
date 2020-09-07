@@ -50,7 +50,6 @@ public class ManageUser extends javax.swing.JFrame {
         optionalEmailField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        tutorField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         genderField = new javax.swing.JComboBox();
         createManageUser = new javax.swing.JButton();
@@ -62,7 +61,6 @@ public class ManageUser extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
         confirmPasswordField = new javax.swing.JPasswordField();
-        jLabel11 = new javax.swing.JLabel();
         phoneField = new javax.swing.JTextField();
         adminCheckBox = new javax.swing.JCheckBox();
         teacherCheckBox = new javax.swing.JCheckBox();
@@ -74,7 +72,7 @@ public class ManageUser extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Administración de usuarios");
+        jLabel1.setText("Crear usuario");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Datos del usuario:");
@@ -97,12 +95,6 @@ public class ManageUser extends javax.swing.JFrame {
         jLabel7.setText("Contraseña:");
 
         jLabel8.setText("Teléfono:");
-
-        tutorField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                tutorFieldKeyTyped(evt);
-            }
-        });
 
         jLabel10.setText("Sexo:");
 
@@ -136,14 +128,12 @@ public class ManageUser extends javax.swing.JFrame {
 
         jLabel9.setText("Usuario:");
 
-        jButton1.setText("COMPROBAR DISPONIBILIDAD");
+        jButton1.setText("COMPROBAR");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        jLabel11.setText("Tutor:");
 
         phoneField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -155,7 +145,7 @@ public class ManageUser extends javax.swing.JFrame {
 
         teacherCheckBox.setText("Profesor");
 
-        preceptorCheckBox.setText("Preseptor");
+        preceptorCheckBox.setText("Preceptor");
 
         studentCheckBox.setText("Alumno");
 
@@ -166,32 +156,37 @@ public class ManageUser extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel8)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(createManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(changeManageUser)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(exitManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel10)
+                                        .addComponent(phoneField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                        .addComponent(genderField, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel8))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(studentCheckBox)
+                                    .addComponent(jLabel13)
+                                    .addComponent(teacherCheckBox)
+                                    .addComponent(preceptorCheckBox)
+                                    .addComponent(adminCheckBox)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
+                                .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(genderField, javax.swing.GroupLayout.Alignment.LEADING, 0, 124, Short.MAX_VALUE)
                                         .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(tutorField, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                 .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,31 +194,29 @@ public class ManageUser extends javax.swing.JFrame {
                                                 .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
                                             .addComponent(jLabel5)
                                             .addComponent(jLabel7)))
-                                    .addComponent(jLabel10)
-                                    .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel6)
-                                    .addComponent(optionalEmailField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                    .addComponent(confirmPasswordField)
-                                    .addComponent(preceptorCheckBox)
-                                    .addComponent(adminCheckBox)
-                                    .addComponent(teacherCheckBox)
-                                    .addComponent(studentCheckBox)
-                                    .addComponent(jLabel13))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel6)
+                                        .addComponent(optionalEmailField, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                        .addComponent(confirmPasswordField))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(createManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(changeManageUser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exitManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
                 .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -253,31 +246,28 @@ public class ManageUser extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tutorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(genderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(studentCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(teacherCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(preceptorCheckBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(adminCheckBox)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(preceptorCheckBox)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(adminCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(createManageUser)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -308,6 +298,8 @@ public class ManageUser extends javax.swing.JFrame {
     private void createManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createManageUserActionPerformed
         if (emptyLoginFields()) return;
         
+        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de crearlo?") == 0)) return;
+        
         User user = new User();
         user.setUsername(usernameField.getText());
         user.setName(nameField.getText());
@@ -317,7 +309,6 @@ public class ManageUser extends javax.swing.JFrame {
         user.setPassword(new String(passwordField.getPassword()).toString());
         user.setPhone(Long.parseLong(phoneField.getText()));
         user.setGender(genderField.getSelectedItem().toString());
-        user.setTutor(tutorField.getText());
         
         if(user.save()){
             JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
@@ -354,10 +345,6 @@ public class ManageUser extends javax.swing.JFrame {
         if(!(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) evt.consume();
     }//GEN-LAST:event_phoneFieldKeyTyped
 
-    private void tutorFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tutorFieldKeyTyped
-
-    }//GEN-LAST:event_tutorFieldKeyTyped
-
 
     private boolean emptyLoginFields() {
         if(usernameField.getText().isEmpty()) {
@@ -388,7 +375,7 @@ public class ManageUser extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
             return true; 
         }
-        if(tutorField.getText().isEmpty()) {
+        if(phoneField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono"); 
             return true;
         }
@@ -416,7 +403,6 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -435,7 +421,6 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JCheckBox preceptorCheckBox;
     private javax.swing.JCheckBox studentCheckBox;
     private javax.swing.JCheckBox teacherCheckBox;
-    private javax.swing.JTextField tutorField;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 
@@ -449,7 +434,6 @@ public class ManageUser extends javax.swing.JFrame {
         confirmPasswordField.setText("");
         phoneField.setText("");
         genderField.setSelectedIndex(0);
-        tutorField.setText("");
     }
 
     private void setCategories() throws ParseException {
