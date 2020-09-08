@@ -93,6 +93,11 @@ public class Menu extends javax.swing.JFrame {
         manageSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         manageSubjectsButton.setText("MATERIAS");
         manageSubjectsButton.setEnabled(false);
+        manageSubjectsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageSubjectsButtonActionPerformed(evt);
+            }
+        });
 
         manageUsersButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         manageUsersButton.setText("USUARIOS");
@@ -106,6 +111,11 @@ public class Menu extends javax.swing.JFrame {
         manageCoursesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         manageCoursesButton.setText("CURSOS");
         manageCoursesButton.setEnabled(false);
+        manageCoursesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageCoursesButtonActionPerformed(evt);
+            }
+        });
 
         exitMenu.setText("SALIR");
         exitMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,6 +228,20 @@ public class Menu extends javax.swing.JFrame {
         changePassword.username = currentUsername;
         changePassword.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void manageCoursesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageCoursesButtonActionPerformed
+        ManageCourse manageCourse = new ManageCourse();
+        manageCourse.setVisible(true);
+        manageCourse.menu = this;
+        this.setVisible(false);
+    }//GEN-LAST:event_manageCoursesButtonActionPerformed
+
+    private void manageSubjectsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageSubjectsButtonActionPerformed
+        ManageSubject manageSubject = new ManageSubject();
+        manageSubject.setVisible(true);
+        manageSubject.menu = this;
+        this.setVisible(false);
+    }//GEN-LAST:event_manageSubjectsButtonActionPerformed
 
     /**
      * @param args the command line arguments
