@@ -153,6 +153,11 @@ public class ModifyUser extends javax.swing.JFrame {
         preceptorCheckBox.setText("Preceptor");
 
         studentCheckBox.setText("Alumno");
+        studentCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentCheckBoxActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Categoría:");
 
@@ -396,6 +401,10 @@ public class ModifyUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_saveModifyUserActionPerformed
 
+    private void studentCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentCheckBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentCheckBoxActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -446,13 +455,14 @@ public class ModifyUser extends javax.swing.JFrame {
         adminCheckBox.setSelected(false);
         
         ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-        
-        for(int i = 0; i < userCategories.size(); i++) {
+        int categoriesSize = userCategories.size();
+
+        for(int i = 0; i < categoriesSize; i++) {
             int categorie = (int) userCategories.get(i);
-            if(categorie == 1) studentCheckBox.setSelected(true);
-            if(categorie == 2) teacherCheckBox.setSelected(true);
-            if(categorie == 3) preceptorCheckBox.setSelected(true);
-            if(categorie == 4) adminCheckBox.setSelected(true);
+            if(categorie == 1) studentCheckBox.setSelected(true); 
+            else if(categorie == 2) teacherCheckBox.setSelected(true);
+            else if(categorie == 3) preceptorCheckBox.setSelected(true);
+            else if(categorie == 4) adminCheckBox.setSelected(true);
         }
     }
     
@@ -520,12 +530,12 @@ public class ModifyUser extends javax.swing.JFrame {
         boolean wasAdmin = false;
         
         for(int i = 0; i < userCategories.size(); i++) {
-            int categorie = (int) userCategories.get(i);
+            int categorie = (int) userCategories.get(i);    
             
-            if(categorie == 1 && !studentCheckBox.isSelected()) User.removeCategorie(1, userUsername);
-            else if(categorie == 2 && !teacherCheckBox.isSelected()) User.removeCategorie(2, userUsername);
-            else if(categorie == 3 && !preceptorCheckBox.isSelected()) User.removeCategorie(3, userUsername);
-            else if(categorie == 4 && !adminCheckBox.isSelected()) User.removeCategorie(4, userUsername);
+            if(categorie == 1 && !studentCheckBox.isSelected()) User.removeCategorie("Alumno", userUsername);
+            else if(categorie == 2 && !teacherCheckBox.isSelected()) User.removeCategorie("Profesor", userUsername);
+            else if(categorie == 3 && !preceptorCheckBox.isSelected()) User.removeCategorie("Preceptor", userUsername);
+            else if(categorie == 4 && !adminCheckBox.isSelected()) User.removeCategorie("Administrador", userUsername);
             
             if(categorie == 1) wasStudent = true;
             else if(categorie == 2) wasTeacher = true;
@@ -534,16 +544,16 @@ public class ModifyUser extends javax.swing.JFrame {
         }
         
         if(studentCheckBox.isSelected() && !wasStudent){
-            User.addCategorie(1, userUsername);
+            User.addCategorie("Alumno", userUsername);
         } 
         if(teacherCheckBox.isSelected() && !wasTeacher){
-            User.addCategorie(2, userUsername);
+            User.addCategorie("Profesor", userUsername);
         }
         if(preceptorCheckBox.isSelected() && !wasPreceptor){
-            User.addCategorie(3, userUsername);
+            User.addCategorie("Preceptor", userUsername);
         }
         if(adminCheckBox.isSelected() && !wasAdmin) {
-            User.addCategorie(4, userUsername);
+            User.addCategorie("Administrador", userUsername);
         }
     }
 }

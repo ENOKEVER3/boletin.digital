@@ -280,16 +280,16 @@ public class Menu extends javax.swing.JFrame {
         for(int i = 0; i < currentUserCategories.size(); i++) {
             int categorie = (int) currentUserCategories.get(i);    
             
-            if(categorie == 1 || categorie == 2 || categorie == 4) {
+            if(User.getCatcodByCategorieName("Alumno") == categorie || User.getCatcodByCategorieName("Profesor") == categorie || User.getCatcodByCategorieName("Administrador") == categorie) {
                 seeMarksButton.setEnabled(true);
                 seeCoursesButton.setEnabled(true);
             } 
           
-            if(categorie == 2) {
+            if(User.getCatcodByCategorieName("Profesor") == categorie) {
                 loadMarksButton.setEnabled(true);
             }
             
-            if(categorie == 3 || categorie == 4) {
+            if(User.getCatcodByCategorieName("Preceptor") == categorie || User.getCatcodByCategorieName("Administrador") == categorie) {
                 seeMarksButton.setEnabled(true);
                 seeCoursesButton.setEnabled(true);
                 manageCoursesButton.setEnabled(true);

@@ -252,6 +252,7 @@ public class ManageCourse extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Compruebe el nombre del usuario");
             return;
         }
+        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de anotarlo?") == 0)) return;
     }//GEN-LAST:event_createManageCourseActionPerformed
 
     private void exitManageCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManageCourseActionPerformed

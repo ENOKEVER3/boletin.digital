@@ -311,9 +311,9 @@ public class ManageUser extends javax.swing.JFrame {
         user.setGender(genderField.getSelectedItem().toString());
         
         if(user.save()){
-            JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
             try {   
                 setCategories();
+                JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
             } catch (ParseException ex) {
                 Logger.getLogger(ManageUser.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -434,15 +434,19 @@ public class ManageUser extends javax.swing.JFrame {
         confirmPasswordField.setText("");
         phoneField.setText("");
         genderField.setSelectedIndex(0);
+        studentCheckBox.setSelected(false);
+        teacherCheckBox.setSelected(false);
+        preceptorCheckBox.setSelected(false);
+        adminCheckBox.setSelected(false);
     }
 
     private void setCategories() throws ParseException {
-        UsersCategories usersCategories = new UsersCategories();
+        //UsersCategories usersCategories = new UsersCategories();
         
-        if(studentCheckBox.isSelected()) User.addCategorie(Categories.STUDENT, usernameField.getText());
-        if(teacherCheckBox.isSelected()) User.addCategorie(Categories.TEACHER, usernameField.getText());
-        if(preceptorCheckBox.isSelected()) User.addCategorie(Categories.PRECEPTOR, usernameField.getText());
-        if(adminCheckBox.isSelected()) User.addCategorie(Categories.ADMIN, usernameField.getText());
+        if(studentCheckBox.isSelected()) User.addCategorie("Alumno", usernameField.getText());
+        if(teacherCheckBox.isSelected()) User.addCategorie("Profesor", usernameField.getText());
+        if(preceptorCheckBox.isSelected()) User.addCategorie("Preceptor", usernameField.getText());
+        if(adminCheckBox.isSelected()) User.addCategorie("Administrador", usernameField.getText());
         
     }
 }

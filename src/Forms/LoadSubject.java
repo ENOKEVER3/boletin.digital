@@ -182,6 +182,8 @@ public class LoadSubject extends javax.swing.JFrame {
             return;
         }
         
+        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de crearla?") == 0)) return;
+        
         Subject subject = new Subject();
         subject.setForcod(typeBox.getSelectedIndex());
         subject.setName(nameField.getText());

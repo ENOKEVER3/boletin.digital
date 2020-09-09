@@ -206,17 +206,22 @@ public class User {
         return false; 
     }
 
-    public static void addCategorie(int catcod, String username) throws ParseException {
+    public static void addCategorie(String categorie, String username) throws ParseException {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
         
         int percod = getUserCodeByUsername(username);
+        int catcod = getCatcodByCategorieName(categorie);
         
-        if(checkPreviusCategorie(catcod, username)) return;
+        if(checkPreviusCategorie(catcod, percod)) {
+            updateCategorie(catcod, percod);
+            
+            return;
+        }
         
         String query = "INSERT INTO `PERSONAS_CATEGORIAS` (`PERCAT_CATCOD`, `PERCAT_PERCOD`, `PERCAT_FECHAINICIO`, `PERCAT_FECHAFIN`) VALUES (?, ?, ?, ?);";
         
-        try {
+        try {                                                          
             java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
             java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
@@ -240,10 +245,12 @@ public class User {
         }   
     }
     
-    public static void removeCategorie(int catcod, String username) throws ParseException {
+    public static void removeCategorie(String categorie, String username) throws ParseException {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
         
+        int catcod = getCatcodByCategorieName(categorie);
+
         int percod = getUserCodeByUsername(username);
         
         String query = "UPDATE PERSONAS_CATEGORIAS SET PERCAT_FECHAFIN=? WHERE PERCAT_CATCOD=" + catcod + " AND PERCAT_PERCOD=" + getUserCodeByUsername(username) + ";";
@@ -267,6 +274,35 @@ public class User {
         }   
     }
 
+    static public int getCatcodByCategorieName(String categorie) {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+ 
+        String query = "SELECT * FROM `CATEGORIAS` WHERE `CAT_NOMBRE`='" + categorie + "'";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.execute();
+            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            
+            if(rs.next()){
+                return (int) rs.getInt("CAT_COD");
+            }    
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return 0;
+    }
+    
     static public int getUserCodeByUsername(String username) {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
@@ -330,22 +366,25 @@ public class User {
         return userCategories;
     }
     
-    private static boolean checkPreviusCategorie(int catcod, String username) throws ParseException {
+    private static boolean checkPreviusCategorie(int catcod, int percod) throws ParseException {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
         
-        String query = "UPDATE PERSONAS_CATEGORIAS SET PERCAT_FECHAFIN=? WHERE `PERCAT_PERCOD`=" + getUserCodeByUsername(username) + " AND `PERCAT_CATCOD`=" + catcod + ";";
+        String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_FECHAFIN`=? AND `PERCAT_PERCOD`=" + percod + " AND `PERCAT_CATCOD`=" + catcod + ";";
         
         try {
             connection = bs.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setDate(1, neverDate);
             preparedStatement.execute();
+            ResultSet rs = (ResultSet) preparedStatement.getResultSet();
             
-            return true;
+            if(rs.next()) {
+                return true;
+            }
             
         } catch (SQLException e) {
             System.out.println("ERROR: " + e);
@@ -413,6 +452,36 @@ public class User {
             }
         }
         
+        return false;
+    }
+    
+    public static boolean updateCategorie(int catcod, int percod) throws ParseException {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+        
+        String query = "UPDATE `PERSONAS_CATEGORIAS` SET `PERCAT_FECHAFIN`=? WHERE `PERCAT_CATCOD`=" + catcod + " AND `PERCAT_PERCOD`=" + percod + ";";
+        
+            try {                                                          
+                java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+
+                connection = bs.getConnection();
+                PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+                preparedStatemnet.setDate(1, neverDate);
+                preparedStatemnet.execute();
+                
+                return true;
+            } catch (SQLException e) {
+                System.out.println("ERROR: " + e.getMessage());
+            } finally {
+                if(connection != null) try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
         return false;
     }
 }

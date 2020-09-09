@@ -15,5 +15,5 @@ public class Categories {
     public static final int TEACHER = 2;
     public static final int PRECEPTOR = 3;
     public static final int ADMIN = 4;
-    public static String[] categoriesList = new String[] {null, "STUDENT", "TEACHER", "PRECEPTOR", "ADMIN"};
+    public static String[] categoriesList = new String[] {null, "Alumno", "Profesor", "Preceptor", "Administrador"};
 }
