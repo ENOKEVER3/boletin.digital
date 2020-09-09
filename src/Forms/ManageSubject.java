@@ -65,6 +65,7 @@ public class ManageSubject extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButton2 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         jLabel11.setText("jLabel11");
 
@@ -131,6 +132,8 @@ public class ManageSubject extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Asignar un profesor a una materia");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,7 +171,8 @@ public class ManageSubject extends javax.swing.JFrame {
                                     .addComponent(lastnameField))
                                 .addGap(14, 14, 14)
                                 .addComponent(jButton2))
-                            .addComponent(jLabel15))
+                            .addComponent(jLabel15)
+                            .addComponent(jLabel7))
                         .addGap(0, 13, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -180,15 +184,17 @@ public class ManageSubject extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -226,16 +232,29 @@ public class ManageSubject extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String userUsername = usernameField.getText();
+        boolean isTeacher = false;
         int usercode = User.getUserCodeByUsername(userUsername);
+        
         if(usercode == 0) {
             JOptionPane.showMessageDialog(null, "El usuario no existe");
             userToAsingUsername="";
             return;
         } else {
+            ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
+            
+            int userCategoriesSize= userCategories.size();
+            
+            for(int i = 0; i < userCategoriesSize; i++) {
+                if ((int) userCategories.get(i) == 2) isTeacher = true;
+            }
+            
+            if(!isTeacher) {
+                JOptionPane.showMessageDialog(null, "El usuario indicado no es actualmente un alumno");
+                return;
+            }
+            
             BasicDataSource bs = Config.setDBParams();
             Connection connection = null;
-
-            ArrayList userCategories = new ArrayList();
 
             String query = "SELECT * FROM `PERSONAS` WHERE `PER_COD`='" + usercode + "'";
 
@@ -292,6 +311,7 @@ public class ManageSubject extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JToggleButton jToggleButton1;

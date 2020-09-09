@@ -86,6 +86,11 @@ public class Menu extends javax.swing.JFrame {
         loadSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         loadSubjectsButton.setText("MATERIAS");
         loadSubjectsButton.setEnabled(false);
+        loadSubjectsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadSubjectsButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Administrar:");
@@ -242,6 +247,13 @@ public class Menu extends javax.swing.JFrame {
         manageSubject.menu = this;
         this.setVisible(false);
     }//GEN-LAST:event_manageSubjectsButtonActionPerformed
+
+    private void loadSubjectsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSubjectsButtonActionPerformed
+        LoadSubject loadSubject = new LoadSubject();
+        loadSubject.setVisible(true);
+        loadSubject.menu = this;
+        this.setVisible(false);
+    }//GEN-LAST:event_loadSubjectsButtonActionPerformed
 
     /**
      * @param args the command line arguments

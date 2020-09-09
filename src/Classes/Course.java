@@ -4,6 +4,7 @@ import Forms.Login;
 import Utils.Config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.dbcp2.BasicDataSource;
 
-public class Courses {
+public class Course {
     private int oricod;
     private int anocod;
     private String division;
@@ -77,4 +78,5 @@ public class Courses {
         
         return false; 
     }
+    
 }

@@ -261,16 +261,30 @@ public class ManageCourse extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String userUsername = usernameField.getText();
+        boolean isStudent= false;
+        
         int usercode = User.getUserCodeByUsername(userUsername);
         if(usercode == 0) {
             JOptionPane.showMessageDialog(null, "El usuario no existe");
             userToMoveUsername = "";
             return;
         } else {
+            
+            ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
+            
+            int userCategoriesSize= userCategories.size();
+            
+            for(int i = 0; i < userCategoriesSize; i++) {
+                if ((int) userCategories.get(i) == 1) isStudent = true;
+            }
+            
+            if(!isStudent) {
+                JOptionPane.showMessageDialog(null, "El usuario indicado no es actualmente un alumno");
+                return;
+            }
+            
             BasicDataSource bs = Config.setDBParams();
             Connection connection = null;
-
-            ArrayList userCategories = new ArrayList();
 
             String query = "SELECT * FROM `PERSONAS` WHERE `PER_COD`='" + usercode + "'";
 
@@ -279,7 +293,7 @@ public class ManageCourse extends javax.swing.JFrame {
                 PreparedStatement preparedStatemnet = connection.prepareStatement(query);
                 preparedStatemnet.execute();
                 ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-                
+
                 if(rs.next()){
                     nameField.setText(rs.getString("PER_NOMBRE"));
                     lastnameField.setText(rs.getString("PER_APELLIDO"));
@@ -287,7 +301,7 @@ public class ManageCourse extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "Algo salió mal");
                 }
-                
+
             } catch (SQLException e) {
                 System.out.println("ERROR: " + e);
             } finally {
@@ -296,7 +310,7 @@ public class ManageCourse extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
+            }         
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
