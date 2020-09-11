@@ -423,7 +423,7 @@ public class ManageUser extends javax.swing.JFrame {
     private javax.swing.JCheckBox teacherCheckBox;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
-
+ 
     private void cleanFields() {
         usernameField.setText("");
         nameField.setText("");

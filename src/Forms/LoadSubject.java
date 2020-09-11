@@ -122,7 +122,7 @@ public class LoadSubject extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(128, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(loadSubject)
@@ -187,8 +187,29 @@ public class LoadSubject extends javax.swing.JFrame {
         Subject subject = new Subject();
         subject.setForcod(typeBox.getSelectedIndex());
         subject.setName(nameField.getText());
+        
         try {
             if(subject.save()) {
+                String year = yearBox.getSelectedItem().toString();
+                String orientation = orientationBox.getSelectedItem().toString();
+                
+                int oricod = Course.getOrientationcod(orientation);
+                int anocod = Course.getYearcod(year);
+                
+                
+                // chequear esto
+                if(orientationBox.getSelectedItem().toString().equals("General")) {
+                    if(!Course.setCourses(oricod, anocod, Course.getCoursesCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())) {
+                        JOptionPane.showMessageDialog(null, "Algo salió mal");
+                        return;
+                    }
+                } else {
+                    if(!Course.setCourse(oricod, anocod, Course.getCourseCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())){
+                        JOptionPane.showMessageDialog(null, "Algo salió mal");
+                        return;
+                    }
+                }
+                
                 JOptionPane.showMessageDialog(null, "La materia fue creada correctamente");
                 clearFields();
             } else {

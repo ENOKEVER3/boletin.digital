@@ -65,6 +65,37 @@ public class Subject {
         return false;
     }
 
+    public static int getSubjectcod(String subject, int forcod) {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
+        java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+        
+        String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + subject + "' AND `MAT_FORCOD`='" + forcod + "' AND 'ANO_FECHAFIN' > ?;";
+        
+        try {
+            connection = bs.getConnection();
+            PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+            preparedStatemnet.setDate(1, todayDate);
+            preparedStatemnet.execute();
+            ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+            
+            if(rs.next()){
+                return (int) rs.getInt("MAT_COD");
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR: " + e);
+        } finally {
+            if(connection != null) try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return 0;
+    }
+    
     public static boolean checkType(String type) {
         BasicDataSource bs = Config.setDBParams();
         Connection connection = null;
