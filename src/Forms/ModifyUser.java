@@ -24,24 +24,24 @@ import org.apache.commons.dbcp2.BasicDataSource;
  */
 public class ModifyUser extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ModifyUser
-     */
-    public ModifyUser() {
-        initComponents();
-    }
-    
-    Menu menuInstance = null;
-    
-    int usercode;
-    String userUsername;
-    String userPassword;
-    String userName;
-    String userLastname;
-    String userEmail;
-    String userOtherEmail;
-    long userPhone;
-    String userGender;
+  /**
+   * Creates new form ModifyUser
+   */
+  public ModifyUser() {
+      initComponents();
+  }
+
+  Menu menuInstance = null;
+
+  int usercode;
+  String userUsername;
+  String userPassword;
+  String userName;
+  String userLastname;
+  String userEmail;
+  String userOtherEmail;
+  long userPhone;
+  String userGender;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -313,96 +313,96 @@ public class ModifyUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void otherEmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_otherEmailFieldActionPerformed
-        // TODO add your handling code here:
+      // TODO add your handling code here:
     }//GEN-LAST:event_otherEmailFieldActionPerformed
 
     private void exitModifyUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitModifyUserActionPerformed
-        menuInstance.setVisible(true);
-        dispose();
+      menuInstance.setVisible(true);
+      dispose();
     }//GEN-LAST:event_exitModifyUserActionPerformed
 
     private void genderBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderBoxActionPerformed
-        // TODO add your handling code here:
+      // TODO add your handling code here:
     }//GEN-LAST:event_genderBoxActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-        userUsername = usernameUserToFindField.getText();
-        usercode = User.getUserCodeByUsername(userUsername);
-        if(usercode == 0) {
-            JOptionPane.showMessageDialog(null, "El usuario no existe");
-            return;
-        } else {
-            BasicDataSource bs = Config.setDBParams();
-            Connection connection = null;
+      userUsername = usernameUserToFindField.getText();
+      usercode = User.getUserCodeByUsername(userUsername);
+      if(usercode == 0) {
+        JOptionPane.showMessageDialog(null, "El usuario no existe");
+        return;
+      } else {
+        BasicDataSource bs = Config.setDBParams();
+        Connection connection = null;
 
-            ArrayList userCategories = new ArrayList();
+        ArrayList userCategories = new ArrayList();
 
-            String query = "SELECT * FROM `PERSONAS` WHERE `PER_COD`='" + usercode + "'";
+        String query = "SELECT * FROM `PERSONAS` WHERE `PER_COD`='" + usercode + "'";
 
-            try {
-                connection = bs.getConnection();
-                PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-                preparedStatemnet.execute();
-                ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-                
-                if(rs.next()){
-                    userPassword = rs.getString("PER_CONTRASENA");
-                    userName = rs.getString("PER_NOMBRE");
-                    userLastname = rs.getString("PER_APELLIDO");
-                    userEmail = rs.getString("PER_CORREO");
-                    userOtherEmail = rs.getString("PER_CORREO2");
-                    userPhone = rs.getLong("PER_TELEFONO");
-                    userGender = rs.getString("PER_SEXO");
-                    
-                    changeFields();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Algo salió mal");
-                }
-                
-            } catch (SQLException e) {
-                System.out.println("ERROR: " + e);
-            } finally {
-                if(connection != null) try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        try {
+          connection = bs.getConnection();
+          PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+          preparedStatemnet.execute();
+          ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+
+          if(rs.next()){
+            userPassword = rs.getString("PER_CONTRASENA");
+            userName = rs.getString("PER_NOMBRE");
+            userLastname = rs.getString("PER_APELLIDO");
+            userEmail = rs.getString("PER_CORREO");
+            userOtherEmail = rs.getString("PER_CORREO2");
+            userPhone = rs.getLong("PER_TELEFONO");
+            userGender = rs.getString("PER_SEXO");
+
+            changeFields();
+          } else {
+            JOptionPane.showMessageDialog(null, "Algo salió mal");
+          }
+
+        } catch (SQLException e) {
+          System.out.println("ERROR: " + e);
+        } finally {
+          if(connection != null) try {
+            connection.close();
+          } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+          }
         }
+      }
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void saveModifyUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveModifyUserActionPerformed
-        if (emptyFields()) return;
-        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de guardar?") == 0)) return;
-        
-        String newpassword = new String(passwordField.getPassword()).toString();
-        
-        User updatedUser = new User();
-        updatedUser.setUsername(usernameLabel.getText());
-        updatedUser.setName(nameField.getText());
-        updatedUser.setLastname(lastnameField.getText());
-        updatedUser.setPassword(newpassword.isEmpty() == false ? newpassword:userPassword);
-        updatedUser.setEmail(emailField.getText());
-        updatedUser.setOptionalEmail(otherEmailField.getText());
-        updatedUser.setPhone(Long.parseLong(phoneField.getText()));
-        updatedUser.setGender(genderBox.getSelectedItem().toString());
-        
-        try {
-            changeCategories();
-        } catch (ParseException ex) {
-            Logger.getLogger(ModifyUser.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(updatedUser.modify()) {
-            JOptionPane.showMessageDialog(null, "El usuario ha sido modificado con éxito");
-            cleanFields();
-        } else {
-            JOptionPane.showMessageDialog(null, "Se ha producido un error. Código: " + String.valueOf(updatedUser.getErrorCode()));
-        }
+      if (emptyFields()) return;
+      if(!(JOptionPane.showConfirmDialog(null, "Está seguro de guardar?") == 0)) return;
+
+      String newpassword = new String(passwordField.getPassword()).toString();
+
+      User updatedUser = new User();
+      updatedUser.setUsername(usernameLabel.getText());
+      updatedUser.setName(nameField.getText());
+      updatedUser.setLastname(lastnameField.getText());
+      updatedUser.setPassword(newpassword.isEmpty() == false ? newpassword:userPassword);
+      updatedUser.setEmail(emailField.getText());
+      updatedUser.setOptionalEmail(otherEmailField.getText());
+      updatedUser.setPhone(Long.parseLong(phoneField.getText()));
+      updatedUser.setGender(genderBox.getSelectedItem().toString());
+
+      try {
+        changeCategories();
+      } catch (ParseException ex) {
+        Logger.getLogger(ModifyUser.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+      if(updatedUser.modify()) {
+        JOptionPane.showMessageDialog(null, "El usuario ha sido modificado con éxito");
+        cleanFields();
+      } else {
+        JOptionPane.showMessageDialog(null, "Se ha producido un error. Código: " + String.valueOf(updatedUser.getErrorCode()));
+      }
     }//GEN-LAST:event_saveModifyUserActionPerformed
 
     private void studentCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentCheckBoxActionPerformed
-        // TODO add your handling code here:
+      // TODO add your handling code here:
     }//GEN-LAST:event_studentCheckBoxActionPerformed
 
     
@@ -441,119 +441,119 @@ public class ModifyUser extends javax.swing.JFrame {
     private javax.swing.JTextField usernameUserToFindField;
     // End of variables declaration//GEN-END:variables
 
-    private void changeFields() {
-        usernameLabel.setText(userUsername);
-        nameField.setText(userName);
-        lastnameField.setText(userLastname);
-        emailField.setText(userEmail);
-        otherEmailField.setText(userOtherEmail);
-        phoneField.setText(String.valueOf(userPhone));
-        genderBox.setSelectedItem(userGender);
-        studentCheckBox.setSelected(false);
-        teacherCheckBox.setSelected(false);
-        preceptorCheckBox.setSelected(false);
-        adminCheckBox.setSelected(false);
-        
-        ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-        int categoriesSize = userCategories.size();
+  private void changeFields() {
+    usernameLabel.setText(userUsername);
+    nameField.setText(userName);
+    lastnameField.setText(userLastname);
+    emailField.setText(userEmail);
+    otherEmailField.setText(userOtherEmail);
+    phoneField.setText(String.valueOf(userPhone));
+    genderBox.setSelectedItem(userGender);
+    studentCheckBox.setSelected(false);
+    teacherCheckBox.setSelected(false);
+    preceptorCheckBox.setSelected(false);
+    adminCheckBox.setSelected(false);
 
-        for(int i = 0; i < categoriesSize; i++) {
-            int categorie = (int) userCategories.get(i);
-            if(categorie == 1) studentCheckBox.setSelected(true); 
-            else if(categorie == 2) teacherCheckBox.setSelected(true);
-            else if(categorie == 3) preceptorCheckBox.setSelected(true);
-            else if(categorie == 4) adminCheckBox.setSelected(true);
-        }
+    ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
+    int categoriesSize = userCategories.size();
+
+    for(int i = 0; i < categoriesSize; i++) {
+      int categorie = (int) userCategories.get(i);
+      if(categorie == 1) studentCheckBox.setSelected(true); 
+      else if(categorie == 2) teacherCheckBox.setSelected(true);
+      else if(categorie == 3) preceptorCheckBox.setSelected(true);
+      else if(categorie == 4) adminCheckBox.setSelected(true);
     }
+  }
     
-    private boolean emptyFields() {
-        if(nameField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre"); 
-            return true;
-        }
-        if(lastnameField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el apellido"); 
-            return true;
-        }
-        if(emailField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el correo"); 
-            return true;
-        }
-        if(!String.valueOf(passwordField.getPassword()).isEmpty() && String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Confirme la contraseña");
-            return true; 
-        }
-        if(!String.valueOf(confirmPasswordField.getPassword()).isEmpty() && String.valueOf(passwordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "ingrese la contraseña");
-            return true; 
-        }
-        if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-            return true; 
-        }
-        if(phoneField.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono"); 
-            return true;
-        }
-        if(genderBox.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Ingrese el genéro"); 
-            return true;
-        }
-            
-        return false;
+  private boolean emptyFields() {
+    if(nameField.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Ingrese el nombre"); 
+      return true;
     }
-    
-    private void cleanFields() {
-        usernameUserToFindField.setText("");
-        usernameLabel.setText("");
-        nameField.setText("");
-        lastnameField.setText("");
-        emailField.setText("");
-        otherEmailField.setText("");
-        passwordField.setText("");
-        confirmPasswordField.setText("");
-        phoneField.setText("");
-        genderBox.setSelectedIndex(0);
-        studentCheckBox.setSelected(false);
-        teacherCheckBox.setSelected(false);
-        preceptorCheckBox.setSelected(false);
-        adminCheckBox.setSelected(false);
-        
+    if(lastnameField.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Ingrese el apellido"); 
+      return true;
+    }
+    if(emailField.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Ingrese el correo"); 
+      return true;
+    }
+    if(!String.valueOf(passwordField.getPassword()).isEmpty() && String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
+      JOptionPane.showMessageDialog(null, "Confirme la contraseña");
+      return true; 
+   }
+    if(!String.valueOf(confirmPasswordField.getPassword()).isEmpty() && String.valueOf(passwordField.getPassword()).isEmpty()) { 
+      JOptionPane.showMessageDialog(null, "ingrese la contraseña");
+      return true; 
+    }
+    if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
+      JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+      return true; 
+    }
+    if(phoneField.getText().isEmpty()) {
+      JOptionPane.showMessageDialog(null, "Ingrese el número de teléfono"); 
+      return true;
+    }
+    if(genderBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Ingrese el genéro"); 
+      return true;
     }
 
-    private void changeCategories() throws ParseException {
-        ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-        
-        boolean wasStudent = false;
-        boolean wasTeacher = false;
-        boolean wasPreceptor = false;
-        boolean wasAdmin = false;
-        
-        for(int i = 0; i < userCategories.size(); i++) {
-            int categorie = (int) userCategories.get(i);    
-            
-            if(categorie == 1 && !studentCheckBox.isSelected()) User.removeCategorie("Alumno", userUsername);
-            else if(categorie == 2 && !teacherCheckBox.isSelected()) User.removeCategorie("Profesor", userUsername);
-            else if(categorie == 3 && !preceptorCheckBox.isSelected()) User.removeCategorie("Preceptor", userUsername);
-            else if(categorie == 4 && !adminCheckBox.isSelected()) User.removeCategorie("Administrador", userUsername);
-            
-            if(categorie == 1) wasStudent = true;
-            else if(categorie == 2) wasTeacher = true;
-            else if(categorie == 3) wasPreceptor = true;
-            else if(categorie == 4) wasAdmin = true;
-        }
-        
-        if(studentCheckBox.isSelected() && !wasStudent){
-            User.addCategorie("Alumno", userUsername);
-        } 
-        if(teacherCheckBox.isSelected() && !wasTeacher){
-            User.addCategorie("Profesor", userUsername);
-        }
-        if(preceptorCheckBox.isSelected() && !wasPreceptor){
-            User.addCategorie("Preceptor", userUsername);
-        }
-        if(adminCheckBox.isSelected() && !wasAdmin) {
-            User.addCategorie("Administrador", userUsername);
-        }
+    return false;
+  }
+    
+  private void cleanFields() {
+      usernameUserToFindField.setText("");
+      usernameLabel.setText("");
+      nameField.setText("");
+      lastnameField.setText("");
+      emailField.setText("");
+      otherEmailField.setText("");
+      passwordField.setText("");
+      confirmPasswordField.setText("");
+      phoneField.setText("");
+      genderBox.setSelectedIndex(0);
+      studentCheckBox.setSelected(false);
+      teacherCheckBox.setSelected(false);
+      preceptorCheckBox.setSelected(false);
+      adminCheckBox.setSelected(false);
+
+  }
+
+  private void changeCategories() throws ParseException {
+    ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
+
+    boolean wasStudent = false;
+    boolean wasTeacher = false;
+    boolean wasPreceptor = false;
+    boolean wasAdmin = false;
+
+    for(int i = 0; i < userCategories.size(); i++) {
+      int categorie = (int) userCategories.get(i);    
+
+      if(categorie == 1 && !studentCheckBox.isSelected()) User.removeCategorie("Alumno", userUsername);
+      else if(categorie == 2 && !teacherCheckBox.isSelected()) User.removeCategorie("Profesor", userUsername);
+      else if(categorie == 3 && !preceptorCheckBox.isSelected()) User.removeCategorie("Preceptor", userUsername);
+      else if(categorie == 4 && !adminCheckBox.isSelected()) User.removeCategorie("Administrador", userUsername);
+
+      if(categorie == 1) wasStudent = true;
+      else if(categorie == 2) wasTeacher = true;
+      else if(categorie == 3) wasPreceptor = true;
+      else if(categorie == 4) wasAdmin = true;
     }
+
+    if(studentCheckBox.isSelected() && !wasStudent){
+      User.addCategorie("Alumno", userUsername);
+    } 
+    if(teacherCheckBox.isSelected() && !wasTeacher){
+      User.addCategorie("Profesor", userUsername);
+    }
+    if(preceptorCheckBox.isSelected() && !wasPreceptor){
+      User.addCategorie("Preceptor", userUsername);
+    }
+    if(adminCheckBox.isSelected() && !wasAdmin) {
+      User.addCategorie("Administrador", userUsername);
+    }
+  }
 }

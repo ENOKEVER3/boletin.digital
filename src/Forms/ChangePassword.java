@@ -26,11 +26,11 @@ public class ChangePassword extends javax.swing.JFrame {
     /**
      * Creates new form changePassword
      */
-    public ChangePassword() {
-        initComponents();
-    }
+  public ChangePassword() {
+      initComponents();
+  }
     
-    String username;
+  String username;
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,25 +136,25 @@ public class ChangePassword extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (emptyFields()) return;
-        
-        if (User.checkPassword(username, String.valueOf(currentPasswordField.getPassword()))) {
-            if(!(JOptionPane.showConfirmDialog(null, "Está seguro de cambiarla?") == 0)) return;
-            
-            if(User.changePassword(username, String.valueOf(passwordField.getPassword()))) {
-                JOptionPane.showMessageDialog(null, "Su contraseña fue actualizada correctamente");
-                dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Hubo un error inesperado");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-        }      
-        
-        currentPasswordField.setText("");
-        passwordField.setText("");
-        confirmPasswordField.setText("");
-        currentPasswordField.requestFocus();
+      if (emptyFields()) return;
+
+      if (User.checkPassword(username, String.valueOf(currentPasswordField.getPassword()))) {
+          if(!(JOptionPane.showConfirmDialog(null, "Está seguro de cambiarla?") == 0)) return;
+
+          if(User.changePassword(username, String.valueOf(passwordField.getPassword()))) {
+              JOptionPane.showMessageDialog(null, "Su contraseña fue actualizada correctamente");
+              dispose();
+          } else {
+              JOptionPane.showMessageDialog(null, "Hubo un error inesperado");
+          }
+      } else {
+          JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+      }      
+
+      currentPasswordField.setText("");
+      passwordField.setText("");
+      confirmPasswordField.setText("");
+      currentPasswordField.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -174,28 +174,28 @@ public class ChangePassword extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordField;
     // End of variables declaration//GEN-END:variables
 
-    private boolean emptyFields() {
-       
-        if(String.valueOf(currentPasswordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Ingrese su contraseña actual");
-            return true; 
-        }
-        
-        if(String.valueOf(passwordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
-            return true; 
-        }
-        if(String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
-            JOptionPane.showMessageDialog(null, "Confirme la contraseña");
-            return true; 
-        }
-        if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
-            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
-            return true; 
-        }
-        
-            
-        return false;
-    }
+  private boolean emptyFields() {
+
+      if(String.valueOf(currentPasswordField.getPassword()).isEmpty()) { 
+          JOptionPane.showMessageDialog(null, "Ingrese su contraseña actual");
+          return true; 
+      }
+
+      if(String.valueOf(passwordField.getPassword()).isEmpty()) { 
+          JOptionPane.showMessageDialog(null, "Ingrese la contraseña");
+          return true; 
+      }
+      if(String.valueOf(confirmPasswordField.getPassword()).isEmpty()) { 
+          JOptionPane.showMessageDialog(null, "Confirme la contraseña");
+          return true; 
+      }
+      if(!String.valueOf(passwordField.getPassword()).equals(String.valueOf(confirmPasswordField.getPassword()))) {
+          JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden");
+          return true; 
+      }
+
+
+      return false;
+  }
    
 }

@@ -8,40 +8,40 @@ package Classes;
 import java.util.Date;
 
 public class UsersCategories {
-    private int catcod;
-    private int percod;
-    private Date startDate;
+  private int catcod;
+  private int percod;
+  private Date startDate;
 
-    public int getCatcod() {
-        return catcod;
-    }
+  public int getCatcod() {
+      return catcod;
+  }
 
-    public void setCatcod(int catcod) {
-        this.catcod = catcod;
-    }
+  public void setCatcod(int catcod) {
+      this.catcod = catcod;
+  }
 
-    public int getPercod() {
-        return percod;
-    }
+  public int getPercod() {
+      return percod;
+  }
 
-    public void setPercod(int percod) {
-        this.percod = percod;
-    }
+  public void setPercod(int percod) {
+      this.percod = percod;
+  }
 
-    public Date getStartDate() {
-        return startDate;
-    }
+  public Date getStartDate() {
+      return startDate;
+  }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
+  public void setStartDate(Date startDate) {
+      this.startDate = startDate;
+  }
 
-    public Date getFinishDate() {
-        return finishDate;
-    }
+  public Date getFinishDate() {
+      return finishDate;
+  }
 
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
-    }
-    private Date finishDate;
+  public void setFinishDate(Date finishDate) {
+      this.finishDate = finishDate;
+  }
+  private Date finishDate;
 }
