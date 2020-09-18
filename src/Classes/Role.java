@@ -10,7 +10,7 @@ package Classes;
  *
  * @author lagos
  */
-public class Categories {
+public class Role {
   public static final int STUDENT = 1;
   public static final int TEACHER = 2;
   public static final int PRECEPTOR = 3;

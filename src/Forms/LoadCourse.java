@@ -6,7 +6,10 @@
 package Forms;
 
 import Classes.Course;
-import Classes.Subject;
+import Classes.Division;
+import Classes.Orientation;
+import Utils.Combo;
+import Classes.Year;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,6 +51,11 @@ public class LoadCourse extends javax.swing.JFrame {
     jLabel4 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowActivated(java.awt.event.WindowEvent evt) {
+        formWindowActivated(evt);
+      }
+    });
 
     yearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "           ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
 
@@ -155,7 +163,7 @@ public class LoadCourse extends javax.swing.JFrame {
 
   private void loadSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSubjectActionPerformed
     if (checkEmptyFields()) return;
-    if (!Subject.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
+    if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
       JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
       return;
     }
@@ -163,8 +171,8 @@ public class LoadCourse extends javax.swing.JFrame {
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de crearlo?") == 0)) return;
 
     Course course = new Course();
-    course.setAnocod(Course.getYearcod((String) yearBox.getSelectedItem()));
-    course.setOricod(Course.getOrientationcod((String) orientationBox.getSelectedItem()));
+    course.setAnocod(Year.getYearcod((String) yearBox.getSelectedItem()));
+    course.setOricod(Orientation.getOrientationcod((String) orientationBox.getSelectedItem()));
     course.setDivision(divisionBox.getSelectedItem().toString());
     
     try {
@@ -178,6 +186,10 @@ public class LoadCourse extends javax.swing.JFrame {
     
     cleanFields();
   }//GEN-LAST:event_loadSubjectActionPerformed
+
+  private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+    changeBoxs();
+  }//GEN-LAST:event_formWindowActivated
 
   /**
    * @param args the command line arguments
@@ -217,6 +229,8 @@ public class LoadCourse extends javax.swing.JFrame {
     }
 
   void changeBoxs() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Combo.setComboBoxItems(Year.getYears(), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
+    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
   }
 }

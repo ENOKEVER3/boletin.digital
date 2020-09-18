@@ -6,7 +6,10 @@
 package Forms;
 
 import Classes.Course;
+import Classes.Orientation;
 import Classes.Subject;
+import Classes.Year;
+import Utils.Combo;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,8 +52,14 @@ public class LoadSubject extends javax.swing.JFrame {
     typeBox = new javax.swing.JComboBox<>();
     jLabel6 = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
+    jButton2 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowActivated(java.awt.event.WindowEvent evt) {
+        formWindowActivated(evt);
+      }
+    });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel1.setText("Cargar materia");
@@ -94,52 +103,60 @@ public class LoadSubject extends javax.swing.JFrame {
 
     jLabel6.setText("Categoria:");
 
-    jButton1.setText("NUEVO");
+    jButton1.setText("OTRA");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton1ActionPerformed(evt);
       }
     });
 
+    jButton2.setText("MODIFICAR");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addGap(21, 21, 21)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel6)
-                .addGap(0, 0, Short.MAX_VALUE))
-              .addComponent(typeBox, 0, 235, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jButton2)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(nameField)
-              .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE))
-          .addComponent(jLabel1)
-          .addComponent(jLabel3)
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(12, 12, 12))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(nameField)
+                  .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE))
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel4)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                  .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jLabel5)))
               .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addGap(0, 0, Short.MAX_VALUE))
-              .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel5))))
-        .addGap(81, 81, 81))
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(loadSubject)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(12, 12, 12))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel6)
+                    .addGap(0, 0, Short.MAX_VALUE))
+                  .addComponent(typeBox, 0, 235, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(loadSubject, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(0, 0, Short.MAX_VALUE)))
+            .addGap(81, 81, 81))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +187,12 @@ public class LoadSubject extends javax.swing.JFrame {
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jButton1)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGap(18, 18, 18)
+        .addComponent(loadSubject)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(exitLoadSubject)
-          .addComponent(loadSubject))
+          .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE))
         .addContainerGap())
     );
 
@@ -182,7 +201,7 @@ public class LoadSubject extends javax.swing.JFrame {
 
     private void loadSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSubjectActionPerformed
       if (checkEmptyFields()) return;
-      if (!Subject.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
+      if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
         JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
         return;
       }
@@ -206,8 +225,8 @@ public class LoadSubject extends javax.swing.JFrame {
           String year = yearBox.getSelectedItem().toString();
           String orientation = orientationBox.getSelectedItem().toString();
 
-          int oricod = Course.getOrientationcod(orientation);
-          int anocod = Course.getYearcod(year);
+          int oricod = Orientation.getOrientationcod(orientation);
+          int anocod = Year.getYearcod(year);
 
           if(orientationBox.getSelectedItem().toString().equals("General")) {
             if(!Course.setCourses(oricod, anocod, Course.getCoursesCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())) {
@@ -248,10 +267,15 @@ public class LoadSubject extends javax.swing.JFrame {
     loadType.setVisible(true);
   }//GEN-LAST:event_jButton1ActionPerformed
 
+  private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+    changeBoxs();
+  }//GEN-LAST:event_formWindowActivated
+
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton exitLoadSubject;
   private javax.swing.JButton jButton1;
+  private javax.swing.JButton jButton2;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -290,6 +314,8 @@ public class LoadSubject extends javax.swing.JFrame {
   }
 
   void changeBoxs() {
-    return;
+    Combo.setComboBoxItems(Year.getYears(), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
+    Combo.setComboBoxItems(Subject.getTypes(), typeBox);
   }
 }

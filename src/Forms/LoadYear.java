@@ -6,9 +6,13 @@
 package Forms;
 
 import Classes.Course;
+import Classes.Orientation;
+import Classes.Subject;
 import static Classes.Subject.errorCode;
 import static Classes.Subject.getForcod;
 import static Classes.Subject.getName;
+import Classes.Year;
+import Utils.Combo;
 import Utils.Config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,6 +59,14 @@ public class LoadYear extends javax.swing.JFrame {
     orientationBox = new javax.swing.JComboBox<>();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowActivated(java.awt.event.WindowEvent evt) {
+        formWindowActivated(evt);
+      }
+      public void windowOpened(java.awt.event.WindowEvent evt) {
+        formWindowOpened(evt);
+      }
+    });
 
     jLabel1.setText("Nueva año");
 
@@ -91,21 +103,19 @@ public class LoadYear extends javax.swing.JFrame {
           .addComponent(jLabel2)
           .addComponent(jLabel1)
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-              .addGap(167, 167, 167)
+            .addGroup(layout.createSequentialGroup()
               .addComponent(jButton1)
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
               .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel4)
-                .addGap(18, 18, 18)
-                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel3))
+              .addGap(18, 18, 18)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(nameField)
+                .addComponent(orientationBox, 0, 222, Short.MAX_VALUE)))))
+        .addContainerGap(21, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,7 +151,7 @@ public class LoadYear extends javax.swing.JFrame {
       JOptionPane.showMessageDialog(null, "Ingrese el nombre de la orientación");
     }
     
-    int oricod = Course.getOrientationcod(orientationBox.getSelectedItem().toString());
+    int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
     
     if(oricod == 0) {
       JOptionPane.showMessageDialog(null, "La orientación no existe");
@@ -162,6 +172,14 @@ public class LoadYear extends javax.swing.JFrame {
     nameField.setText("");
     nameField.requestFocus();
   }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    // TODO add your handling code here:
+  }//GEN-LAST:event_formWindowOpened
+
+  private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+    changeBoxs();
+  }//GEN-LAST:event_formWindowActivated
 
   /**
    * @param args the command line arguments
@@ -268,5 +286,9 @@ public class LoadYear extends javax.swing.JFrame {
     }
 
     return false;
+  }
+
+  private void changeBoxs() {
+    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
   }
 }

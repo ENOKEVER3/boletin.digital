@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -138,18 +139,22 @@ public class ChangePassword extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       if (emptyFields()) return;
 
+    try {
       if (User.checkPassword(username, String.valueOf(currentPasswordField.getPassword()))) {
-          if(!(JOptionPane.showConfirmDialog(null, "Está seguro de cambiarla?") == 0)) return;
-
-          if(User.changePassword(username, String.valueOf(passwordField.getPassword()))) {
-              JOptionPane.showMessageDialog(null, "Su contraseña fue actualizada correctamente");
-              dispose();
-          } else {
-              JOptionPane.showMessageDialog(null, "Hubo un error inesperado");
-          }
+        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de cambiarla?") == 0)) return;
+        
+        if(User.changePassword(username, String.valueOf(passwordField.getPassword()))) {
+          JOptionPane.showMessageDialog(null, "Su contraseña fue actualizada correctamente");
+          dispose();
+        } else {
+          JOptionPane.showMessageDialog(null, "Hubo un error inesperado");
+        }
       } else {
-          JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+        JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
       }      
+    } catch (ParseException ex) {
+      Logger.getLogger(ChangePassword.class.getName()).log(Level.SEVERE, null, ex);
+    }
 
       currentPasswordField.setText("");
       passwordField.setText("");

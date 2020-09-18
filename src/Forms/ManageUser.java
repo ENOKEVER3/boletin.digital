@@ -5,7 +5,7 @@
  */
 package Forms;
 
-import Classes.Categories;
+import Classes.Role;
 import Classes.User;
 import Classes.UsersCategories;
 import java.text.ParseException;

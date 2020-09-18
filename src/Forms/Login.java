@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -110,7 +111,11 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+      try {
         tryLogin();
+      } catch (ParseException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -122,11 +127,19 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameFieldKeyPressed
 
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
-        if(evt.getKeyChar() == 10) tryLogin();
+        if(evt.getKeyChar() == 10) try {
+          tryLogin();
+        } catch (ParseException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_passwordFieldKeyPressed
 
     private void loginButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginButtonKeyPressed
-        if(evt.getKeyChar() == 10) tryLogin();
+        if(evt.getKeyChar() == 10) try {
+          tryLogin();
+        } catch (ParseException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_loginButtonKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -158,7 +171,7 @@ public class Login extends javax.swing.JFrame {
         return false;
     }
 
-    private void tryLogin() {
+    private void tryLogin() throws ParseException {
         if (emptyLoginFields()) return;
        
         if(User.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword()))) {

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,37 +35,6 @@ public class Subject {
 
   public static void setName(String name) {
     Subject.name = name;
-  }
-
-  public static boolean checkYear(String year, int orientation) {
-    BasicDataSource bs = Config.setDBParams();
-    Connection connection = null;
-    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-
-    String query = "SELECT * FROM `ANOS` WHERE `ANO_NOMBRE`='" + year + "' AND `ANO_ORICOD`='" + orientation + "' AND 'ANO_FECHAFIN' > ?;";
-
-    try {
-      connection = bs.getConnection();
-      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-      preparedStatemnet.setDate(1, todayDate);
-      preparedStatemnet.execute();
-      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-
-      if(rs.next()){
-        return true;
-      }
-
-    } catch (SQLException e) {
-      System.out.println("ERROR: " + e);
-    } finally {
-      if(connection != null) try {
-        connection.close();
-      } catch (SQLException ex) {
-        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-
-    return false;
   }
 
   public static int getSubjectcod(String subject, int forcod) {
@@ -243,5 +213,71 @@ public class Subject {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+  }
+  
+  public static ArrayList getSubjects() {
+    ArrayList subjects = new ArrayList(); 
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_FECHAFIN` > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      while(rs.next()){
+        String subject = rs.getString("MAT_NOMBRE");
+        if(!subjects.contains(subject)) subjects.add(subject);
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return subjects; 
+  }
+  
+  public static ArrayList getTypes() {
+    ArrayList types = new ArrayList(); 
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_FECHAFIN` > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      while(rs.next()){
+        String type = rs.getString("FOR_NOMBRE");
+        if(!types.contains(type)) types.add(type);
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return types; 
   }
 }
