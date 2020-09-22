@@ -498,14 +498,11 @@ public class User {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-    
-    String query = "SELECT * FROM `PERSONAS` WHERE PER_USUARIO='" + username + "' AND PER_CONTRASENA='"+ password + "' AND `PER_FECHAFIN` > ?;";
+    String query = "SELECT * FROM `PERSONAS` WHERE PER_USUARIO='" + username + "' AND PER_CONTRASENA='"+ password + "';";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 

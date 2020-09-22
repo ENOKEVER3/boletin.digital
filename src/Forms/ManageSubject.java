@@ -53,23 +53,21 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     subjectBox = new javax.swing.JComboBox();
-    jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
     orientationBox = new javax.swing.JComboBox();
     jLabel6 = new javax.swing.JLabel();
     jLabel8 = new javax.swing.JLabel();
-    jLabel9 = new javax.swing.JLabel();
-    nameField = new javax.swing.JLabel();
-    lastnameField = new javax.swing.JLabel();
     exitManageSubject = new javax.swing.JButton();
-    manageSubject = new javax.swing.JButton();
-    usernameField = new javax.swing.JTextField();
-    jLabel15 = new javax.swing.JLabel();
-    jToggleButton1 = new javax.swing.JToggleButton();
-    jButton2 = new javax.swing.JButton();
     jLabel7 = new javax.swing.JLabel();
+    jButton3 = new javax.swing.JButton();
+    jLabel10 = new javax.swing.JLabel();
+    jComboBox1 = new javax.swing.JComboBox<>();
+    jComboBox2 = new javax.swing.JComboBox<>();
+    jLabel3 = new javax.swing.JLabel();
+    jButton2 = new javax.swing.JButton();
+    jButton4 = new javax.swing.JButton();
 
     jLabel11.setText("jLabel11");
 
@@ -78,6 +76,7 @@ public class ManageSubject extends javax.swing.JFrame {
     jButton1.setText("jButton1");
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
@@ -92,8 +91,6 @@ public class ManageSubject extends javax.swing.JFrame {
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
 
-    jLabel3.setText("____________________________________________________");
-
     jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jLabel4.setText("Indique el curso:");
 
@@ -107,13 +104,6 @@ public class ManageSubject extends javax.swing.JFrame {
 
     jLabel8.setText("____________________________________________________");
 
-    jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel9.setText("Indique el profesor:");
-
-    nameField.setText("Nombre:");
-
-    lastnameField.setText("Apellido:");
-
     exitManageSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     exitManageSubject.setText("Salir");
     exitManageSubject.addActionListener(new java.awt.event.ActionListener() {
@@ -122,26 +112,19 @@ public class ManageSubject extends javax.swing.JFrame {
       }
     });
 
-    manageSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    manageSubject.setText("Asignar");
-    manageSubject.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        manageSubjectActionPerformed(evt);
-      }
-    });
-
-    jLabel15.setText("Usuario:");
-
-    jToggleButton1.setText("Lista");
-
-    jButton2.setText("COMPROBAR");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
-      }
-    });
-
     jLabel7.setText("Asignar un profesor a una materia");
+
+    jButton3.setText("BUSCAR");
+
+    jLabel10.setText("Subgrupo/División:");
+
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "A", "B", "C", "D" }));
+
+    jLabel3.setText("Profesores asociados:");
+
+    jButton2.setText("ELIMINAR");
+
+    jButton4.setText("AGREGAR");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -150,12 +133,13 @@ public class ManageSubject extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
             .addGap(21, 21, 21)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel9)
               .addComponent(jLabel8)
               .addComponent(jLabel4)
-              .addComponent(jLabel3)
               .addComponent(jLabel2)
               .addComponent(jLabel1)
               .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,27 +152,32 @@ public class ManageSubject extends javax.swing.JFrame {
                     .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(24, 24, 24)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel6)
-                  .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-              .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGroup(layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addComponent(nameField)
-                  .addComponent(lastnameField))
-                .addGap(14, 14, 14)
-                .addComponent(jButton2))
-              .addComponent(jLabel15)
-              .addComponent(jLabel7))
-            .addGap(0, 13, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(manageSubject)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel6)
+                    .addGap(71, 71, 71)
+                    .addComponent(jLabel10))
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+              .addComponent(jLabel7)
+              .addComponent(jButton3))
+            .addGap(0, 28, Short.MAX_VALUE)))
         .addContainerGap())
+      .addGroup(layout.createSequentialGroup()
+        .addGap(130, 130, 130)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(19, 19, 19)
+            .addComponent(jLabel3))
+          .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(31, 31, 31)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jButton4)
+              .addComponent(jButton2))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,106 +190,37 @@ public class ManageSubject extends javax.swing.JFrame {
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(13, 13, 13)
-        .addComponent(jLabel3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGap(18, 18, 18)
         .addComponent(jLabel4)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel5)
-          .addComponent(jLabel6))
+          .addComponent(jLabel6)
+          .addComponent(jLabel10))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
+          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(9, 9, 9)
+        .addComponent(jButton3)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel8)
-        .addGap(18, 18, 18)
-        .addComponent(jLabel9)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+        .addComponent(jLabel3)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel15)
-        .addGap(4, 4, 4)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jButton2))
+        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jToggleButton1)
-        .addGap(18, 18, 18)
-        .addComponent(nameField)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(lastnameField)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitManageSubject)
-          .addComponent(manageSubject))
+        .addComponent(jButton2)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jButton4)
+        .addGap(12, 12, 12)
+        .addComponent(exitManageSubject)
         .addContainerGap())
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        String userUsername = usernameField.getText();
-        boolean isTeacher = false;
-        int usercode = User.getUserCodeByUsername(userUsername);
-        
-        if(usercode == 0) {
-            JOptionPane.showMessageDialog(null, "El usuario no existe");
-            userToAsingUsername="";
-            return;
-        } else {
-            ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-            
-            int userCategoriesSize= userCategories.size();
-            
-            for(int i = 0; i < userCategoriesSize; i++) {
-                if ((int) userCategories.get(i) == 2) isTeacher = true;
-            }
-            
-            if(!isTeacher) {
-                JOptionPane.showMessageDialog(null, "El usuario indicado no es actualmente un alumno");
-                return;
-            }
-            
-            BasicDataSource bs = Config.setDBParams();
-            Connection connection = null;
-
-            String query = "SELECT * FROM `PERSONAS` WHERE `PER_COD`='" + usercode + "'";
-
-            try {
-                connection = bs.getConnection();
-                PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-                preparedStatemnet.execute();
-                ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
-
-                if(rs.next()){
-                    nameField.setText(rs.getString("PER_NOMBRE"));
-                    lastnameField.setText(rs.getString("PER_APELLIDO"));
-                    userToAsingUsername = userUsername;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Algo salió mal");
-                }
-
-            } catch (SQLException e) {
-                System.out.println("ERROR: " + e);
-            } finally {
-                if(connection != null) try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void manageSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageSubjectActionPerformed
-        if (checkEmptyFields()) return;
-        if (!usernameField.getText().equals(userToAsingUsername)) {
-            JOptionPane.showMessageDialog(null, "Compruebe el nombre del usuario");
-            return;
-        }
-        if(!(JOptionPane.showConfirmDialog(null, "Está seguro de asginarlo?") == 0)) return;
-    }//GEN-LAST:event_manageSubjectActionPerformed
 
     private void exitManageSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManageSubjectActionPerformed
         menu.setVisible(true);
@@ -316,10 +236,14 @@ public class ManageSubject extends javax.swing.JFrame {
   private javax.swing.JButton exitManageSubject;
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton2;
+  private javax.swing.JButton jButton3;
+  private javax.swing.JButton jButton4;
+  private javax.swing.JComboBox<String> jComboBox1;
+  private javax.swing.JComboBox<String> jComboBox2;
   private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel13;
-  private javax.swing.JLabel jLabel15;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
@@ -327,14 +251,8 @@ public class ManageSubject extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
-  private javax.swing.JLabel jLabel9;
-  private javax.swing.JToggleButton jToggleButton1;
-  private javax.swing.JLabel lastnameField;
-  private javax.swing.JButton manageSubject;
-  private javax.swing.JLabel nameField;
   private javax.swing.JComboBox orientationBox;
   private javax.swing.JComboBox subjectBox;
-  private javax.swing.JTextField usernameField;
   private javax.swing.JComboBox yearBox;
   // End of variables declaration//GEN-END:variables
 

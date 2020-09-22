@@ -56,33 +56,33 @@ public class Categorie {
   }
   
     public static int getCatcod(String categorie) {
-    BasicDataSource bs = Config.setDBParams();
-    Connection connection = null;
-    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+      BasicDataSource bs = Config.setDBParams();
+      Connection connection = null;
+      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
 
-    String query = "SELECT * FROM `CATEGORIAS` WHERE `CAT_NOMBRE`='" + categorie + "' AND 'CAT_FECHAFIN' > ?;";
+      String query = "SELECT * FROM `CATEGORIAS` WHERE `CAT_NOMBRE`='" + categorie + "' AND 'CAT_FECHAFIN' > ?;";
 
-    try {
-      connection = bs.getConnection();
-      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-      preparedStatemnet.setDate(1, todayDate);
-      preparedStatemnet.execute();
-      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+      try {
+        connection = bs.getConnection();
+        PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+        preparedStatemnet.setDate(1, todayDate);
+        preparedStatemnet.execute();
+        ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 
-      if(rs.next()){
-        return (int) rs.getInt("CAT_COD");
+        if(rs.next()){
+          return (int) rs.getInt("CAT_COD");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("ERROR: " + e);
+      } finally {
+        if(connection != null) try {
+          connection.close();
+        } catch (SQLException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
       }
 
-    } catch (SQLException e) {
-      System.out.println("ERROR: " + e);
-    } finally {
-      if(connection != null) try {
-        connection.close();
-      } catch (SQLException ex) {
-        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-      }
-    }
-
-    return 0;
+      return 0;
   }
 }

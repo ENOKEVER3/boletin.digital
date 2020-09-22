@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Classes.Course;
 import Classes.Role;
 import Classes.User;
 import Classes.UsersCategories;
@@ -314,6 +315,11 @@ public class ManageUser extends javax.swing.JFrame {
             try {   
                 setCategories();
                 JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+                if(studentCheckBox.isSelected()) {
+                  if(!(JOptionPane.showConfirmDialog(null, "Desea inscribir al alumno en primer año?") == 0)) return;
+                  RegisterFirstGrade registerFirstGrade = new RegisterFirstGrade();
+                  registerFirstGrade.setVisible(true);
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(ManageUser.class.getName()).log(Level.SEVERE, null, ex);
             }

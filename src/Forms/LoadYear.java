@@ -59,6 +59,7 @@ public class LoadYear extends javax.swing.JFrame {
     orientationBox = new javax.swing.JComboBox<>();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
@@ -115,7 +116,7 @@ public class LoadYear extends javax.swing.JFrame {
               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(nameField)
                 .addComponent(orientationBox, 0, 222, Short.MAX_VALUE)))))
-        .addContainerGap(21, Short.MAX_VALUE))
+        .addContainerGap(28, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
