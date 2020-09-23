@@ -4,10 +4,10 @@ import org.apache.commons.dbcp2.BasicDataSource;
 
 public class Config {
 
-    public static String url = "jdbc:mysql://18.231.175.39:3306/boletindigital";
-    public static String user = "root";
-    public static String pass = "boletin123digital456";
-    
+    public static String url = Credentials.url;
+    public static String user = Credentials.user;
+    public static String pass = Credentials.password;
+   
     public static BasicDataSource setDBParams(){
 
         BasicDataSource bs = new BasicDataSource();

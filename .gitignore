@@ -4,3 +4,7 @@
 /nbproject
 build.xml
 manifest.xml
+
+# security
+
+src/Utils/Credentials.java
