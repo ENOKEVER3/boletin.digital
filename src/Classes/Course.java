@@ -52,31 +52,31 @@ public class Course {
   
   public static int getCurcodByDivsion(int oricod, int anocod, String division) {
     BasicDataSource bs = Config.setDBParams();
-      Connection connection = null;
-      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-      String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + oricod + "' AND `CUR_ANOCOD`='" + anocod + "' AND `CUR_DIVISION`=" + division + "AND `CUR_FECHAFIN` > ?;";
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + oricod + "' AND `CUR_ANOCOD`='" + anocod + "' AND `CUR_DIVISION`='" + division + "' AND `CUR_FECHAFIN` > ?;";
 
-      try {
-        connection = bs.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setDate(1, todayDate);
-        preparedStatement.execute();
-        ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
-        if(rs.next()){
-          return (int) rs.getInt("CUR_COD");
-        }
-
-      } catch (SQLException e) {
-          System.out.println("ERROR: " + e);
-      } finally {
-        if(connection != null) try {
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      if(rs.next()){
+        return (int) rs.getInt("CUR_COD");
       }
-    
+
+    } catch (SQLException e) {
+        System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+          connection.close();
+      } catch (SQLException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
     return 0;
   }
 
@@ -239,7 +239,7 @@ public class Course {
   public static boolean courseAlreadyCreated(int oricod, int anocod, String division) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-    String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`=? AND `CUR_ANOCOD`=? AND `CUR_DIVISION`=? AND `CUR_FECHAFIN`>?;";
+    String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`=? AND `CUR_ANOCOD`=? AND `CUR_DIVISION`=? AND `CUR_FECHAFIN` > ?;";
     
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     
@@ -306,7 +306,7 @@ public class Course {
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_CATCOD`=? AND `PERCAT_PERCOD`=? AND `PERCAT_FECHAFIN`>?;";
+    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_CATCOD`=? AND `PERCAT_PERCOD`=? AND `PERCAT_FECHAFIN` > ?;";
 
     try {
       connection = bs.getConnection();

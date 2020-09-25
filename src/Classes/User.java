@@ -589,4 +589,74 @@ public class User {
 
     return null;
   }
+  
+  public static String getFullNameByCod(int usercod) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `PERSONAS` WHERE PER_COD='" + usercod + "';";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){ 
+        String name = rs.getString("PER_NOMBRE").substring(0, 1).toUpperCase() + rs.getString("PER_NOMBRE").substring(1).toLowerCase();
+        String lastname = rs.getString("PER_APELLIDO").substring(0, 1).toUpperCase() + rs.getString("PER_APELLIDO").substring(1).toLowerCase();
+        return (name + " " + lastname);
+      }
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return "";
+  }
+  
+  public static ArrayList getUsersFromCategories(String categorie) {
+    ArrayList teachers = new ArrayList();
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    User user = new User();
+    
+    int catcod = Categorie.getCatcod(categorie);
+    
+    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE PERCAT_CATCOD='" + catcod + "' AND PERCAT_FECHAFIN > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      while(rs.next()){
+        teachers.add(getUser(rs.getInt("PERCAT_PERCOD")));
+      }
+      
+      return teachers;
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return null;
+  }
+
 }

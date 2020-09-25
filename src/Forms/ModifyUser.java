@@ -179,6 +179,7 @@ public class ModifyUser extends javax.swing.JFrame {
 
     deleteUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     deleteUser.setText("ELIMINAR");
+    deleteUser.setEnabled(false);
     deleteUser.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         deleteUserActionPerformed(evt);
@@ -434,7 +435,7 @@ public class ModifyUser extends javax.swing.JFrame {
     }
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminarlo?") == 0)) return;
     
-    User.delete(usercod);
+    //User.delete(usercod);
   }//GEN-LAST:event_deleteUserActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -175,6 +175,7 @@ public class Modify extends javax.swing.JFrame {
       JOptionPane.showMessageDialog(null, "Se ha modificado corecctamente");
       combo.removeItem(combo.getSelectedItem());
       combo.addItem(nameField.getText());
+      nameField.setText("");
       return;
     }
     

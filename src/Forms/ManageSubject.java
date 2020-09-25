@@ -5,21 +5,16 @@
  */
 package Forms;
 
+import Classes.Course;
+import Classes.Division;
 import Classes.Orientation;
 import Classes.Subject;
 import Classes.User;
 import Classes.Year;
 import Utils.Combo;
-import Utils.Config;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.apache.commons.dbcp2.BasicDataSource;
 
 /**
  *
@@ -32,9 +27,15 @@ public class ManageSubject extends javax.swing.JFrame {
      */
     public ManageSubject() {
         initComponents();
+        changeBoxs();
     }
     
     Menu menu;
+    ArrayList teachersCod;
+    int oricod;
+    int anocod;
+    int curcod;
+    int teacherCod;
     
     private String userToAsingUsername;
     
@@ -58,16 +59,16 @@ public class ManageSubject extends javax.swing.JFrame {
     yearBox = new javax.swing.JComboBox();
     orientationBox = new javax.swing.JComboBox();
     jLabel6 = new javax.swing.JLabel();
-    jLabel8 = new javax.swing.JLabel();
     exitManageSubject = new javax.swing.JButton();
     jLabel7 = new javax.swing.JLabel();
     jButton3 = new javax.swing.JButton();
-    jLabel10 = new javax.swing.JLabel();
-    jComboBox1 = new javax.swing.JComboBox<>();
-    jComboBox2 = new javax.swing.JComboBox<>();
+    teachersBox = new javax.swing.JComboBox<>();
     jLabel3 = new javax.swing.JLabel();
-    jButton2 = new javax.swing.JButton();
-    jButton4 = new javax.swing.JButton();
+    deleteButton = new javax.swing.JButton();
+    addButton = new javax.swing.JButton();
+    jLabel12 = new javax.swing.JLabel();
+    divisionBox = new javax.swing.JComboBox<>();
+    jSeparator1 = new javax.swing.JSeparator();
 
     jLabel11.setText("jLabel11");
 
@@ -90,6 +91,16 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel2.setText("Indique la materia:");
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
+    subjectBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        subjectBoxItemStateChanged(evt);
+      }
+    });
+    subjectBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        subjectBoxActionPerformed(evt);
+      }
+    });
 
     jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jLabel4.setText("Indique el curso:");
@@ -97,12 +108,30 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel5.setText("Año:");
 
     yearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                    ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
+    yearBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        yearBoxItemStateChanged(evt);
+      }
+    });
+    yearBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        yearBoxActionPerformed(evt);
+      }
+    });
 
     orientationBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                             ", "General", "Informática", "Electromecánica" }));
+    orientationBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        orientationBoxItemStateChanged(evt);
+      }
+    });
+    orientationBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        orientationBoxActionPerformed(evt);
+      }
+    });
 
     jLabel6.setText("Orientación:");
-
-    jLabel8.setText("____________________________________________________");
 
     exitManageSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     exitManageSubject.setText("Salir");
@@ -115,16 +144,40 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel7.setText("Asignar un profesor a una materia");
 
     jButton3.setText("BUSCAR");
-
-    jLabel10.setText("Subgrupo/División:");
-
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "A", "B", "C", "D" }));
+    jButton3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton3ActionPerformed(evt);
+      }
+    });
 
     jLabel3.setText("Profesores asociados:");
 
-    jButton2.setText("ELIMINAR");
+    deleteButton.setText("ELIMINAR");
+    deleteButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        deleteButtonActionPerformed(evt);
+      }
+    });
 
-    jButton4.setText("AGREGAR");
+    addButton.setText("AGREGAR");
+    addButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addButtonActionPerformed(evt);
+      }
+    });
+
+    jLabel12.setText("División");
+
+    divisionBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        divisionBoxItemStateChanged(evt);
+      }
+    });
+    divisionBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        divisionBoxActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -133,50 +186,52 @@ public class ManageSubject extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(21, 21, 21)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel8)
-              .addComponent(jLabel4)
-              .addComponent(jLabel2)
-              .addComponent(jLabel1)
-              .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel5)
-                    .addGap(92, 92, 92))
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(24, 24, 24)))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel4)
+                  .addComponent(jLabel1)
+                  .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jLabel7)
                   .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel6)
-                    .addGap(71, 71, 71)
-                    .addComponent(jLabel10))
+                    .addGap(119, 119, 119)
+                    .addComponent(jButton3))
                   .addGroup(layout.createSequentialGroup()
-                    .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
-              .addComponent(jLabel7)
-              .addComponent(jButton3))
-            .addGap(0, 28, Short.MAX_VALUE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                          .addComponent(jLabel5)
+                          .addComponent(yearBox, 0, 91, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                          .addComponent(jLabel6)
+                          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                      .addComponent(jLabel2))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel12)
+                      .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+              .addGroup(layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(jLabel3))
+              .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(teachersBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(0, 0, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jSeparator1)
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         .addContainerGap())
       .addGroup(layout.createSequentialGroup()
-        .addGap(130, 130, 130)
+        .addGap(144, 144, 144)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(19, 19, 19)
-            .addComponent(jLabel3))
-          .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(31, 31, 31)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jButton4)
-              .addComponent(jButton2))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addComponent(addButton)
+          .addComponent(deleteButton))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -193,28 +248,32 @@ public class ManageSubject extends javax.swing.JFrame {
         .addGap(18, 18, 18)
         .addComponent(jLabel4)
         .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel5)
-          .addComponent(jLabel6)
-          .addComponent(jLabel10))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(9, 9, 9)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel5)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel12)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel6)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(33, 33, 33)
         .addComponent(jButton3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel8)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addComponent(jLabel3)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jButton2)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jButton4)
-        .addGap(12, 12, 12)
+        .addComponent(teachersBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
+        .addComponent(deleteButton)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(addButton)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
         .addComponent(exitManageSubject)
         .addContainerGap())
     );
@@ -223,26 +282,80 @@ public class ManageSubject extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
     private void exitManageSubjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManageSubjectActionPerformed
-        menu.setVisible(true);
-        dispose();
+      menu.setVisible(true);
+      dispose();
     }//GEN-LAST:event_exitManageSubjectActionPerformed
 
   private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    changeBoxs();
+    
   }//GEN-LAST:event_formWindowActivated
+
+  private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    updateTeachersList();
+  }//GEN-LAST:event_jButton3ActionPerformed
+
+  private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminar?") == 0)) return;
+    
+    if(teachersBox.getSelectedItem() != "") {
+      Subject.deleteSubjectTeacher((int) teachersCod.get(teachersBox.getSelectedIndex() + 2), oricod, anocod, curcod, (int) teachersCod.get(0), (int) teachersCod.get(1));
+    } else {
+      JOptionPane.showMessageDialog(null, "Seleccione un profesor");
+    }
+    
+    updateTeachersList();
+  }//GEN-LAST:event_deleteButtonActionPerformed
+
+  private void subjectBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_subjectBoxItemStateChanged
+    blockButtons();
+  }//GEN-LAST:event_subjectBoxItemStateChanged
+
+  private void yearBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_yearBoxItemStateChanged
+    blockButtons();
+  }//GEN-LAST:event_yearBoxItemStateChanged
+
+  private void orientationBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_orientationBoxItemStateChanged
+    blockButtons();
+  }//GEN-LAST:event_orientationBoxItemStateChanged
+
+  private void divisionBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_divisionBoxItemStateChanged
+    blockButtons();
+  }//GEN-LAST:event_divisionBoxItemStateChanged
+
+  private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    TeachersList teacherList = new TeachersList();
+    teacherList.setVisible(true);
+    teacherList.manageSubject = this;
+    this.setVisible(false);
+  }//GEN-LAST:event_addButtonActionPerformed
+
+  private void subjectBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectBoxActionPerformed
+
+  }//GEN-LAST:event_subjectBoxActionPerformed
+
+  private void yearBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearBoxActionPerformed
+
+  }//GEN-LAST:event_yearBoxActionPerformed
+
+  private void orientationBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orientationBoxActionPerformed
+
+  }//GEN-LAST:event_orientationBoxActionPerformed
+
+  private void divisionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionBoxActionPerformed
+    
+  }//GEN-LAST:event_divisionBoxActionPerformed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton addButton;
+  private javax.swing.JButton deleteButton;
+  private javax.swing.JComboBox<String> divisionBox;
   private javax.swing.JButton exitManageSubject;
   private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton3;
-  private javax.swing.JButton jButton4;
-  private javax.swing.JComboBox<String> jComboBox1;
-  private javax.swing.JComboBox<String> jComboBox2;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
+  private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
@@ -250,29 +363,85 @@ public class ManageSubject extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
-  private javax.swing.JLabel jLabel8;
+  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JComboBox orientationBox;
   private javax.swing.JComboBox subjectBox;
+  private javax.swing.JComboBox<String> teachersBox;
   private javax.swing.JComboBox yearBox;
   // End of variables declaration//GEN-END:variables
 
-    private boolean checkEmptyFields() {
-        if(subjectBox.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Indique la materia");
-        } else if(yearBox.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Indique el año");
-        } else if(orientationBox.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(null, "Indique la orientación");
-        } else {
-            return false;
-        }
-        
-        return true;
+  private boolean checkEmptyFields() {
+    if(subjectBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la materia");
+    } else if(yearBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique el año");
+    } else if(orientationBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la orientación");
+    } else if(divisionBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la división");
+    } else {
+      return false;
     }
+
+    return true;
+  }
 
   private void changeBoxs() {
     Combo.setComboBoxItems(Year.getYears(), yearBox);
     Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
     Combo.setComboBoxItems(Subject.getSubjects(), subjectBox);
+    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
+  }
+  
+  public void cleanFields() {
+      yearBox.setSelectedIndex(0);
+      orientationBox.setSelectedIndex(0);
+      divisionBox.setSelectedIndex(0);
+      subjectBox.setSelectedIndex(0);
+  }
+  
+  public void updateTeachersList(){
+    if(checkEmptyFields()) return;
+    oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
+    anocod = Year.getYearcod(yearBox.getSelectedItem().toString());
+    String division = divisionBox.getSelectedItem().toString();
+    
+    curcod = Course.getCurcodByDivsion(oricod, anocod, division);
+    
+    if(curcod != 0) {
+      teachersBox.removeAllItems();
+      teachersCod = Subject.getTeachersCod(oricod, anocod, curcod, subjectBox.getSelectedItem().toString());
+      
+      for(int i = 2; i < teachersCod.size(); i++) {
+        teachersBox.addItem(User.getFullNameByCod((int) teachersCod.get(i)));
+      }
+      
+      JOptionPane.showMessageDialog(null, "Lista de profesores actualizada");
+      enableButtons();
+    } else {
+      JOptionPane.showMessageDialog(null, "El curso no existe");
+      cleanFields();
+      blockButtons();
+    }
+  }
+
+  private void blockButtons() {
+    deleteButton.setEnabled(false);
+    addButton.setEnabled(false);
+    teachersBox.setEnabled(false);
+  }
+  
+  private void enableButtons() {
+    deleteButton.setEnabled(true);
+    addButton.setEnabled(true);
+    teachersBox.setEnabled(true);
+  }
+  
+  public void addTeacher(int percod) throws ParseException {
+    if(Subject.registerTeacherInSubject(percod, oricod, anocod, curcod, (int) teachersCod.get(0), (int) teachersCod.get(1))) {
+      updateTeachersList();
+    } else {
+      JOptionPane.showMessageDialog(null, "No se ha podido agregar al profeosr");
+    }
   }
 }
