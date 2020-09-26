@@ -2,7 +2,7 @@
 
 ## About
 
-Boletín Digital is a school project developed by students from Fray Luis Beltrán de Salliqueló High School, Buenos Aires, Argentina. Its objective is to digitalize the quarterly delivery of grades, in addition to creating a school platform with the data of students, teachers and subjects. The system was designed to work in the school itself where it is developed.
+Boletín Digital is a school project developed by students from Fray Luis Beltrán High School in Salliqueló, Buenos Aires, Argentina. Its objective is to digitalize the quarterly delivery of grades, in addition to creating a school platform with the data of students, teachers and subjects. The system was designed to work in the school itself where it is developed.
 
 ## Technical Aspects
 
