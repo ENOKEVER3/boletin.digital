@@ -6,5 +6,7 @@ build.xml
 manifest.xml
 
 # security
-
 src/Utils/Credentials.java
+
+# file extensions
+*.rar
