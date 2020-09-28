@@ -159,11 +159,15 @@ public class LoadOrientation extends javax.swing.JFrame {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    String query = "SELECT * FROM `ORIENTACIONES` WHERE `ORI_NOMBRE`='" + orientation + "';";
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+    
+    String query = "SELECT * FROM `ORIENTACIONES` WHERE `ORI_NOMBRE`='" + orientation + "' AND `ORI_FECHAFIN`<?;";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
       preparedStatemnet.execute();
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 

@@ -11,6 +11,7 @@ import Classes.Orientation;
 import Classes.Subject;
 import Classes.Year;
 import Utils.Combo;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -245,16 +246,24 @@ public class LoadSubject extends javax.swing.JFrame {
           int anocod = Year.getYearcod(year);
 
           if(orientationBox.getSelectedItem().toString().equals("General")) {
-            if(!Course.setCourses(oricod, anocod, Course.getCoursesCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())) {
-              JOptionPane.showMessageDialog(null, "Algo salió mal");
-              subject.delete();
-              return;
+            try {
+              if(!Course.setCourses(oricod, anocod, Course.getCoursesCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())) {
+                JOptionPane.showMessageDialog(null, "Algo salió mal");
+                subject.delete();
+                return;
+              }
+            } catch (SQLException ex) {
+              Logger.getLogger(LoadSubject.class.getName()).log(Level.SEVERE, null, ex);
             }
           } else {
-            if(!Course.setCourse(oricod, anocod, Course.getCourseCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())){
-              JOptionPane.showMessageDialog(null, "Algo salió mal");
-              subject.delete();
-              return;
+            try {
+              if(!Course.setCourse(oricod, anocod, Course.getCourseCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())){
+                JOptionPane.showMessageDialog(null, "Algo salió mal");
+                subject.delete();
+                return;
+              }
+            } catch (SQLException ex) {
+              Logger.getLogger(LoadSubject.class.getName()).log(Level.SEVERE, null, ex);
             }
           }
 

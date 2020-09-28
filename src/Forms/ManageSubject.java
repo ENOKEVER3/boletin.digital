@@ -298,6 +298,7 @@ public class ManageSubject extends javax.swing.JFrame {
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminar?") == 0)) return;
     
     if(teachersBox.getSelectedItem() != "") {
+      int teacherCode = (int) teachersCod.get(teachersBox.getSelectedIndex() + 2);
       Subject.deleteSubjectTeacher((int) teachersCod.get(teachersBox.getSelectedIndex() + 2), oricod, anocod, curcod, (int) teachersCod.get(0), (int) teachersCod.get(1));
     } else {
       JOptionPane.showMessageDialog(null, "Seleccione un profesor");

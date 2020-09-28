@@ -496,6 +496,11 @@ public class ModifyUser extends javax.swing.JFrame {
     ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
     int categoriesSize = userCategories.size();
 
+    studentCheckBox.setSelected(false);
+    teacherCheckBox.setSelected(false);
+    preceptorCheckBox.setSelected(false);
+    adminCheckBox.setSelected(false);
+    
     for(int i = 0; i < categoriesSize; i++) {
       int categorie = (int) userCategories.get(i);
       if(categorie == 1) studentCheckBox.setSelected(true); 

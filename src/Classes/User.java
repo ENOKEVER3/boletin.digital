@@ -35,6 +35,7 @@ public class User {
   private String gender;
   private int errorCode;
   
+  
   public String getUsername() {
       return username;
   }
@@ -232,13 +233,15 @@ public class User {
   public static void addCategorie(String categorie, String username) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+    
     int percod = getUserCodeByUsername(username);
     int catcod = getCatcodByCategorieName(categorie);
 
     if(checkPreviusCategorie(catcod, percod)) {
       updateCategorie(catcod, percod);
-
       return;
     }
 
@@ -246,8 +249,6 @@ public class User {
 
     try {                                                          
       java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
@@ -272,7 +273,6 @@ public class User {
     Connection connection = null;
 
     int catcod = getCatcodByCategorieName(categorie);
-
     int percod = getUserCodeByUsername(username);
 
     String query = "UPDATE PERSONAS_CATEGORIAS SET PERCAT_FECHAFIN=? WHERE PERCAT_CATCOD=" + catcod + " AND PERCAT_PERCOD=" + getUserCodeByUsername(username) + ";";
@@ -440,7 +440,7 @@ public class User {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_FECHAFIN`=? AND `PERCAT_PERCOD`=" + percod + " AND `PERCAT_CATCOD`=" + catcod + ";";
+    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_FECHAFIN`<? AND `PERCAT_PERCOD`=" + percod + " AND `PERCAT_CATCOD`=" + catcod + ";";
 
     try {
       connection = bs.getConnection();

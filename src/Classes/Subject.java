@@ -161,11 +161,15 @@ public class Subject {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + name + "' AND 'MAT_FORCOD'=" + forcod +";";
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+    
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + name + "' AND 'MAT_FORCOD'=" + forcod +" AND 'MAT_FECHAFIN'<?;";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
       preparedStatemnet.execute();
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 
@@ -449,7 +453,10 @@ public class Subject {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`=? AND `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FORCOD`=?;";
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+    
+    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`=? AND `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FORCOD`=? AND `CURMATPRO_FECHAFIN`<?;";
 
     try {
       connection = bs.getConnection();
@@ -459,7 +466,8 @@ public class Subject {
       preparedStatement.setInt(3, anocod);
       preparedStatement.setInt(4, curcod);
       preparedStatement.setInt(5, (int) matcod);
-      preparedStatement.setInt(6, forcod);       
+      preparedStatement.setInt(6, forcod); 
+      preparedStatement.setDate(7, neverDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
       

@@ -158,12 +158,16 @@ public class LoadDivision extends javax.swing.JFrame {
   private boolean divisionAlreadyExist(String division) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "SELECT * FROM `DIVISIONES` WHERE `DIV_NOMBRE`='" + division + "';";
+    String query = "SELECT * FROM `DIVISIONES` WHERE `DIV_NOMBRE`='" + division + "' AND `DIV_FECHAFIN` < ?;";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
       preparedStatemnet.execute();
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 

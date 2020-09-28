@@ -156,21 +156,24 @@ public class LoadType extends javax.swing.JFrame {
   private javax.swing.JTextField nameField;
   // End of variables declaration//GEN-END:variables
 
-  private boolean categoryAlreadyExist(String categorie) throws ParseException {
+  private boolean categorieAlreadyCreated(String categorie) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_NOMBRE`='" + categorie + "';";
+    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+    
+    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_NOMBRE`='" + categorie + "' AND `FOR_FECHAFIN`<?;";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
       preparedStatemnet.execute();
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 
       if(rs.next()){
         updateCategory(rs.getInt("FOR_COD"));
-        return true;
       }
 
     } catch (SQLException e) {
@@ -214,7 +217,7 @@ public class LoadType extends javax.swing.JFrame {
   }
 
   private boolean newCategory(String categorie) throws ParseException {
-    if(categoryAlreadyExist(categorie)) return true;
+    if(categorieAlreadyCreated(categorie)) return true;
 
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
