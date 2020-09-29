@@ -33,7 +33,6 @@ public class Modify extends javax.swing.JFrame {
   ArrayList list;
   String table;
   ManageCourse manageCourse;
-  LoadSubject loadSubject;
   
   /**
    * This method is called from within the constructor to initialize the form.
@@ -152,6 +151,7 @@ public class Modify extends javax.swing.JFrame {
    if(deleteRow()) {
       changeCombo();
       JOptionPane.showMessageDialog(null, "Se ha eliminado corecctamente");
+      changeCombo();
       return;
     }
     
@@ -176,6 +176,7 @@ public class Modify extends javax.swing.JFrame {
       combo.removeItem(combo.getSelectedItem());
       combo.addItem(nameField.getText());
       nameField.setText("");
+      changeCombo();
       return;
     }
     
@@ -184,8 +185,7 @@ public class Modify extends javax.swing.JFrame {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     if (manageCourse != null) manageCourse.setVisible(true);
-    if (loadSubject != null) manageCourse.setVisible(true);
-    
+    this.setVisible(false);
     dispose();
   }//GEN-LAST:event_jButton1ActionPerformed
 

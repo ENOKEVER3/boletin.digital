@@ -306,8 +306,31 @@ public class Course {
     }
   }
   
-  public static void removeAllStudentsCourses(int percod) {
+  public static void removeAllStudentsCourses(int percod) throws ParseException {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
     
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURSOSMATERIAS_FECHAFIN=? WHERE `CURMATALU_ALUMNOPERCOD`=?";
+
+    try {                                                          
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
+      preparedStatemnet.setInt(2, percod);
+      preparedStatemnet.execute();
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }   
   }
   
   public static boolean registerStudentInCourse(int percod, int oricod, int anocod, int curcod, String... subgrup) throws SQLException, ParseException {
@@ -420,12 +443,48 @@ public class Course {
     
     return false;
   }
-  
+
+  private static void updateStudentInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod, String... subgrup) throws ParseException {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<? AND `CURMATALU_GRUPO`=?;";
+
+    try {                                                          
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, neverDate);
+      preparedStatemnet.setInt(2, catcod);
+      preparedStatemnet.setInt(3, percod);
+      preparedStatemnet.setDate(4, (java.sql.Date) startDate);
+      preparedStatemnet.setInt(5, oricod);
+      preparedStatemnet.setInt(6, anocod);
+      preparedStatemnet.setInt(7, curcod);
+      preparedStatemnet.setInt(8, matcod);
+      preparedStatemnet.setInt(9, forcod);
+      preparedStatemnet.setDate(10, neverDate);
+      preparedStatemnet.setString(11, subgrup.toString());
+      preparedStatemnet.execute();
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }   
+  }
+
   private static boolean checkAlreadyRegisteredInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod, String... subgrup) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`=? AND `CURMATALU_GRUPO`=?;";
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<? AND `CURMATALU_GRUPO`=?;";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -448,7 +507,7 @@ public class Course {
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
       
       if(rs.next()) {
-        rs.updateDate("CURMATALU_FECHAFIN", neverDate);
+        updateStudentInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod, subgrup);
         return true;
       }
       

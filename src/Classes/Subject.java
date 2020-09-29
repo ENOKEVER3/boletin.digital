@@ -41,7 +41,7 @@ public class Subject {
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
 
-    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + subject + "' AND `MAT_FORCOD`='" + forcod + "' AND 'ANO_FECHAFIN' > ?;";
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + subject + "' AND `MAT_FORCOD`='" + forcod + "' AND 'MAT_FECHAFIN' > ?;";
 
     try {
       connection = bs.getConnection();
@@ -72,7 +72,7 @@ public class Subject {
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
 
-    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_NOMBRE`='" + type + "' AND 'ANO_FECHAFIN' > ?;";
+    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_NOMBRE`='" + type + "' AND 'FOR_FECHAFIN' > ?;";
 
     try {
       connection = bs.getConnection();
@@ -164,12 +164,11 @@ public class Subject {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
     
-    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + name + "' AND 'MAT_FORCOD'=" + forcod +" AND 'MAT_FECHAFIN'<?;";
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + name + "' AND 'MAT_FORCOD'=" + forcod +";";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-      preparedStatemnet.setDate(1, neverDate);
       preparedStatemnet.execute();
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 
@@ -198,14 +197,15 @@ public class Subject {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "UPDATE MATERIAS SET MAT_FECHAFIN=? WHERE MAT_COD=" + matcod + " AND MAT_FORCOD=" + forcod + " AND MAT_FECHAFIN < ?;";
+    String query = "UPDATE MATERIAS SET MAT_FECHAFIN=? WHERE MAT_COD=" + matcod + " AND MAT_FORCOD=" + forcod + ";";
 
     try {           
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setDate(1, neverDate);
-      preparedStatemnet.setDate(2, neverDate);
       preparedStatemnet.execute();
+      
+      
 
     } catch (SQLException e) {
       System.out.println("ERROR: " + e.getMessage());
@@ -314,6 +314,37 @@ public class Subject {
     
     return types; 
   }
+  
+  public static int getTypeCodeByName(String type) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `FORMACIONES` WHERE `FOR_FECHAFIN` > ? AND `FOR_NOMBRE`='" + type +"';";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return (int) rs.getInt("FOR_COD");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return 0; 
+  }
+  
   
   public static ArrayList getSubjectsCodByCourse(int oricod, int anocod, int curcod) {
     ArrayList cods = new ArrayList();
@@ -452,11 +483,8 @@ public class Subject {
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-
-    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-    java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
     
-    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`=? AND `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FORCOD`=? AND `CURMATPRO_FECHAFIN`<?;";
+    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`=? AND `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FORCOD`=?;";
 
     try {
       connection = bs.getConnection();
@@ -467,7 +495,6 @@ public class Subject {
       preparedStatement.setInt(4, curcod);
       preparedStatement.setInt(5, (int) matcod);
       preparedStatement.setInt(6, forcod); 
-      preparedStatement.setDate(7, neverDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
       
@@ -549,6 +576,159 @@ public class Subject {
         } catch (SQLException ex) {
           Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+  }
+
+  public static ArrayList getSubjectsCodByCourseAndCategory(int oricod, int anocod, int typecode) {
+    ArrayList cods = new ArrayList();
+    
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_ORICOD`=? AND `CURMAT_ANOCOD`=? AND `CURMAT_FORCOD`=? AND `CURMAT_FECHAFIN` > ?;";
+    
+      try {
+        connection = bs.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, oricod);
+        preparedStatement.setInt(2, anocod);
+        preparedStatement.setInt(3, typecode);
+        preparedStatement.setDate(4, todayDate);
+        preparedStatement.execute();
+        ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+        while(rs.next()){
+          int matcod = rs.getInt("CURMAT_MATCOD");
+          if(!cods.contains(matcod)) cods.add(matcod);
+        }
+        
+      } catch(SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+        if(connection != null) try {
+            connection.close();
+          } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+          }
+      }
+    
+    return cods;
+  }
+
+  public static String getSubjectNameByCode(Object subcod) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_COD`='" + subcod + "' AND 'MAT_FECHAFIN' > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+
+      if(rs.next()){
+        return (String) rs.getString("MAT_NOMBRE");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return "";
+  }
+
+  public static boolean removeSubject(int subcod) throws ParseException {
+    if(!removeSubjectCourses(subcod)) return false;
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    String query = "UPDATE MATERIAS SET MAT_FECHAFIN=? WHERE MAT_COD=" + subcod + ";";
+
+    try {           
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+      
+      return true;
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+      return false;
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+  }
+
+  public static boolean changeSubjectName(int subcod, String name) throws ParseException {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    String query = "UPDATE MATERIAS SET MAT_NOMBRE=? WHERE MAT_COD=" + subcod + " AND MAT_FECHAFIN > ?;";
+
+    try {           
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setString(1, name);
+      preparedStatemnet.setDate(2, todayDate);
+      preparedStatemnet.execute();
+      
+      return true;
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+      return false;
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+  }
+
+  private static boolean removeSubjectCourses(int subcod) throws ParseException {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    String query = "UPDATE CURSOS_MATERIAS SET CURMAT_FECHAFIN=? WHERE CURMAT_MATCOD=" + subcod + ";";
+
+    try {           
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+      
+      return true;
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+      return false;
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
   }
 }

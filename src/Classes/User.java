@@ -440,12 +440,11 @@ public class User {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_FECHAFIN`<? AND `PERCAT_PERCOD`=" + percod + " AND `PERCAT_CATCOD`=" + catcod + ";";
+    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_PERCOD`=" + percod + " AND `PERCAT_CATCOD`=" + catcod + ";";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, neverDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 

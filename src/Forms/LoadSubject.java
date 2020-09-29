@@ -54,8 +54,8 @@ public class LoadSubject extends javax.swing.JFrame {
     typeBox = new javax.swing.JComboBox<>();
     jLabel6 = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
     jButton3 = new javax.swing.JButton();
+    exitLoadSubject1 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     setResizable(false);
@@ -119,17 +119,18 @@ public class LoadSubject extends javax.swing.JFrame {
       }
     });
 
-    jButton2.setText("MODIFICAR");
-    jButton2.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton2ActionPerformed(evt);
-      }
-    });
-
     jButton3.setText("EDITAR");
     jButton3.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton3ActionPerformed(evt);
+      }
+    });
+
+    exitLoadSubject1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    exitLoadSubject1.setText("MODIFICAR");
+    exitLoadSubject1.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitLoadSubject1ActionPerformed(evt);
       }
     });
 
@@ -142,7 +143,7 @@ public class LoadSubject extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(jButton2)
+            .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(12, 12, 12))
@@ -206,11 +207,11 @@ public class LoadSubject extends javax.swing.JFrame {
             .addComponent(jButton1)
             .addComponent(jButton3)))
         .addComponent(loadSubject)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(exitLoadSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addContainerGap(21, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(exitLoadSubject)
+          .addComponent(exitLoadSubject1))
+        .addContainerGap(25, Short.MAX_VALUE))
     );
 
     pack();
@@ -224,10 +225,6 @@ public class LoadSubject extends javax.swing.JFrame {
       }
       if (!Subject.checkType(typeBox.getSelectedItem().toString())) {
         JOptionPane.showMessageDialog(null, "El tipo de matería no existe");
-        return;
-      }
-      if (orientationBox.getSelectedIndex() == 1 && typeBox.getSelectedIndex() == 2) {
-        JOptionPane.showMessageDialog(null, "Revise el tipo de la materia");
         return;
       }
 
@@ -297,32 +294,25 @@ public class LoadSubject extends javax.swing.JFrame {
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    this.setVisible(false);
-    Modify modify = new Modify();
-    modify.setVisible(true);
-    modify.list = Subject.getTypes();
-    modify.loadSubject = this;
-    modify.table = "FORMACIONES";
+
   }//GEN-LAST:event_jButton3ActionPerformed
 
   private void typeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeBoxActionPerformed
     // TODO add your handling code here:
   }//GEN-LAST:event_typeBoxActionPerformed
 
-  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+  private void exitLoadSubject1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitLoadSubject1ActionPerformed
+    ModifySubject modifySubject = new ModifySubject();
+    modifySubject.setVisible(true);
+    modifySubject.loadSubject = this;
     this.setVisible(false);
-    Modify modify = new Modify();
-    modify.setVisible(true);
-    modify.list = Subject.getSubjects();
-    modify.loadSubject = this;
-    modify.table = "MATERIAS";
-  }//GEN-LAST:event_jButton2ActionPerformed
+  }//GEN-LAST:event_exitLoadSubject1ActionPerformed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton exitLoadSubject;
+  private javax.swing.JButton exitLoadSubject1;
   private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton3;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
