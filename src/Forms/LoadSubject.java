@@ -28,6 +28,7 @@ public class LoadSubject extends javax.swing.JFrame {
    */
   public LoadSubject() {
       initComponents();
+      changeBoxs();
   }
     
   Menu menu;
@@ -120,6 +121,7 @@ public class LoadSubject extends javax.swing.JFrame {
     });
 
     jButton3.setText("EDITAR");
+    jButton3.setEnabled(false);
     jButton3.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton3ActionPerformed(evt);
@@ -143,6 +145,8 @@ public class LoadSubject extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(loadSubject)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,8 +169,7 @@ public class LoadSubject extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                   .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
                   .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(loadSubject, javax.swing.GroupLayout.Alignment.LEADING))
+                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(0, 0, Short.MAX_VALUE))
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,12 +209,11 @@ public class LoadSubject extends javax.swing.JFrame {
             .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jButton1)
             .addComponent(jButton3)))
-        .addComponent(loadSubject)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(exitLoadSubject)
-          .addComponent(exitLoadSubject1))
-        .addContainerGap(25, Short.MAX_VALUE))
+          .addComponent(exitLoadSubject1)
+          .addComponent(loadSubject)))
     );
 
     pack();
@@ -290,7 +292,7 @@ public class LoadSubject extends javax.swing.JFrame {
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    changeBoxs();
+    
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -28,6 +28,7 @@ public class Modify extends javax.swing.JFrame {
    */
   public Modify() {
     initComponents();
+    changeCombo();
   }
   
   ArrayList list;
@@ -140,7 +141,7 @@ public class Modify extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    changeCombo();
+
     String title = table.substring(0, 1).toUpperCase() + table.substring(1).toLowerCase();
     titleLabel.setText(title);
   }//GEN-LAST:event_formWindowActivated
@@ -151,7 +152,6 @@ public class Modify extends javax.swing.JFrame {
    if(deleteRow()) {
       changeCombo();
       JOptionPane.showMessageDialog(null, "Se ha eliminado corecctamente");
-      changeCombo();
       return;
     }
     
@@ -172,11 +172,11 @@ public class Modify extends javax.swing.JFrame {
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de modificarlo?") == 0)) return;
     
     if(modifyRow(nameField.getText())) {
+      changeCombo();
       JOptionPane.showMessageDialog(null, "Se ha modificado corecctamente");
       combo.removeItem(combo.getSelectedItem());
       combo.addItem(nameField.getText());
       nameField.setText("");
-      changeCombo();
       return;
     }
     

@@ -173,7 +173,6 @@ public class ModifySubject extends javax.swing.JFrame {
                 .addGap(0, 177, Short.MAX_VALUE)))
             .addContainerGap())
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jToggleButton1)
             .addGap(16, 16, 16))))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()

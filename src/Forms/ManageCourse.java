@@ -32,7 +32,8 @@ public class ManageCourse extends javax.swing.JFrame {
      * Creates new form ManageCourse
      */
     public ManageCourse() {
-        initComponents();
+      initComponents();
+      changeBoxs();
     }
 
     Menu menu;
@@ -61,8 +62,6 @@ public class ManageCourse extends javax.swing.JFrame {
     orientationBox = new javax.swing.JComboBox<>();
     divisionBox = new javax.swing.JComboBox<>();
     jLabel9 = new javax.swing.JLabel();
-    subdivCheckBox = new javax.swing.JCheckBox();
-    subdivBox = new javax.swing.JComboBox<>();
     studentsManageCourse1 = new javax.swing.JButton();
     jLabel10 = new javax.swing.JLabel();
     studentsManageCourse2 = new javax.swing.JButton();
@@ -71,9 +70,6 @@ public class ManageCourse extends javax.swing.JFrame {
     studentsManageCourse3 = new javax.swing.JButton();
     jLabel12 = new javax.swing.JLabel();
     loadSubject = new javax.swing.JButton();
-    jLabel7 = new javax.swing.JLabel();
-    jButton2 = new javax.swing.JButton();
-    jButton1 = new javax.swing.JButton();
     jButton4 = new javax.swing.JButton();
     jButton5 = new javax.swing.JButton();
     jButton6 = new javax.swing.JButton();
@@ -127,26 +123,6 @@ public class ManageCourse extends javax.swing.JFrame {
     jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
     jLabel9.setText("Cursos");
 
-    subdivCheckBox.setText("Subdivisión");
-    subdivCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
-      public void stateChanged(javax.swing.event.ChangeEvent evt) {
-        subdivCheckBoxStateChanged(evt);
-      }
-    });
-    subdivCheckBox.addMouseListener(new java.awt.event.MouseAdapter() {
-      public void mouseClicked(java.awt.event.MouseEvent evt) {
-        subdivCheckBoxMouseClicked(evt);
-      }
-    });
-    subdivCheckBox.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        subdivCheckBoxActionPerformed(evt);
-      }
-    });
-
-    subdivBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  ", "A", "B", "C", "D" }));
-    subdivBox.setEnabled(false);
-
     studentsManageCourse1.setText("CREAR");
     studentsManageCourse1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,17 +158,6 @@ public class ManageCourse extends javax.swing.JFrame {
     loadSubject.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         loadSubjectActionPerformed(evt);
-      }
-    });
-
-    jLabel7.setText("Mover un curso entero");
-
-    jButton2.setText("IR");
-
-    jButton1.setText("OTRA");
-    jButton1.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        jButton1ActionPerformed(evt);
       }
     });
 
@@ -234,32 +199,24 @@ public class ManageCourse extends javax.swing.JFrame {
                       .addComponent(jLabel2)
                       .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                       .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                          .addComponent(jLabel3)
-                          .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                          .addComponent(subdivCheckBox))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                          .addComponent(jLabel4)
-                          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                          .addComponent(subdivBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                          .addComponent(loadSubject)
                           .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jButton1))
-                          .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                              .addComponent(jLabel5)
-                              .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                      .addComponent(jLabel7))
+                              .addComponent(jLabel3)
+                              .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                              .addComponent(jLabel4)
+                              .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                          .addComponent(jLabel5)
+                          .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGap(0, 0, Short.MAX_VALUE))
                   .addGroup(layout.createSequentialGroup()
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                      .addComponent(loadSubject, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel8))))
               .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                   .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,23 +268,12 @@ public class ManageCourse extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(subdivBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(subdivCheckBox)
-          .addComponent(jButton1))
-        .addGap(31, 31, 31)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(jLabel8)
-          .addComponent(jLabel7))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(0, 25, Short.MAX_VALUE)
-            .addComponent(loadSubject)
-            .addGap(18, 18, 18)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addComponent(jButton2))
+        .addGap(27, 27, 27)
+        .addComponent(loadSubject)
+        .addGap(34, 34, 34)
+        .addComponent(jLabel8)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
@@ -365,25 +311,12 @@ public class ManageCourse extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_exitManageCourseActionPerformed
 
-  private void subdivCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_subdivCheckBoxStateChanged
-    if(subdivCheckBox.isSelected()) subdivBox.setEnabled(true);
-    else subdivBox.setEnabled(false); 
-  }//GEN-LAST:event_subdivCheckBoxStateChanged
-
-  private void subdivCheckBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subdivCheckBoxMouseClicked
-   
-  }//GEN-LAST:event_subdivCheckBoxMouseClicked
-
   private void studentsManageCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourseActionPerformed
     LoadCourse loadCourse = new LoadCourse();
     loadCourse.setVisible(true);
     loadCourse.menu = menu;
     dispose();
   }//GEN-LAST:event_studentsManageCourseActionPerformed
-
-  private void subdivCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subdivCheckBoxActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_subdivCheckBoxActionPerformed
 
   private void studentsManageCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourse1ActionPerformed
     LoadYear loadYear = new LoadYear();
@@ -414,26 +347,8 @@ public class ManageCourse extends javax.swing.JFrame {
     
   }//GEN-LAST:event_loadSubjectActionPerformed
 
-  private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    if(subdivCheckBox.isSelected()) {
-      String letter = JOptionPane.showInputDialog("Ingrese la subdivisión (letra)").toUpperCase();
-      
-      if(letter.length() == 0) return;
-      
-      if(letter.length() > 1) {
-        JOptionPane.showMessageDialog(null, "Ingrese una sola letra");
-      } else {
-        subdivBox.addItem(letter);
-        subdivBox.setSelectedItem(letter);
-      }
-
-    } else {
-      JOptionPane.showMessageDialog(null, "Active la subdivisión");
-    }
-  }//GEN-LAST:event_jButton1ActionPerformed
-
   private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    changeBoxs();
+    
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -458,8 +373,6 @@ public class ManageCourse extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<String> divisionBox;
   private javax.swing.JButton exitManageCourse;
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton3;
   private javax.swing.JButton jButton4;
   private javax.swing.JButton jButton5;
@@ -474,7 +387,6 @@ public class ManageCourse extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
-  private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
   private javax.swing.JSeparator jSeparator1;
@@ -484,8 +396,6 @@ public class ManageCourse extends javax.swing.JFrame {
   private javax.swing.JButton studentsManageCourse1;
   private javax.swing.JButton studentsManageCourse2;
   private javax.swing.JButton studentsManageCourse3;
-  private javax.swing.JComboBox<String> subdivBox;
-  private javax.swing.JCheckBox subdivCheckBox;
   private javax.swing.JComboBox<String> yearBox;
   // End of variables declaration//GEN-END:variables
 
@@ -513,6 +423,5 @@ public class ManageCourse extends javax.swing.JFrame {
     yearBox.setSelectedIndex(0);
     orientationBox.setSelectedIndex(0);
     divisionBox.setSelectedIndex(0);
-    subdivBox.setSelectedIndex(0);
   }
 }
