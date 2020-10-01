@@ -28,12 +28,12 @@ public class Modify extends javax.swing.JFrame {
    */
   public Modify() {
     initComponents();
-    changeCombo();
   }
   
   ArrayList list;
   String table;
   ManageCourse manageCourse;
+  LoadSubject loadSubject;
   
   /**
    * This method is called from within the constructor to initialize the form.
@@ -57,6 +57,15 @@ public class Modify extends javax.swing.JFrame {
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
+      }
+      public void windowOpened(java.awt.event.WindowEvent evt) {
+        formWindowOpened(evt);
+      }
+    });
+
+    combo.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        comboItemStateChanged(evt);
       }
     });
 
@@ -185,9 +194,19 @@ public class Modify extends javax.swing.JFrame {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     if (manageCourse != null) manageCourse.setVisible(true);
+    if (loadSubject != null) loadSubject.setVisible(true);
+
     this.setVisible(false);
     dispose();
   }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+    changeCombo();
+  }//GEN-LAST:event_formWindowOpened
+
+  private void comboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboItemStateChanged
+    nameField.setText(combo.getSelectedItem().toString());
+  }//GEN-LAST:event_comboItemStateChanged
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<String> combo;

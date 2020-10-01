@@ -121,7 +121,6 @@ public class LoadSubject extends javax.swing.JFrame {
     });
 
     jButton3.setText("EDITAR");
-    jButton3.setEnabled(false);
     jButton3.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton3ActionPerformed(evt);
@@ -296,7 +295,12 @@ public class LoadSubject extends javax.swing.JFrame {
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+    this.setVisible(false);
+    Modify modify = new Modify();
+    modify.setVisible(true);
+    modify.list = Subject.getTypes();
+    modify.loadSubject = this;
+    modify.table = "FORMACIONES";
   }//GEN-LAST:event_jButton3ActionPerformed
 
   private void typeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeBoxActionPerformed
