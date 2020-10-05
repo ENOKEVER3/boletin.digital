@@ -1,8 +1,5 @@
 package Classes;
 
-import static Classes.User.getCatcodByCategorieName;
-import static Classes.User.getUserCodeByUsername;
-import static Classes.User.updateCategorie;
 import Forms.Login;
 import Utils.Config;
 import java.sql.Connection;
@@ -119,17 +116,23 @@ public class Course {
     return false; 
   }
 
-  public static int getCourseCod(String year, String orientation) {
+  public static int getCourseCod(String year, String orientation, String division) {
 
     int yearcode = Year.getYearcod(year);
     int orientationcode = Orientation.getOrientationcod(orientation);
-
+    int divcod = Division.getDivcod(division);
+    
     if(!(yearcode == 0) && !(orientationcode == 0)) {
       BasicDataSource bs = Config.setDBParams();
       Connection connection = null;
       java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+      
       String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + orientationcode + "' AND `CUR_ANOCOD`='" + yearcode + "' AND `CUR_FECHAFIN` > ?;";
-
+      
+      if(divcod!=0) {
+        query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + orientationcode + "' AND `CUR_ANOCOD`='" + yearcode + "' AND `CUR_DIVCOD`='" + divcod + "' AND `CUR_FECHAFIN` > ?;";
+      } 
+      
       try {
         connection = bs.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -310,7 +313,7 @@ public class Course {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURSOSMATERIAS_FECHAFIN=? WHERE `CURMATALU_ALUMNOPERCOD`=?";
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURSMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOPERCOD`=?";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -333,7 +336,7 @@ public class Course {
     }   
   }
   
-  public static boolean registerStudentInCourse(int percod, int oricod, int anocod, int curcod, String... subgrup) throws SQLException, ParseException {
+  public static boolean registerStudentInCourse(int percod, int oricod, int anocod, int curcod) throws SQLException, ParseException {
     removeAllStudentsCourses(percod);
     
     int catcod = Categorie.getCatcod("Alumno");
@@ -362,7 +365,7 @@ public class Course {
 
           try {
             connection2 = bs.getConnection();
-            PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+            PreparedStatement preparedStatement2 = connection.prepareStatement(query2);
             preparedStatement2.setInt(1, oricod);
             preparedStatement2.setInt(2, anocod);
             preparedStatement2.setInt(3, curcod);
@@ -374,7 +377,7 @@ public class Course {
               int matcod = rs2.getInt("CURMAT_MATCOD");
               int forcod = rs2.getInt("CURMAT_FORCOD");
               
-              if(!registerStudentInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod, subgrup)) {
+              if(!registerStudentInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod)) {
                 JOptionPane.showMessageDialog(null, "Hubo un error al asignar la matería con código: " + matcod);
               }
             }
@@ -416,7 +419,7 @@ public class Course {
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-    String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`=? AND `CUR_ANOCOD`=? AND `CUR_COD`=? AND `PERCAT_FECHAFIN`>?;";
+    String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`=? AND `CUR_ANOCOD`=? AND `CUR_COD`=? AND `CUR_FECHAFIN`>?;";
 
     try {
       connection = bs.getConnection();
@@ -444,11 +447,11 @@ public class Course {
     return false;
   }
 
-  private static void updateStudentInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod, String... subgrup) throws ParseException {
+  private static void updateStudentInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
-    
-    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<? AND `CURMATALU_GRUPO`=?;";
+                                                                                                                  
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<?;";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -466,7 +469,6 @@ public class Course {
       preparedStatemnet.setInt(8, matcod);
       preparedStatemnet.setInt(9, forcod);
       preparedStatemnet.setDate(10, neverDate);
-      preparedStatemnet.setString(11, subgrup.toString());
       preparedStatemnet.execute();
 
     } catch (SQLException e) {
@@ -480,11 +482,11 @@ public class Course {
     }   
   }
 
-  private static boolean checkAlreadyRegisteredInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod, String... subgrup) throws ParseException {
+  private static boolean checkAlreadyRegisteredInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<? AND `CURMATALU_GRUPO`=?;";
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<?;";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -501,13 +503,12 @@ public class Course {
       preparedStatemnet.setInt(7, matcod);
       preparedStatemnet.setInt(8, forcod);
       preparedStatemnet.setDate(9, neverDate);
-      preparedStatemnet.setString(10, subgrup.toString());
       preparedStatemnet.execute();
 
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
       
       if(rs.next()) {
-        updateStudentInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod, subgrup);
+        updateStudentInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod);
         return true;
       }
       
@@ -524,13 +525,13 @@ public class Course {
     return false;
   }
   
-  private static boolean registerStudentInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod, String... subgrup) throws ParseException {
+  private static boolean registerStudentInSubject(int catcod, int percod, Date startDate, int oricod, int anocod, int curcod, int matcod, int forcod) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    if(checkAlreadyRegisteredInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod, subgrup)) return true;
+    if(checkAlreadyRegisteredInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod)) return true;
     
-    String query = "INSERT INTO `CURSOSMATERIAS_ALUMNOS` (`CURMATALU_ALUMNOCATCOD`, `CURMATALU_ALUMNOPERCOD`, `CURMATALU_ALUMNOFECHAINICIO`, `CURMATALU_CURORICOD`, `CURMATALU_CURANOCOD`, `CURMATALU_CURCOD`, `CURMATALU_MATCOD`, `CURMATALU_FORCOD`, `CURMATALU_FECHAFIN`, `CURMATALU_GRUPO`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    String query = "INSERT INTO `CURSOSMATERIAS_ALUMNOS` (`CURMATALU_ALUMNOCATCOD`, `CURMATALU_ALUMNOPERCOD`, `CURMATALU_ALUMNOFECHAINICIO`, `CURMATALU_CURORICOD`, `CURMATALU_CURANOCOD`, `CURMATALU_CURCOD`, `CURMATALU_MATCOD`, `CURMATALU_FORCOD`, `CURMATALU_FECHAFIN`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -547,7 +548,6 @@ public class Course {
       preparedStatemnet.setInt(7, matcod);
       preparedStatemnet.setInt(8, forcod);
       preparedStatemnet.setDate(9, neverDate);
-      preparedStatemnet.setString(10, subgrup.toString());
       preparedStatemnet.execute();
       
       return true;
@@ -632,5 +632,46 @@ public class Course {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+  }
+  
+  public static ArrayList getStudentsByCourse(int curcod) throws ParseException {
+    ArrayList students = new ArrayList();
+    
+    int matcod = Subject.getFirstSubjectByCourse(curcod);
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=?  AND `CURMATALU_FECHAFIN`<?;";
+
+    try {                                                          
+      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
+
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setInt(1, curcod);
+      preparedStatemnet.setInt(2, matcod);
+      preparedStatemnet.setDate(3, neverDate);
+      preparedStatemnet.execute();
+
+      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+      
+      while(rs.next()) {
+        User student = User.getUser(rs.getInt("CURMATALU_ALUMNOPERCOD"));
+        if (!students.contains(student)) students.add(student);
+      }
+      
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }   
+   
+    return students;
   }
 }

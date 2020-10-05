@@ -179,6 +179,8 @@ public class LoadCourse extends javax.swing.JFrame {
     try {
       if(course.save()) {
         JOptionPane.showMessageDialog(null, "El curso fue creado correctamente");
+        menu.setVisible(true);
+        dispose();
       } else {
         JOptionPane.showMessageDialog(null, "Algo salió mal. código de error: " + course.errorCode); 
       } } catch (ParseException ex) {

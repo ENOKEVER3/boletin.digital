@@ -7,6 +7,13 @@ package Forms;
 
 import Classes.Course;
 import Classes.Division;
+import Classes.Orientation;
+import Classes.User;
+import Classes.Year;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +28,8 @@ public class RegisterFirstGrade extends javax.swing.JFrame {
   public RegisterFirstGrade() {
     initComponents();
   }
+  
+  User user;
 
   /**
    * This method is called from within the constructor to initialize the form.
@@ -107,11 +116,21 @@ public class RegisterFirstGrade extends javax.swing.JFrame {
       return;
     }
     
-    /*if(Course.registerStudentInCourse()) {
-      JOptionPane.showMessageDialog(null, "El alumno fue registrado correctamente");
-    } else {
-      JOptionPane.showMessageDialog(null, "Se produjo un error inesperado");
-    }*/
+    int percod = User.getUserCodeByUsername(user.getUsername());
+    int oricod = Orientation.getOrientationcod("Básica");
+    int anocod = Year.getYearcod("Primero");
+
+    try {
+      if(Course.registerStudentInCourse(percod, oricod, anocod, Course.getCurcodByDivsion(oricod, anocod, combo.getSelectedItem().toString()))) {
+        JOptionPane.showMessageDialog(null, "El alumno fue registrado correctamente");
+      } else {
+        JOptionPane.showMessageDialog(null, "Se produjo un error inesperado");
+      }
+    } catch (SQLException ex) {
+      Logger.getLogger(RegisterFirstGrade.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ParseException ex) {
+      Logger.getLogger(RegisterFirstGrade.class.getName()).log(Level.SEVERE, null, ex);
+    }
     
     dispose();
   }//GEN-LAST:event_jButton1ActionPerformed

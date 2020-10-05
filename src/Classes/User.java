@@ -657,5 +657,34 @@ public class User {
     
     return null;
   }
+  
+  public static Date getCategorieStartedDateByUsercod(int usercod, int catcod) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
 
+    ArrayList userCategories = new ArrayList();
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    String query = "SELECT * FROM `PERSONAS_CATEGORIAS` WHERE `PERCAT_PERCOD`='" + usercod + "' AND `PERCAT_CATCOD`='" + catcod + "' AND `PERCAT_FECHAFIN` > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()) return rs.getDate("PERCAT_FECHAINICIO");
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return null;
+  }
 }

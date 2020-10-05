@@ -318,6 +318,7 @@ public class ManageUser extends javax.swing.JFrame {
                 if(studentCheckBox.isSelected()) {
                   if(!(JOptionPane.showConfirmDialog(null, "Desea inscribir al alumno en primer año?") == 0)) return;
                   RegisterFirstGrade registerFirstGrade = new RegisterFirstGrade();
+                  registerFirstGrade.user = user;
                   registerFirstGrade.setVisible(true);
                 }
             } catch (ParseException ex) {

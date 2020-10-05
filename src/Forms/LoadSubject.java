@@ -6,7 +6,6 @@
 package Forms;
 
 import Classes.Course;
-import Classes.Division;
 import Classes.Orientation;
 import Classes.Subject;
 import Classes.Year;
@@ -140,19 +139,10 @@ public class LoadSubject extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(21, 21, 21)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(loadSubject)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(12, 12, 12))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+          .addGroup(layout.createSequentialGroup()
+            .addGap(21, 21, 21)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,18 +155,26 @@ public class LoadSubject extends javax.swing.JFrame {
                   .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(jLabel5)))
               .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                .addGap(0, 0, Short.MAX_VALUE))
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                 .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)))
-            .addContainerGap())))
+                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(loadSubject)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,11 +206,12 @@ public class LoadSubject extends javax.swing.JFrame {
             .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jButton1)
             .addComponent(jButton3)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(exitLoadSubject)
           .addComponent(exitLoadSubject1)
-          .addComponent(loadSubject)))
+          .addComponent(loadSubject))
+        .addContainerGap())
     );
 
     pack();
@@ -243,7 +242,7 @@ public class LoadSubject extends javax.swing.JFrame {
           int oricod = Orientation.getOrientationcod(orientation);
           int anocod = Year.getYearcod(year);
 
-          if(orientationBox.getSelectedItem().toString().equals("General")) {
+          if(orientationBox.getSelectedItem().toString().equals("Básica")) {
             try {
               if(!Course.setCourses(oricod, anocod, Course.getCoursesCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())) {
                 JOptionPane.showMessageDialog(null, "Algo salió mal");
@@ -255,7 +254,7 @@ public class LoadSubject extends javax.swing.JFrame {
             }
           } else {
             try {
-              if(!Course.setCourse(oricod, anocod, Course.getCourseCod(year, orientation), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())){
+              if(!Course.setCourse(oricod, anocod, Course.getCourseCod(year, orientation, ""), Subject.getSubjectcod(subject.getName(), subject.getForcod()), subject.getForcod())){
                 JOptionPane.showMessageDialog(null, "Algo salió mal");
                 subject.delete();
                 return;

@@ -54,4 +54,35 @@ public class Division {
     
     return divisions; 
   }
+  
+  public static int getDivcod (String division) {
+      BasicDataSource bs = Config.setDBParams();
+      Connection connection = null;
+      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+      String query = "SELECT * FROM `DIVISIONES` WHERE `DIV_NOMBRE`='" + division + "' AND 'DIV_FECHAFIN' > ?;";
+
+      try {
+        connection = bs.getConnection();
+        PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+        preparedStatemnet.setDate(1, todayDate);
+        preparedStatemnet.execute();
+        ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+
+        if(rs.next()){
+          return (int) rs.getInt("DIV_COD");
+        }
+
+      } catch (SQLException e) {
+        System.out.println("ERROR: " + e);
+      } finally {
+        if(connection != null) try {
+          connection.close();
+        } catch (SQLException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }
+
+      return 0;
+  }
 }

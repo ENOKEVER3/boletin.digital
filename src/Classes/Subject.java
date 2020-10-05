@@ -390,6 +390,12 @@ public class Subject {
     ArrayList teacherCods = new ArrayList();
     
     ArrayList subjectCods = getSubjectsCodByCourse(oricod, anocod, curcod);
+    
+    if(subjectCods.size() <= 0) {
+      JOptionPane.showMessageDialog(null, "No se ha encontrado la materia");
+      return null;
+    }
+    
     subjectCods.forEach(matcod -> {
     int forcod = getForCod((int) matcod, subject);
       
@@ -429,12 +435,8 @@ public class Subject {
             } catch (SQLException ex) {
               Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
-    } else {
-      JOptionPane.showMessageDialog(null, "No se ha encontrado la materia");
-    }
-    
+        }  
+    } 
     });
     
     return teacherCods;
@@ -446,6 +448,8 @@ public class Subject {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
+    int catcod = Categorie.getCatcod("Profesor");
+    
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
@@ -455,9 +459,9 @@ public class Subject {
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      preparedStatement.setDate(1, (java.sql.Date) User.getCategorieStartedDateByUsercod(percod, catcod));
       preparedStatement.setInt(2, percod);
-      preparedStatement.setInt(3, Categorie.getCatcod("Profesor"));
+      preparedStatement.setInt(3, catcod);
       preparedStatement.setInt(4, oricod);
       preparedStatement.setInt(5, anocod);
       preparedStatement.setInt(6, curcod);
@@ -730,5 +734,40 @@ public class Subject {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+  }
+
+  static int getFirstSubjectByCourse(int curcod) {
+    ArrayList cods = new ArrayList();
+    
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_CURCOD`=? AND `CURMAT_FECHAFIN` > ?;";
+    
+      try {
+        connection = bs.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setInt(1, curcod);
+        preparedStatement.setDate(2, todayDate);
+        preparedStatement.execute();
+        ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+        if(rs.next()){
+          return rs.getInt("CURMAT_MATCOD");
+        }
+        
+      } catch(SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+        if(connection != null) try {
+            connection.close();
+          } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+          }
+      }
+    
+    return 0;
   }
 }
