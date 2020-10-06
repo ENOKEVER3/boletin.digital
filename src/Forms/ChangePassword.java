@@ -52,7 +52,7 @@ public class ChangePassword extends javax.swing.JFrame {
     passwordField = new javax.swing.JPasswordField();
     confirmPasswordField = new javax.swing.JPasswordField();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -131,6 +131,7 @@ public class ChangePassword extends javax.swing.JFrame {
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

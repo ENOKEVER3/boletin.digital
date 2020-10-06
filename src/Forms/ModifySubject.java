@@ -59,7 +59,7 @@ public class ModifySubject extends javax.swing.JFrame {
     deleteButton = new javax.swing.JButton();
     saveButton = new javax.swing.JButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -236,6 +236,7 @@ public class ModifySubject extends javax.swing.JFrame {
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
     private void orientationBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orientationBoxActionPerformed
@@ -257,7 +258,7 @@ public class ModifySubject extends javax.swing.JFrame {
 
   private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
     if (checkEmptyFields()) return;
-    if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
+    if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString())) {
       JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
       return;
     }

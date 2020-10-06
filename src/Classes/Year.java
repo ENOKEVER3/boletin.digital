@@ -22,12 +22,14 @@ import org.apache.commons.dbcp2.BasicDataSource;
  * @author lagos
  */
 public class Year {
-  public static boolean checkYear(String year, int orientation) {
+  public static boolean checkYear(String year, String orientation) {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    int oricod = Orientation.getOrientationcod(orientation);
 
-    String query = "SELECT * FROM `ANOS` WHERE `ANO_NOMBRE`='" + year + "' AND `ANO_ORICOD`='" + orientation + "' AND 'ANO_FECHAFIN' > ?;";
+    String query = "SELECT * FROM `ANOS` WHERE `ANO_NOMBRE`='" + year + "' AND `ANO_ORICOD`='" + oricod + "' AND 'ANO_FECHAFIN' > ?;";
 
     try {
       connection = bs.getConnection();

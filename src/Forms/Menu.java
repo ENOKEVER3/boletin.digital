@@ -59,7 +59,7 @@ public class Menu extends javax.swing.JFrame {
     jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     jButton5.setText("CURSOS");
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
@@ -211,6 +211,7 @@ public class Menu extends javax.swing.JFrame {
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
     private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed

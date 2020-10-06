@@ -120,7 +120,6 @@ public class Course {
 
     int yearcode = Year.getYearcod(year);
     int orientationcode = Orientation.getOrientationcod(orientation);
-    int divcod = Division.getDivcod(division);
     
     if(!(yearcode == 0) && !(orientationcode == 0)) {
       BasicDataSource bs = Config.setDBParams();
@@ -129,8 +128,8 @@ public class Course {
       
       String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + orientationcode + "' AND `CUR_ANOCOD`='" + yearcode + "' AND `CUR_FECHAFIN` > ?;";
       
-      if(divcod!=0) {
-        query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + orientationcode + "' AND `CUR_ANOCOD`='" + yearcode + "' AND `CUR_DIVCOD`='" + divcod + "' AND `CUR_FECHAFIN` > ?;";
+      if(division!="") {
+        query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + orientationcode + "' AND `CUR_ANOCOD`='" + yearcode + "' AND `CUR_DIVISION`='" + division + "' AND `CUR_FECHAFIN` > ?;";
       } 
       
       try {
@@ -313,15 +312,14 @@ public class Course {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURSMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOPERCOD`=?";
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOPERCOD`=?";
 
     try {                                                          
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
-
+      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+      
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-      preparedStatemnet.setDate(1, neverDate);
+      preparedStatemnet.setDate(1, todayDate);
       preparedStatemnet.setInt(2, percod);
       preparedStatemnet.execute();
 
@@ -642,17 +640,17 @@ public class Course {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=?  AND `CURMATALU_FECHAFIN`<?;";
-
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=?  AND `CURMATALU_FECHAFIN`>?;";
+    
     try {                                                          
-      SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-      java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
+      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+      
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setInt(1, curcod);
       preparedStatemnet.setInt(2, matcod);
-      preparedStatemnet.setDate(3, neverDate);
+      preparedStatemnet.setDate(3, todayDate);
       preparedStatemnet.execute();
 
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();

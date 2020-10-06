@@ -687,4 +687,8 @@ public class User {
     
     return null;
   }
+  
+  public static boolean isCategorie(int percod, String categorie){
+    return (boolean) User.getUserCategoriesByUsercode(percod).contains(Categorie.getCatcod(categorie));
+  }
 }

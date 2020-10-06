@@ -45,7 +45,7 @@ public class TeachersList extends javax.swing.JFrame {
     jToggleButton1 = new javax.swing.JToggleButton();
     jButton1 = new javax.swing.JButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
@@ -143,6 +143,7 @@ public class TeachersList extends javax.swing.JFrame {
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
   private void teachersBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_teachersBoxItemStateChanged

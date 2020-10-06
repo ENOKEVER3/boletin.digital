@@ -11,11 +11,13 @@ import Classes.Orientation;
 import Classes.User;
 import Classes.Year;
 import Utils.Combo;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -28,8 +30,13 @@ public class CourseToCourse extends javax.swing.JFrame {
    */
   public CourseToCourse() {
     initComponents();
+    changeBoxs();
+    disableButton();
   }
 
+  ArrayList students;
+  ManageCourse manageCourse;
+  
   /**
    * This method is called from within the constructor to initialize the form.
    * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +47,7 @@ public class CourseToCourse extends javax.swing.JFrame {
   private void initComponents() {
 
     jScrollPane1 = new javax.swing.JScrollPane();
-    jTable1 = new javax.swing.JTable();
+    table = new javax.swing.JTable();
     jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox<>();
@@ -49,41 +56,57 @@ public class CourseToCourse extends javax.swing.JFrame {
     jLabel3 = new javax.swing.JLabel();
     jLabel6 = new javax.swing.JLabel();
     jLabel7 = new javax.swing.JLabel();
-    yearBox1 = new javax.swing.JComboBox<>();
-    orientationBox1 = new javax.swing.JComboBox<>();
-    divisionBox1 = new javax.swing.JComboBox<>();
+    yearBox2 = new javax.swing.JComboBox<>();
+    orientationBox2 = new javax.swing.JComboBox<>();
+    divisionBox2 = new javax.swing.JComboBox<>();
     jLabel8 = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     jLabel9 = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
+    moveButton = new javax.swing.JButton();
     jButton2 = new javax.swing.JButton();
     jButton3 = new javax.swing.JButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    table.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
-        {null, null, null, null},
-        {null, null, null, null},
-        {null, null, null, null},
-        {null, null, null, null}
+        {},
+        {},
+        {},
+        {}
       },
       new String [] {
-        "Nombre", "Apellido", "Promedio", "Materias Pendientes"
+
       }
     ));
-    jScrollPane1.setViewportView(jTable1);
+    table.setEnabled(false);
+    jScrollPane1.setViewportView(table);
 
     jLabel4.setText("Orientación:");
 
     jLabel5.setText("División:");
 
     yearBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                        ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
+    yearBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        yearBoxItemStateChanged(evt);
+      }
+    });
 
     orientationBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                ", "General", "Informática", "Electromecánica" }));
+    orientationBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        orientationBoxItemStateChanged(evt);
+      }
+    });
 
     divisionBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "               ", "Primera", "Segunda" }));
+    divisionBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        divisionBoxItemStateChanged(evt);
+      }
+    });
 
     jLabel3.setText("Año:");
 
@@ -91,11 +114,11 @@ public class CourseToCourse extends javax.swing.JFrame {
 
     jLabel7.setText("División:");
 
-    yearBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                        ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
+    yearBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                        ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
 
-    orientationBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                ", "General", "Informática", "Electromecánica" }));
+    orientationBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                ", "General", "Informática", "Electromecánica" }));
 
-    divisionBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "               ", "Primera", "Segunda" }));
+    divisionBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "               ", "Primera", "Segunda" }));
 
     jLabel8.setText("Año:");
 
@@ -106,9 +129,19 @@ public class CourseToCourse extends javax.swing.JFrame {
     jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel9.setText("Promocion de cursos");
 
-    jButton1.setText("MOVER");
+    moveButton.setText("MOVER");
+    moveButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        moveButtonActionPerformed(evt);
+      }
+    });
 
     jButton2.setText("SALIR");
+    jButton2.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton2ActionPerformed(evt);
+      }
+    });
 
     jButton3.setText("BUSCAR");
     jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -148,18 +181,18 @@ public class CourseToCourse extends javax.swing.JFrame {
                 .addGroup(layout.createSequentialGroup()
                   .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(yearBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(yearBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                   .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(orientationBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orientationBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                   .addGap(10, 10, 10)
                   .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
-                      .addComponent(divisionBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                      .addComponent(divisionBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(jButton1))))
+                      .addComponent(moveButton))))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(43, 43, 43))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -197,44 +230,118 @@ public class CourseToCourse extends javax.swing.JFrame {
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel8)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(yearBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(yearBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(jLabel6)
               .addComponent(jLabel7))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(orientationBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(divisionBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jButton1))))
+              .addComponent(orientationBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(divisionBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(moveButton))))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
         .addComponent(jButton2)
         .addContainerGap())
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
     if (checkEmptyFields()) return;
-    if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedIndex())) {
+    if (!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString())) {
       JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
       return;
     }
     
     int curcod = Course.getCourseCod(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString(), divisionBox.getSelectedItem().toString());
+    
     try {
-      ArrayList students = Course.getStudentsByCourse(curcod);
+      students = Course.getStudentsByCourse(curcod);
+      
+      DefaultTableModel model = new DefaultTableModel(){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+          //all cells false
+        return false;
+        }  
+      };
+      
+      model.addColumn("Nombre");
+      model.addColumn("Apellido");
+      model.addColumn("Promedio");
+      model.addColumn("Materias Pendientes");
+      
+      table.setModel(model);
+      table.getTableHeader().setReorderingAllowed(false);
       
       students.forEach(student -> {
         User currentStudent = (User) student;
-        System.out.println(currentStudent.getName());
+        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(),"",""});
       });
       
+      if(students.size() > 0) enableButton();
+      else disableButton();
     } catch (ParseException ex) {
       Logger.getLogger(CourseToCourse.class.getName()).log(Level.SEVERE, null, ex);
     }
   }//GEN-LAST:event_jButton3ActionPerformed
+
+  private void moveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveButtonActionPerformed
+    if (checkEmptyFields2()) return;
+    if (!Year.checkYear(yearBox2.getSelectedItem().toString(), orientationBox2.getSelectedItem().toString())) {
+       JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
+      return;
+    }
+    
+    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de moverlo?") == 0)) return;
+    
+    students.forEach(student -> {
+      User currentStudent = (User) student;
+      
+      boolean success = false;
+      
+      int percod = User.getUserCodeByUsername(currentStudent.getUsername());
+      int oricod = Orientation.getOrientationcod(orientationBox2.getSelectedItem().toString());
+      int anocod = Year.getYearcod(yearBox2.getSelectedItem().toString());
+      int curcod = Course.getCourseCod(yearBox2.getSelectedItem().toString(), orientationBox2.getSelectedItem().toString(), divisionBox2.getSelectedItem().toString());
+      
+      try {
+        Course.registerStudentInCourse(percod, oricod, anocod, curcod);
+        success = true;
+      } catch (SQLException ex) {
+        Logger.getLogger(CourseToCourse.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (ParseException ex) {
+        Logger.getLogger(CourseToCourse.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+        if(success == true) {
+          JOptionPane.showMessageDialog(this, "El curso fue movido");
+          clearFields();
+        } else {
+          JOptionPane.showMessageDialog(this, "Se produjo un error inesperado");
+        }
+      }
+    });
+  }//GEN-LAST:event_moveButtonActionPerformed
+
+  private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    manageCourse.setVisible(true);
+    dispose();
+  }//GEN-LAST:event_jButton2ActionPerformed
+
+  private void yearBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_yearBoxItemStateChanged
+    disableButton();
+  }//GEN-LAST:event_yearBoxItemStateChanged
+
+  private void orientationBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_orientationBoxItemStateChanged
+    disableButton();
+  }//GEN-LAST:event_orientationBoxItemStateChanged
+
+  private void divisionBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_divisionBoxItemStateChanged
+    disableButton();
+  }//GEN-LAST:event_divisionBoxItemStateChanged
   
   private boolean checkEmptyFields() {
     if(yearBox.getSelectedIndex() == 0) {
@@ -254,54 +361,18 @@ public class CourseToCourse extends javax.swing.JFrame {
     Combo.setComboBoxItems(Year.getYears(), yearBox);
     Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
     Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
-  }
-  
-  public void cleanFields() {
-    yearBox.setSelectedIndex(0);
-    orientationBox.setSelectedIndex(0);
-    divisionBox.setSelectedIndex(0);
+    Combo.setComboBoxItems(Year.getYears(), yearBox2);
+    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox2);
+    Combo.setComboBoxItems(Division.getDivisions(), divisionBox2);
   }
   
   /**
    * @param args the command line arguments
    */
-  public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-      for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-        if ("Nimbus".equals(info.getName())) {
-          javax.swing.UIManager.setLookAndFeel(info.getClassName());
-          break;
-        }
-      }
-    } catch (ClassNotFoundException ex) {
-      java.util.logging.Logger.getLogger(CourseToCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-      java.util.logging.Logger.getLogger(CourseToCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-      java.util.logging.Logger.getLogger(CourseToCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-      java.util.logging.Logger.getLogger(CourseToCourse.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
-    /* Create and display the form */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run() {
-        new CourseToCourse().setVisible(true);
-      }
-    });
-    
-  }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<String> divisionBox;
-  private javax.swing.JComboBox<String> divisionBox1;
-  private javax.swing.JButton jButton1;
+  private javax.swing.JComboBox<String> divisionBox2;
   private javax.swing.JButton jButton2;
   private javax.swing.JButton jButton3;
   private javax.swing.JLabel jLabel1;
@@ -314,10 +385,44 @@ public class CourseToCourse extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JTable jTable1;
+  private javax.swing.JButton moveButton;
   private javax.swing.JComboBox<String> orientationBox;
-  private javax.swing.JComboBox<String> orientationBox1;
+  private javax.swing.JComboBox<String> orientationBox2;
+  private javax.swing.JTable table;
   private javax.swing.JComboBox<String> yearBox;
-  private javax.swing.JComboBox<String> yearBox1;
+  private javax.swing.JComboBox<String> yearBox2;
   // End of variables declaration//GEN-END:variables
+
+  private boolean checkEmptyFields2() {
+    if(yearBox2.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique el año");
+    } else if(orientationBox2.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la orientación");
+    } else if (divisionBox2.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Ingrese la división");
+    } else {
+      return false;
+    }
+
+    return true;
+  }
+
+  private void disableButton() {
+    moveButton.setEnabled(false);
+  }
+
+  private void enableButton() {
+    moveButton.setEnabled(true);
+  }
+
+  private void clearFields() {
+    yearBox.setSelectedIndex(0);
+    yearBox2.setSelectedIndex(0);
+    orientationBox.setSelectedIndex(0);
+    orientationBox2.setSelectedIndex(0);
+    divisionBox.setSelectedIndex(0);
+    divisionBox2.setSelectedIndex(0);
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.setRowCount(0);
+  }
 }

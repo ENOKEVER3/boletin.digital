@@ -51,7 +51,7 @@ public class LoadOrientation extends javax.swing.JFrame {
     jButton1 = new javax.swing.JButton();
     jToggleButton1 = new javax.swing.JToggleButton();
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
 
     jLabel1.setText("Nueva orentación");
@@ -116,6 +116,7 @@ public class LoadOrientation extends javax.swing.JFrame {
     );
 
     pack();
+    setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
   private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
