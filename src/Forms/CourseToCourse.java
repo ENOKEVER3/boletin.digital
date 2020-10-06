@@ -68,6 +68,7 @@ public class CourseToCourse extends javax.swing.JFrame {
     jButton3 = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setResizable(false);
 
     table.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -80,7 +81,6 @@ public class CourseToCourse extends javax.swing.JFrame {
 
       }
     ));
-    table.setEnabled(false);
     jScrollPane1.setViewportView(table);
 
     jLabel4.setText("Orientación:");
@@ -155,7 +155,7 @@ public class CourseToCourse extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap(64, Short.MAX_VALUE)
+        .addContainerGap(32, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +176,7 @@ public class CourseToCourse extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addGroup(layout.createSequentialGroup()
                       .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                       .addComponent(jButton3))))
                 .addGroup(layout.createSequentialGroup()
                   .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,12 +192,14 @@ public class CourseToCourse extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                       .addComponent(divisionBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                       .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(moveButton))))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                      .addComponent(moveButton))))))
             .addGap(43, 43, 43))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addComponent(jButton2)
-            .addContainerGap())))
+            .addContainerGap())
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(34, 34, 34))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,25 +263,39 @@ public class CourseToCourse extends javax.swing.JFrame {
     try {
       students = Course.getStudentsByCourse(curcod);
       
-      DefaultTableModel model = new DefaultTableModel(){
+      Object[] columnNames = {"Nombre", "Apellido", "Promedio General", "Materias pendientes", "Seleccionado"};
+      
+      DefaultTableModel model = new DefaultTableModel(null, columnNames){
         @Override
         public boolean isCellEditable(int row, int column) {
-          //all cells false
-        return false;
+          if(column == 4) return true;
+          return false;
         }  
+        
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+              return String.class;
+            case 1:
+              return String.class;
+            case 2:
+              return Integer.class;
+            case 3:
+              return Integer.class;
+            default:
+              return Boolean.class;
+          }
+        }
       };
-      
-      model.addColumn("Nombre");
-      model.addColumn("Apellido");
-      model.addColumn("Promedio");
-      model.addColumn("Materias Pendientes");
       
       table.setModel(model);
       table.getTableHeader().setReorderingAllowed(false);
+      table.getTableHeader().setResizingAllowed(false);
       
       students.forEach(student -> {
         User currentStudent = (User) student;
-        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(),"",""});
+        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(),"","", true});
       });
       
       if(students.size() > 0) enableButton();
@@ -298,11 +314,13 @@ public class CourseToCourse extends javax.swing.JFrame {
     
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de moverlo?") == 0)) return;
     
-    students.forEach(student -> {
-      User currentStudent = (User) student;
+    boolean success = true;
+    
+    for(int i = 0; i < students.size(); i++){
+      User currentStudent = (User) students.get(i);
       
-      boolean success = false;
-      
+      if(table.getValueAt(i, 4).equals(false)) continue;
+     
       int percod = User.getUserCodeByUsername(currentStudent.getUsername());
       int oricod = Orientation.getOrientationcod(orientationBox2.getSelectedItem().toString());
       int anocod = Year.getYearcod(yearBox2.getSelectedItem().toString());
@@ -313,17 +331,19 @@ public class CourseToCourse extends javax.swing.JFrame {
         success = true;
       } catch (SQLException ex) {
         Logger.getLogger(CourseToCourse.class.getName()).log(Level.SEVERE, null, ex);
+        success = false;
       } catch (ParseException ex) {
         Logger.getLogger(CourseToCourse.class.getName()).log(Level.SEVERE, null, ex);
-      } finally {
-        if(success == true) {
-          JOptionPane.showMessageDialog(this, "El curso fue movido");
-          clearFields();
-        } else {
-          JOptionPane.showMessageDialog(this, "Se produjo un error inesperado");
-        }
-      }
-    });
+        success = false;
+      } 
+    }
+    
+    if(success == true) {
+      JOptionPane.showMessageDialog(this, "El curso fue movido");
+      clearFields();
+    } else {
+      JOptionPane.showMessageDialog(this, "Se produjo un error inesperado");
+    }
   }//GEN-LAST:event_moveButtonActionPerformed
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -424,5 +444,13 @@ public class CourseToCourse extends javax.swing.JFrame {
     divisionBox2.setSelectedIndex(0);
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     model.setRowCount(0);
+  }
+
+  public static void main(String[] args) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+      public void run() {
+        new CourseToCourse().setVisible(true);
+      }
+    });
   }
 }
