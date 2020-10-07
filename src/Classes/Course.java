@@ -672,4 +672,29 @@ public class Course {
    
     return students;
   }
+  
+  public static void deleteByCurcod(int curcod) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    String query = "UPDATE CURSOS SET CUR_FECHAFIN=? WHERE CUR_COD=" + curcod + ";";
+
+    try {           
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+  }
 }

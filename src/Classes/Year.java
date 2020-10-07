@@ -117,5 +117,32 @@ public class Year {
     
     return years; 
   }
+
+  public static void delete(String year, String orientation) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    int oricod = Orientation.getOrientationcod(orientation);
+    
+    String query = "UPDATE ANOS SET ANO_FECHAFIN=? WHERE ANO_NOMBRE='" + year + "' AND ANO_ORICOD='" + oricod + "';";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+  }
   
 }

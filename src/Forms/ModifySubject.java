@@ -65,6 +65,9 @@ public class ModifySubject extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -326,6 +329,10 @@ public class ModifySubject extends javax.swing.JFrame {
   private void typeBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_typeBoxItemStateChanged
     disableButtons();
   }//GEN-LAST:event_typeBoxItemStateChanged
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    loadSubject.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -59,8 +59,16 @@ public class Menu extends javax.swing.JFrame {
     jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     jButton5.setText("CURSOS");
 
-    setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+      public void windowClosing(java.awt.event.WindowEvent evt) {
+        formWindowClosing(evt);
+      }
+    });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
     jLabel1.setText("Menú");
@@ -71,6 +79,11 @@ public class Menu extends javax.swing.JFrame {
     seeMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     seeMarksButton.setText("NOTAS ");
     seeMarksButton.setEnabled(false);
+    seeMarksButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        seeMarksButtonActionPerformed(evt);
+      }
+    });
 
     seeCoursesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     seeCoursesButton.setText("CURSOS");
@@ -215,10 +228,10 @@ public class Menu extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
     private void manageUsersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageUsersButtonActionPerformed
+      this.setVisible(false);
       ManageUser manageUser = new ManageUser();
       manageUser.setVisible(true);
       manageUser.menuInstance = this;
-      this.setVisible(false);
     }//GEN-LAST:event_manageUsersButtonActionPerformed
 
     private void exitMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuActionPerformed
@@ -233,28 +246,43 @@ public class Menu extends javax.swing.JFrame {
       ChangePassword changePassword = new ChangePassword();
       changePassword.username = currentUsername;
       changePassword.setVisible(true);
+      changePassword.requestFocus();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void manageCoursesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageCoursesButtonActionPerformed
+      this.setVisible(false);
       ManageCourse manageCourse = new ManageCourse();
       manageCourse.setVisible(true);
       manageCourse.menu = this;
-      this.setVisible(false);
     }//GEN-LAST:event_manageCoursesButtonActionPerformed
 
     private void manageSubjectsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageSubjectsButtonActionPerformed
+      this.setVisible(false);
       ManageSubject manageSubject = new ManageSubject();
       manageSubject.setVisible(true);
       manageSubject.menu = this;
-      this.setVisible(false);
     }//GEN-LAST:event_manageSubjectsButtonActionPerformed
 
     private void loadSubjectsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadSubjectsButtonActionPerformed
+      this.setVisible(false);
       LoadSubject loadSubject = new LoadSubject();
       loadSubject.setVisible(true);
-      loadSubject.menu = this;
-      this.setVisible(false);
+      loadSubject.menu = this;      
     }//GEN-LAST:event_loadSubjectsButtonActionPerformed
+
+  private void seeMarksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMarksButtonActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_seeMarksButtonActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    
+  }//GEN-LAST:event_formWindowClosed
+
+  private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+    if(JOptionPane.showConfirmDialog(null, "Está seguro de salir?") == 0) {
+      dispose();
+    }
+  }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

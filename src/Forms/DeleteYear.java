@@ -29,12 +29,12 @@ import org.apache.commons.dbcp2.BasicDataSource;
  *
  * @author lagos
  */
-public class LoadYear extends javax.swing.JFrame {
+public class DeleteYear extends javax.swing.JFrame {
 
   /**
    * Creates new form LoadType
    */
-  public LoadYear() {
+  public DeleteYear() {
     initComponents();
   }
   
@@ -51,12 +51,12 @@ public class LoadYear extends javax.swing.JFrame {
 
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
-    jLabel3 = new javax.swing.JLabel();
-    nameField = new javax.swing.JTextField();
     jButton1 = new javax.swing.JButton();
     jToggleButton1 = new javax.swing.JToggleButton();
     jLabel4 = new javax.swing.JLabel();
     orientationBox = new javax.swing.JComboBox<>();
+    yearBox = new javax.swing.JComboBox();
+    jLabel5 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -74,9 +74,7 @@ public class LoadYear extends javax.swing.JFrame {
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
     jLabel2.setText("Años");
 
-    jLabel3.setText("Nombre:");
-
-    jButton1.setText("CREAR");
+    jButton1.setText("ELIMINAR");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton1ActionPerformed(evt);
@@ -94,6 +92,10 @@ public class LoadYear extends javax.swing.JFrame {
 
     orientationBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                          ", "General", "Informática", "Electromecánica" }));
 
+    yearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "           ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
+
+    jLabel5.setText("Año:");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -103,7 +105,7 @@ public class LoadYear extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel2)
           .addComponent(jLabel1)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
               .addComponent(jButton1)
               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -111,10 +113,10 @@ public class LoadYear extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jLabel4)
-                .addComponent(jLabel3))
+                .addComponent(jLabel5))
               .addGap(18, 18, 18)
               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(nameField)
+                .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(orientationBox, 0, 222, Short.MAX_VALUE)))))
         .addContainerGap(28, Short.MAX_VALUE))
     );
@@ -125,15 +127,15 @@ public class LoadYear extends javax.swing.JFrame {
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel4)
           .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel3)
-          .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(26, 26, 26)
+          .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel5))
+        .addGap(23, 23, 23)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jButton1)
           .addComponent(jToggleButton1))
@@ -149,31 +151,28 @@ public class LoadYear extends javax.swing.JFrame {
   }//GEN-LAST:event_jToggleButton1ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    if(nameField.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Ingrese el nombre de la orientación");
-    }
-    
+   
     int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
     
     if(oricod == 0) {
       JOptionPane.showMessageDialog(null, "La orientación no existe");
       return;
     }
-      
-    try {
-      if(newYear(oricod, nameField.getText())) {
-        manageCourse.changeBoxs();
-        JOptionPane.showMessageDialog(null, "El año fue creado correctamente");
-        dispose();
-      } else {
-        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado");
-      }
-    } catch (ParseException ex) {
-      Logger.getLogger(LoadYear.class.getName()).log(Level.SEVERE, null, ex);
+    
+    if(!Year.checkYear(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString())){
+      JOptionPane.showMessageDialog(null, "Los datos ingresados del año y la orientación son incorrectos");
+      return;
     }
     
-    nameField.setText("");
-    nameField.requestFocus();
+    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminarlo?") == 0)) return;
+    
+    Year.delete(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString());
+    
+    JOptionPane.showMessageDialog(null, "El año fue eliminado");
+    
+    manageCourse.changeBoxs();
+    manageCourse.setVisible(true);
+    dispose();
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -192,11 +191,11 @@ public class LoadYear extends javax.swing.JFrame {
   private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
+  private javax.swing.JLabel jLabel5;
   private javax.swing.JToggleButton jToggleButton1;
-  private javax.swing.JTextField nameField;
   private javax.swing.JComboBox<String> orientationBox;
+  private javax.swing.JComboBox yearBox;
   // End of variables declaration//GEN-END:variables
 
   private boolean yearAlreadyExist(int oricod, String year) throws ParseException {
@@ -293,5 +292,6 @@ public class LoadYear extends javax.swing.JFrame {
 
   private void changeBoxs() {
     Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
+    Combo.setComboBoxItems(Year.getYears(), yearBox);
   }
 }

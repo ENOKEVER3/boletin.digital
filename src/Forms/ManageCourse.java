@@ -93,6 +93,9 @@ public class ManageCourse extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -184,10 +187,18 @@ public class ManageCourse extends javax.swing.JFrame {
     });
 
     jButton6.setText("ELIMINAR");
-    jButton6.setEnabled(false);
+    jButton6.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton6ActionPerformed(evt);
+      }
+    });
 
     jButton7.setText("ELIMINAR");
-    jButton7.setEnabled(false);
+    jButton7.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton7ActionPerformed(evt);
+      }
+    });
 
     jLabel7.setText("Usuario:");
 
@@ -354,8 +365,7 @@ public class ManageCourse extends javax.swing.JFrame {
   private void studentsManageCourseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourseActionPerformed
     LoadCourse loadCourse = new LoadCourse();
     loadCourse.setVisible(true);
-    loadCourse.menu = menu;
-    dispose();
+    loadCourse.manageCourse = this;
   }//GEN-LAST:event_studentsManageCourseActionPerformed
 
   private void studentsManageCourse1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourse1ActionPerformed
@@ -447,11 +457,27 @@ public class ManageCourse extends javax.swing.JFrame {
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    this.setVisible(false);
     CourseToCourse courseToCourse = new CourseToCourse();
     courseToCourse.setVisible(true);
     courseToCourse.manageCourse = this;
-    this.setVisible(false);
   }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menu.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
+
+  private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    DeleteCourse deleteCourse = new DeleteCourse();
+    deleteCourse.setVisible(true);
+    deleteCourse.manageCourse = this;
+  }//GEN-LAST:event_jButton6ActionPerformed
+
+  private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    DeleteYear deleteYear = new DeleteYear();
+    deleteYear.setVisible(true);
+    deleteYear.manageCourse = this;
+  }//GEN-LAST:event_jButton7ActionPerformed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables

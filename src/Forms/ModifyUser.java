@@ -87,6 +87,11 @@ public class ModifyUser extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+    });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel1.setText("Modificar usuario");
@@ -443,6 +448,10 @@ public class ModifyUser extends javax.swing.JFrame {
     UserList userList = new UserList();
     userList.setVisible(true);
   }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menuInstance.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
     
 

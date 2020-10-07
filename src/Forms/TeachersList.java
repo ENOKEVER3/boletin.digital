@@ -51,6 +51,9 @@ public class TeachersList extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
     });
 
     jLabel1.setText("Seleccione un profesor:");
@@ -179,7 +182,6 @@ public class TeachersList extends javax.swing.JFrame {
       teachersBox.addItem(teacher.getUsername());
     }
     
-    changeLabels();
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -189,7 +191,15 @@ public class TeachersList extends javax.swing.JFrame {
 
   private void teachersBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_teachersBoxActionPerformed
     changeLabels();
+    if(teachersBox.getSelectedIndex() == 0) {
+      nameField.setText("");
+      lastnameField.setText("");
+    }
   }//GEN-LAST:event_teachersBoxActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    manageSubject.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
   /**
    * @param args the command line arguments
@@ -208,9 +218,11 @@ public class TeachersList extends javax.swing.JFrame {
   // End of variables declaration//GEN-END:variables
 
   private void changeLabels() {
-    if(teachersBox.getSelectedIndex() == 0) return;
+    if(teachersBox.getSelectedIndex() <= 0) return;
     
-    teacher = (User) teachers.get(teachersBox.getSelectedIndex() - 1);
+    int i = teachersBox.getSelectedIndex() - 1;
+    
+    teacher = (User) teachers.get(i);
     
     nameField.setText(teacher.getName());
     lastnameField.setText(teacher.getLastname());

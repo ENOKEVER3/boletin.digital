@@ -53,6 +53,11 @@ public class LoadDivision extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+    });
 
     jLabel1.setText("Nueva división");
 
@@ -132,6 +137,7 @@ public class LoadDivision extends javax.swing.JFrame {
       if(newDivision(nameField.getText())) {
         manageCourse.changeBoxs();
         JOptionPane.showMessageDialog(null, "La división fue creada correctamente");
+        dispose();
       } else {
         JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado");
       }
@@ -142,6 +148,10 @@ public class LoadDivision extends javax.swing.JFrame {
     nameField.setText("");
     nameField.requestFocus();
   }//GEN-LAST:event_jButton1ActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_formWindowClosed
 
   /**
    * @param args the command line arguments

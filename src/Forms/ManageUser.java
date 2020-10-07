@@ -71,6 +71,11 @@ public class ManageUser extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+    });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel1.setText("Crear usuario");
@@ -286,10 +291,10 @@ public class ManageUser extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFieldActionPerformed
 
     private void changeManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeManageUserActionPerformed
-        ModifyUser modifyUser = new ModifyUser();
-        modifyUser.setVisible(true);
-        modifyUser.menuInstance = menuInstance;
-        dispose();
+      dispose();  
+      ModifyUser modifyUser = new ModifyUser();
+      modifyUser.setVisible(true);
+      modifyUser.menuInstance = menuInstance;  
     }//GEN-LAST:event_changeManageUserActionPerformed
 
     private void exitManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitManageUserActionPerformed
@@ -352,6 +357,10 @@ public class ManageUser extends javax.swing.JFrame {
     private void phoneFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_phoneFieldKeyTyped
         if(!(evt.getKeyChar() >= '0' && evt.getKeyChar() <= '9')) evt.consume();
     }//GEN-LAST:event_phoneFieldKeyTyped
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menuInstance.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
 
     private boolean emptyLoginFields() {

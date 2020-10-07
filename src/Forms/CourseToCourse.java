@@ -69,6 +69,11 @@ public class CourseToCourse extends javax.swing.JFrame {
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
+    });
 
     table.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -362,6 +367,10 @@ public class CourseToCourse extends javax.swing.JFrame {
   private void divisionBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_divisionBoxItemStateChanged
     disableButton();
   }//GEN-LAST:event_divisionBoxItemStateChanged
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    manageCourse.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
   
   private boolean checkEmptyFields() {
     if(yearBox.getSelectedIndex() == 0) {
@@ -444,13 +453,5 @@ public class CourseToCourse extends javax.swing.JFrame {
     divisionBox2.setSelectedIndex(0);
     DefaultTableModel model = (DefaultTableModel) table.getModel();
     model.setRowCount(0);
-  }
-
-  public static void main(String[] args) {
-    java.awt.EventQueue.invokeLater(new Runnable() {
-      public void run() {
-        new CourseToCourse().setVisible(true);
-      }
-    });
   }
 }

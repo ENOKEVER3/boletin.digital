@@ -132,6 +132,7 @@ public class LoadOrientation extends javax.swing.JFrame {
       if(newOrientation(nameField.getText())) {
         manageCourse.changeBoxs();
         JOptionPane.showMessageDialog(null, "La orientación fue creada correctamente");
+        dispose();
       } else {
         JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado");
       }

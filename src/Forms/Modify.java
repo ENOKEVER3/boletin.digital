@@ -58,6 +58,9 @@ public class Modify extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
       public void windowOpened(java.awt.event.WindowEvent evt) {
         formWindowOpened(evt);
       }
@@ -160,8 +163,10 @@ public class Modify extends javax.swing.JFrame {
    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminarlo?") == 0)) return;
    
    if(deleteRow()) {
-      changeCombo();
+      if (manageCourse != null) manageCourse.changeBoxs();
+      if (loadSubject != null) loadSubject.changeBoxs();
       JOptionPane.showMessageDialog(null, "Se ha eliminado corecctamente");
+      combo.removeItem(combo.getSelectedItem());
       return;
     }
     
@@ -181,11 +186,17 @@ public class Modify extends javax.swing.JFrame {
     
     if(!(JOptionPane.showConfirmDialog(null, "Está seguro de modificarlo?") == 0)) return;
     
-    if(modifyRow(nameField.getText())) {
-      changeCombo();
+    String name = nameField.getText();
+    
+    if(modifyRow(name)) {
+      
+      if (manageCourse != null) manageCourse.changeBoxs();
+      if (loadSubject != null) loadSubject.changeBoxs();
+      
       JOptionPane.showMessageDialog(null, "Se ha modificado corecctamente");
+      
       combo.removeItem(combo.getSelectedItem());
-      combo.addItem(nameField.getText());
+      combo.addItem(name);
       nameField.setText("");
       return;
     }
@@ -194,11 +205,12 @@ public class Modify extends javax.swing.JFrame {
   }//GEN-LAST:event_jToggleButton2ActionPerformed
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    if (manageCourse != null) manageCourse.setVisible(true);
-    if (loadSubject != null) loadSubject.setVisible(true);
+    
 
-    this.setVisible(false);
-    dispose();
+    if (manageCourse != null) manageCourse.setVisible(true);
+    if (loadSubject != null)  loadSubject.setVisible(true);
+
+    dispose();    
   }//GEN-LAST:event_jButton1ActionPerformed
 
   private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -208,6 +220,11 @@ public class Modify extends javax.swing.JFrame {
   private void comboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboItemStateChanged
     nameField.setText(combo.getSelectedItem().toString());
   }//GEN-LAST:event_comboItemStateChanged
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    if (manageCourse != null) manageCourse.setVisible(true);
+    if (loadSubject != null) loadSubject.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<String> combo;

@@ -19,12 +19,12 @@ import javax.swing.JOptionPane;
  *
  * @author lagos
  */
-public class LoadCourse extends javax.swing.JFrame {
+public class DeleteCourse extends javax.swing.JFrame {
 
     /**
      * Creates new form LoadCourse
      */
-    public LoadCourse() {
+    public DeleteCourse() {
         initComponents();
     }
     
@@ -81,7 +81,7 @@ public class LoadCourse extends javax.swing.JFrame {
     });
 
     loadSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    loadSubject.setText("CARGAR");
+    loadSubject.setText("ELIMINAR");
     loadSubject.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         loadSubjectActionPerformed(evt);
@@ -91,7 +91,7 @@ public class LoadCourse extends javax.swing.JFrame {
     divisionBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "                     ", "Primera", "Segunda", "Tercera" }));
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Cargar curso");
+    jLabel1.setText("Eliminar curso");
 
     jLabel6.setText("División:");
 
@@ -146,10 +146,10 @@ public class LoadCourse extends javax.swing.JFrame {
         .addComponent(jLabel6)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitLoadSubject)
-          .addComponent(loadSubject))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(loadSubject)
+          .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap())
     );
 
@@ -173,7 +173,7 @@ public class LoadCourse extends javax.swing.JFrame {
       return;
     }
 
-    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de crearlo?") == 0)) return;
+    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminarlo?") == 0)) return;
 
     Course course = new Course();
     
@@ -181,25 +181,16 @@ public class LoadCourse extends javax.swing.JFrame {
     int oricod = Orientation.getOrientationcod((String) orientationBox.getSelectedItem());     
     String div = divisionBox.getSelectedItem().toString();
    
-    if(Course.getCurcodByDivsion(oricod, yearcod, div) !=0 ){
-      JOptionPane.showMessageDialog(null, "El curso ya existe");
+    int curcod = Course.getCurcodByDivsion(oricod, yearcod, div);
+    
+    if(curcod == 0 ){
+      JOptionPane.showMessageDialog(null, "El curso no existe");
       return;
     }
-      
-    course.setAnocod(yearcod);
-    course.setOricod(oricod);
-    course.setDivision(div);
-    
-    
-    try {
-      if(course.save()) {
-        JOptionPane.showMessageDialog(null, "El curso fue creado correctamente");
-        dispose();
-      } else {
-        JOptionPane.showMessageDialog(null, "Algo salió mal. código de error: " + course.errorCode); 
-      } } catch (ParseException ex) {
-      Logger.getLogger(LoadCourse.class.getName()).log(Level.SEVERE, null, ex);
-    }
+     
+    Course.deleteByCurcod(curcod);
+   
+    JOptionPane.showMessageDialog(null, "El curso fue eliminado");
     
     cleanFields();
   }//GEN-LAST:event_loadSubjectActionPerformed

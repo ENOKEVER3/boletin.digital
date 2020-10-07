@@ -82,6 +82,9 @@ public class ManageSubject extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -325,10 +328,10 @@ public class ManageSubject extends javax.swing.JFrame {
   }//GEN-LAST:event_divisionBoxItemStateChanged
 
   private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+    this.setVisible(false);
     TeachersList teacherList = new TeachersList();
     teacherList.setVisible(true);
     teacherList.manageSubject = this;
-    this.setVisible(false);
   }//GEN-LAST:event_addButtonActionPerformed
 
   private void subjectBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectBoxActionPerformed
@@ -346,6 +349,10 @@ public class ManageSubject extends javax.swing.JFrame {
   private void divisionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionBoxActionPerformed
     
   }//GEN-LAST:event_divisionBoxActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menu.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables

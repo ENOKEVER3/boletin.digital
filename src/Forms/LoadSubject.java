@@ -63,6 +63,9 @@ public class LoadSubject extends javax.swing.JFrame {
       public void windowActivated(java.awt.event.WindowEvent evt) {
         formWindowActivated(evt);
       }
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
+      }
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -308,11 +311,15 @@ public class LoadSubject extends javax.swing.JFrame {
   }//GEN-LAST:event_typeBoxActionPerformed
 
   private void exitLoadSubject1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitLoadSubject1ActionPerformed
+    this.setVisible(false);
     ModifySubject modifySubject = new ModifySubject();
     modifySubject.setVisible(true);
     modifySubject.loadSubject = this;
-    this.setVisible(false);
   }//GEN-LAST:event_exitLoadSubject1ActionPerformed
+
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menu.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables

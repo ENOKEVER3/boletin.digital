@@ -178,10 +178,11 @@ public class Login extends javax.swing.JFrame {
         if(User.checkPassword(usernameField.getText(), String.valueOf(passwordField.getPassword()))) {
             int usercode = User.getUserCodeByUsername(usernameField.getText());
             ArrayList userCategories = User.getUserCategoriesByUsercode(usercode);
-
+            
+            dispose();
+            
             Menu menu = new Menu(usercode, usernameField.getText(), userCategories);        
             menu.setVisible(true);
-            dispose();
         } else {
             retryLogin();
         }   
