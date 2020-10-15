@@ -275,7 +275,7 @@ public class ModifySubject extends javax.swing.JFrame {
     subjscodBox.removeAllItems();
     
     subjscod.forEach(subcod -> {
-      subjscodBox.addItem(Subject.getSubjectNameByCode(subcod));
+      subjscodBox.addItem(Subject.getSubjectNameByCode((int) subcod));
     });
     
     if(subjscod.size() > 0) {

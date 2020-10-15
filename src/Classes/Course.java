@@ -449,7 +449,7 @@ public class Course {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
                                                                                                                   
-    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=? WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<?;";
+    String query = "UPDATE `CURSOSMATERIAS_ALUMNOS` SET CURMATALU_FECHAFIN=?, `CURMATALU_ANOFECHA`=? WHERE `CURMATALU_ALUMNOCATCOD`=? AND `CURMATALU_ALUMNOPERCOD`=? AND `CURMATALU_ALUMNOFECHAINICIO`=? AND `CURMATALU_CURORICOD`=? AND `CURMATALU_CURANOCOD`=? AND `CURMATALU_CURCOD`=? AND `CURMATALU_MATCOD`=? AND `CURMATALU_FORCOD`=? AND `CURMATALU_FECHAFIN`<?;";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -458,15 +458,16 @@ public class Course {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setDate(1, neverDate);
-      preparedStatemnet.setInt(2, catcod);
-      preparedStatemnet.setInt(3, percod);
-      preparedStatemnet.setDate(4, (java.sql.Date) startDate);
-      preparedStatemnet.setInt(5, oricod);
-      preparedStatemnet.setInt(6, anocod);
-      preparedStatemnet.setInt(7, curcod);
-      preparedStatemnet.setInt(8, matcod);
-      preparedStatemnet.setInt(9, forcod);
-      preparedStatemnet.setDate(10, neverDate);
+      preparedStatemnet.setInt(2, java.time.Year.now().getValue());
+      preparedStatemnet.setInt(3, catcod);
+      preparedStatemnet.setInt(4, percod);
+      preparedStatemnet.setDate(5, (java.sql.Date) startDate);
+      preparedStatemnet.setInt(6, oricod);
+      preparedStatemnet.setInt(7, anocod);
+      preparedStatemnet.setInt(8, curcod);
+      preparedStatemnet.setInt(9, matcod);
+      preparedStatemnet.setInt(10, forcod);
+      preparedStatemnet.setDate(11, neverDate);
       preparedStatemnet.execute();
 
     } catch (SQLException e) {
@@ -489,7 +490,7 @@ public class Course {
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
       java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
-
+      
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setInt(1, catcod);
@@ -529,12 +530,12 @@ public class Course {
 
     if(checkAlreadyRegisteredInSubject(catcod, percod, startDate, oricod, anocod, curcod, matcod, forcod)) return true;
     
-    String query = "INSERT INTO `CURSOSMATERIAS_ALUMNOS` (`CURMATALU_ALUMNOCATCOD`, `CURMATALU_ALUMNOPERCOD`, `CURMATALU_ALUMNOFECHAINICIO`, `CURMATALU_CURORICOD`, `CURMATALU_CURANOCOD`, `CURMATALU_CURCOD`, `CURMATALU_MATCOD`, `CURMATALU_FORCOD`, `CURMATALU_FECHAFIN`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    String query = "INSERT INTO `CURSOSMATERIAS_ALUMNOS` (`CURMATALU_ALUMNOCATCOD`, `CURMATALU_ALUMNOPERCOD`, `CURMATALU_ALUMNOFECHAINICIO`, `CURMATALU_CURORICOD`, `CURMATALU_CURANOCOD`, `CURMATALU_CURCOD`, `CURMATALU_MATCOD`, `CURMATALU_FORCOD`, `CURMATALU_ANOFECHA`,`CURMATALU_FECHAFIN`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     try {                                                          
       SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
       java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
-
+      
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setInt(1, catcod);
@@ -545,7 +546,8 @@ public class Course {
       preparedStatemnet.setInt(6, curcod);
       preparedStatemnet.setInt(7, matcod);
       preparedStatemnet.setInt(8, forcod);
-      preparedStatemnet.setDate(9, neverDate);
+      preparedStatemnet.setInt(9, java.time.Year.now().getValue());
+      preparedStatemnet.setDate(10, neverDate);
       preparedStatemnet.execute();
       
       return true;
@@ -568,7 +570,7 @@ public class Course {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
-
+    
     String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_ORICOD`=? AND `CURMAT_ANOCOD`=? AND `CURMAT_CURCOD`=? AND `CURMAT_MATCOD`=? AND `CURMAT_FORCOD`=? AND `CURMAT_FECHAFIN`<?;";
 
     try {
@@ -614,7 +616,7 @@ public class Course {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
       preparedStatemnet.setDate(1, neverDate);
-       preparedStatemnet.setInt(2, oricod);
+      preparedStatemnet.setInt(2, oricod);
       preparedStatemnet.setInt(3, anocod);
       preparedStatemnet.setInt(4, curcod);
       preparedStatemnet.setInt(5, matcod);
@@ -696,5 +698,36 @@ public class Course {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
+  }
+  
+  static String getDivision(int curcod) {
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    String query = "SELECT * FROM `CURSOS` WHERE `CUR_COD`=? AND `CUR_FECHAFIN`>?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setInt(1, curcod);
+      preparedStatement.setDate(2, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return rs.getString("CUR_DIVISION");
+      }
+    } catch(SQLException ex) {
+      Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    return "";
   }
 }

@@ -8,7 +8,7 @@ package Forms;
 import Classes.Course;
 import Classes.Role;
 import Classes.User;
-import Classes.UsersCategories;
+import Classes.UserCategorie;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -458,7 +458,7 @@ public class ManageUser extends javax.swing.JFrame {
     }
 
     private void setCategories() throws ParseException {
-        //UsersCategories usersCategories = new UsersCategories();
+        //UsersCategories usersCategories = new UserCategorie();
         
         if(studentCheckBox.isSelected()) User.addCategorie("Alumno", usernameField.getText());
         if(teacherCheckBox.isSelected()) User.addCategorie("Profesor", usernameField.getText());

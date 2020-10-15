@@ -7,7 +7,7 @@ package Classes;
 
 import java.util.Date;
 
-public class UsersCategories {
+public class UserCategorie {
   private int catcod;
   private int percod;
   private Date startDate;

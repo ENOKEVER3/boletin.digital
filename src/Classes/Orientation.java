@@ -84,4 +84,35 @@ public class Orientation {
 
     return 0;
   }
+
+  static String getOrientationName(int orientation) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `ORIENTACIONES` WHERE `ORI_COD`='" + orientation + "' AND `ORI_FECHAFIN` > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return (String) rs.getString("ORI_NOMBRE");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return "";
+  }
+  
 }

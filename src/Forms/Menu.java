@@ -95,6 +95,11 @@ public class Menu extends javax.swing.JFrame {
     loadMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     loadMarksButton.setText("NOTAS");
     loadMarksButton.setEnabled(false);
+    loadMarksButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        loadMarksButtonActionPerformed(evt);
+      }
+    });
 
     loadSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     loadSubjectsButton.setText("MATERIAS");
@@ -284,6 +289,13 @@ public class Menu extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_formWindowClosing
 
+  private void loadMarksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadMarksButtonActionPerformed
+    this.setVisible(false);
+    LoadNote loadNote = new LoadNote();
+    loadNote.setVisible(true);
+    loadNote.menu = this;
+  }//GEN-LAST:event_loadMarksButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -326,7 +338,7 @@ public class Menu extends javax.swing.JFrame {
                 loadSubjectsButton.setEnabled(true);
             }   
             
-            if(categorie == 4) {
+            if(User.getCatcodByCategorieName("Administrador") == categorie) {
                 manageUsersButton.setEnabled(true);
             }
         }

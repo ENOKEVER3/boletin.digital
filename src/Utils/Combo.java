@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
  */
 public class Combo {
   static public void setComboBoxItems(ArrayList list, JComboBox combo) {
+    if(list == null) return;
     int listLenght = list.size();
     
     combo.removeAllItems();
