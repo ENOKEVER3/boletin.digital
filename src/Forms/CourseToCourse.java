@@ -7,6 +7,7 @@ package Forms;
 
 import Classes.Course;
 import Classes.Division;
+import Classes.Note;
 import Classes.Orientation;
 import Classes.User;
 import Classes.Year;
@@ -263,6 +264,8 @@ public class CourseToCourse extends javax.swing.JFrame {
       return;
     }
     
+    int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
+    int anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     int curcod = Course.getCourseCod(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString(), divisionBox.getSelectedItem().toString());
     
     try {
@@ -300,7 +303,7 @@ public class CourseToCourse extends javax.swing.JFrame {
       
       students.forEach(student -> {
         User currentStudent = (User) student;
-        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(),"","", true});
+        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(), Note.getFinalNote(User.getUserCodeByUsername(currentStudent.getUsername()), oricod, anocod, curcod),"", true});
       });
       
       if(students.size() > 0) enableButton();
@@ -328,7 +331,7 @@ public class CourseToCourse extends javax.swing.JFrame {
      
       int percod = User.getUserCodeByUsername(currentStudent.getUsername());
       int oricod = Orientation.getOrientationcod(orientationBox2.getSelectedItem().toString());
-      int anocod = Year.getYearcod(yearBox2.getSelectedItem().toString());
+      int anocod = Year.getYearcod(yearBox2.getSelectedItem().toString(), oricod);
       int curcod = Course.getCourseCod(yearBox2.getSelectedItem().toString(), orientationBox2.getSelectedItem().toString(), divisionBox2.getSelectedItem().toString());
       
       try {

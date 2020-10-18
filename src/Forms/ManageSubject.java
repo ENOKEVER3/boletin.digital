@@ -412,7 +412,7 @@ public class ManageSubject extends javax.swing.JFrame {
   public void updateTeachersList(){
     if(checkEmptyFields()) return;
     oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
-    anocod = Year.getYearcod(yearBox.getSelectedItem().toString());
+    anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     String division = divisionBox.getSelectedItem().toString();
     
     curcod = Course.getCurcodByDivsion(oricod, anocod, division);

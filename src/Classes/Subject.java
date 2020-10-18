@@ -251,12 +251,12 @@ public class Subject {
     return subjects; 
   }
   
-  public static int getForCod(int matcod, String subjectName) {
+  public static int getForCod(int matcod) {
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-    String query = "SELECT * FROM `MATERIAS` WHERE MAT_COD='"+ matcod + "' AND MAT_NOMBRE='" + subjectName + "' AND `MAT_FECHAFIN` > ?;";
+    String query = "SELECT * FROM `MATERIAS` WHERE MAT_COD='"+ matcod + "' AND `MAT_FECHAFIN` > ?;";
 
     try {
       connection = bs.getConnection();
@@ -397,7 +397,7 @@ public class Subject {
     }
     
     subjectCods.forEach(matcod -> {
-      int forcod = getForCod((int) matcod, subject);
+      int forcod = getForCod((int) matcod);
 
       if(forcod != 0) {
         java.sql.Date todayDate = new java.sql.Date(new Date().getTime());

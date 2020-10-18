@@ -9,6 +9,7 @@ import Classes.Categorie;
 import Classes.Course;
 import Classes.Division;
 import Classes.Orientation;
+import Classes.Period;
 import Classes.Subject;
 import Classes.User;
 import Classes.Year;
@@ -82,6 +83,9 @@ public class ManageCourse extends javax.swing.JFrame {
     jButton1 = new javax.swing.JButton();
     jToggleButton1 = new javax.swing.JToggleButton();
     jLabel13 = new javax.swing.JLabel();
+    jButton8 = new javax.swing.JButton();
+    studentsManageCourse4 = new javax.swing.JButton();
+    jLabel14 = new javax.swing.JLabel();
 
     jLabel6.setText("jLabel6");
 
@@ -218,6 +222,23 @@ public class ManageCourse extends javax.swing.JFrame {
 
     jLabel13.setText("Esta opción le permite mover cursos enteros");
 
+    jButton8.setText("EDITAR");
+    jButton8.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jButton8ActionPerformed(evt);
+      }
+    });
+
+    studentsManageCourse4.setText("CREAR");
+    studentsManageCourse4.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        studentsManageCourse4ActionPerformed(evt);
+      }
+    });
+
+    jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+    jLabel14.setText("Períodos");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -236,7 +257,26 @@ public class ManageCourse extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8))
               .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addComponent(jLabel1)
+                  .addComponent(jLabel2)
+                  .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel3)
+                      .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                      .addComponent(jLabel7))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel4)
+                      .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(10, 10, 10)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel5)
+                      .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(usernameField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+                  .addComponent(jToggleButton1)
                   .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                       .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,28 +300,16 @@ public class ManageCourse extends javax.swing.JFrame {
                       .addGroup(layout.createSequentialGroup()
                         .addComponent(studentsManageCourse2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(studentsManageCourse3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                  .addComponent(jLabel1)
-                  .addComponent(jLabel2)
-                  .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(jLabel3)
-                      .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                      .addComponent(jLabel7))
+                        .addComponent(studentsManageCourse3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(jLabel4)
-                      .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(10, 10, 10)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(jLabel5)
-                      .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(usernameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
-                  .addComponent(jToggleButton1))
-                .addGap(0, 20, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                      .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jLabel14))
+                      .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                      .addComponent(studentsManageCourse4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                  .addComponent(jSeparator1))
+                .addGap(0, 50, Short.MAX_VALUE))))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(exitManageCourse)))
@@ -327,27 +355,35 @@ public class ManageCourse extends javax.swing.JFrame {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel10)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(studentsManageCourse1))
+              .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(studentsManageCourse))
+              .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                  .addComponent(jLabel11)
+                  .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                  .addComponent(studentsManageCourse2)
+                  .addComponent(studentsManageCourse3))))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(studentsManageCourse1))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel9)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(studentsManageCourse))
-          .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel11)
-              .addComponent(jLabel12))
+              .addComponent(jButton4)
+              .addComponent(jButton5)
+              .addComponent(jButton6)
+              .addComponent(jButton7)))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel14)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(studentsManageCourse2)
-              .addComponent(studentsManageCourse3))))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton4)
-          .addComponent(jButton5)
-          .addComponent(jButton6)
-          .addComponent(jButton7))
+            .addComponent(studentsManageCourse4)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton8)))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(exitManageCourse)
         .addContainerGap())
@@ -375,7 +411,7 @@ public class ManageCourse extends javax.swing.JFrame {
   }//GEN-LAST:event_studentsManageCourse1ActionPerformed
 
   private void studentsManageCourse2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourse2ActionPerformed
-    LoadOrientation loadOrientation = new LoadOrientation();
+    LoadPeriod loadOrientation = new LoadPeriod();
     loadOrientation.setVisible(true);
     loadOrientation.manageCourse = this;
   }//GEN-LAST:event_studentsManageCourse2ActionPerformed
@@ -409,7 +445,7 @@ public class ManageCourse extends javax.swing.JFrame {
       };
       
       int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
-      int anocod = Year.getYearcod(yearBox.getSelectedItem().toString());
+      int anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
       int curcod = Course.getCourseCod(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString(), divisionBox.getSelectedItem().toString());
       
       try {
@@ -479,6 +515,21 @@ public class ManageCourse extends javax.swing.JFrame {
     deleteYear.manageCourse = this;
   }//GEN-LAST:event_jButton7ActionPerformed
 
+  private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    this.setVisible(false);
+    Modify modify = new Modify();
+    modify.setVisible(true);
+    modify.list = Period.getPeriods();
+    modify.manageCourse = this;
+    modify.table = "PERIODOS";
+  }//GEN-LAST:event_jButton8ActionPerformed
+
+  private void studentsManageCourse4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsManageCourse4ActionPerformed
+    LoadPeriod loadPeriod = new LoadPeriod();
+    loadPeriod.setVisible(true);
+    loadPeriod.manageCourse = this;
+  }//GEN-LAST:event_studentsManageCourse4ActionPerformed
+
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JComboBox<String> divisionBox;
@@ -489,11 +540,13 @@ public class ManageCourse extends javax.swing.JFrame {
   private javax.swing.JButton jButton5;
   private javax.swing.JButton jButton6;
   private javax.swing.JButton jButton7;
+  private javax.swing.JButton jButton8;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel13;
+  private javax.swing.JLabel jLabel14;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
@@ -510,6 +563,7 @@ public class ManageCourse extends javax.swing.JFrame {
   private javax.swing.JButton studentsManageCourse1;
   private javax.swing.JButton studentsManageCourse2;
   private javax.swing.JButton studentsManageCourse3;
+  private javax.swing.JButton studentsManageCourse4;
   private javax.swing.JTextField usernameField;
   private javax.swing.JComboBox<String> yearBox;
   // End of variables declaration//GEN-END:variables

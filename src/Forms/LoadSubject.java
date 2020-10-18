@@ -244,7 +244,7 @@ public class LoadSubject extends javax.swing.JFrame {
           String orientation = orientationBox.getSelectedItem().toString();
 
           int oricod = Orientation.getOrientationcod(orientation);
-          int anocod = Year.getYearcod(year);
+          int anocod = Year.getYearcod(year, oricod);
 
           if(orientationBox.getSelectedItem().toString().equals("Básica")) {
             try {

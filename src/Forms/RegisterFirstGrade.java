@@ -120,7 +120,7 @@ public class RegisterFirstGrade extends javax.swing.JFrame {
     
     int percod = User.getUserCodeByUsername(user.getUsername());
     int oricod = Orientation.getOrientationcod("Básica");
-    int anocod = Year.getYearcod("Primero");
+    int anocod = Year.getYearcod("Primero", oricod);
 
     try {
       if(Course.registerStudentInCourse(percod, oricod, anocod, Course.getCurcodByDivsion(oricod, anocod, combo.getSelectedItem().toString()))) {

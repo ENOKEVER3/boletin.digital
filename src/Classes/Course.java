@@ -118,8 +118,8 @@ public class Course {
 
   public static int getCourseCod(String year, String orientation, String division) {
 
-    int yearcode = Year.getYearcod(year);
     int orientationcode = Orientation.getOrientationcod(orientation);
+    int yearcode = Year.getYearcod(year, orientationcode);
     
     if(!(yearcode == 0) && !(orientationcode == 0)) {
       BasicDataSource bs = Config.setDBParams();
@@ -161,8 +161,8 @@ public class Course {
 
     ArrayList codes = new ArrayList();
 
-    int yearcode = Year.getYearcod(year);
     int orientationcode = Orientation.getOrientationcod(orientation);
+    int yearcode = Year.getYearcod(year, orientationcode);
 
     if(!(yearcode == 0) && !(orientationcode == 0)) {
       BasicDataSource bs = Config.setDBParams();

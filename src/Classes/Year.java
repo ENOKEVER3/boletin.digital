@@ -56,11 +56,11 @@ public class Year {
     return false;
   }
   
-  public static int getYearcod(String year) {
+  public static int getYearcod(String year, int oricod) {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-    String query = "SELECT * FROM `ANOS` WHERE `ANO_NOMBRE`='" + year + "' AND `ANO_FECHAFIN` > ?;";
+    String query = "SELECT * FROM `ANOS` WHERE `ANO_NOMBRE`='" + year + "' AND `ANO_ORICOD`='" + oricod + "' AND `ANO_FECHAFIN` > ?;";
 
     try {
       connection = bs.getConnection();

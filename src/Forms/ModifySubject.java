@@ -270,7 +270,9 @@ public class ModifySubject extends javax.swing.JFrame {
       return;
     }
     
-    subjscod = Subject.getSubjectsCodByCourseAndCategory(Orientation.getOrientationcod(orientationBox.getSelectedItem().toString()), Year.getYearcod(yearBox.getSelectedItem().toString()), Subject.getTypeCodeByName(typeBox.getSelectedItem().toString()));
+    int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
+    
+    subjscod = Subject.getSubjectsCodByCourseAndCategory(oricod, Year.getYearcod(yearBox.getSelectedItem().toString(), oricod), Subject.getTypeCodeByName(typeBox.getSelectedItem().toString()));
     
     subjscodBox.removeAllItems();
     

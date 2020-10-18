@@ -173,6 +173,9 @@ public class LoadNote extends javax.swing.JFrame {
           .addComponent(selectButton)
           .addComponent(jLabel3)
           .addComponent(jLabel4)
+          .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jLabel2)
+          .addComponent(jLabel1)
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
               .addComponent(jLabel5)
@@ -186,10 +189,7 @@ public class LoadNote extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel12)
               .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel2)
-          .addComponent(jLabel1))
+          .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addContainerGap(317, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
@@ -248,7 +248,7 @@ public class LoadNote extends javax.swing.JFrame {
   private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
     if(checkEmptyFields()) return;
     int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
-    int anocod = Year.getYearcod(yearBox.getSelectedItem().toString());
+    int anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     String division = divisionBox.getSelectedItem().toString();
     
     int curcod = Course.getCurcodByDivsion(oricod, anocod, division);
@@ -303,6 +303,8 @@ public class LoadNote extends javax.swing.JFrame {
       JOptionPane.showMessageDialog(null, "Seleccione un período");
       return;
     }
+    
+    
   }//GEN-LAST:event_selectButtonActionPerformed
 
     

@@ -177,8 +177,9 @@ public class LoadCourse extends javax.swing.JFrame {
 
     Course course = new Course();
     
-    int yearcod = Year.getYearcod((String) yearBox.getSelectedItem());
-    int oricod = Orientation.getOrientationcod((String) orientationBox.getSelectedItem());     
+    int oricod = Orientation.getOrientationcod((String) orientationBox.getSelectedItem());  
+    int yearcod = Year.getYearcod((String) yearBox.getSelectedItem(), oricod);
+       
     String div = divisionBox.getSelectedItem().toString();
    
     if(Course.getCurcodByDivsion(oricod, yearcod, div) !=0 ){

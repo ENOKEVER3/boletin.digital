@@ -24,12 +24,12 @@ import org.apache.commons.dbcp2.BasicDataSource;
  *
  * @author lagos
  */
-public class LoadOrientation extends javax.swing.JFrame {
+public class LoadPeriod extends javax.swing.JFrame {
 
   /**
    * Creates new form LoadType
    */
-  public LoadOrientation() {
+  public LoadPeriod() {
     initComponents();
   }
   
@@ -54,10 +54,10 @@ public class LoadOrientation extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
 
-    jLabel1.setText("Nueva orentación");
+    jLabel1.setText("Nuevo período");
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-    jLabel2.setText("Orientación");
+    jLabel2.setText("Período");
 
     jLabel3.setText("Nombre:");
 
@@ -125,19 +125,19 @@ public class LoadOrientation extends javax.swing.JFrame {
 
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     if(nameField.getText().isEmpty()) {
-      JOptionPane.showMessageDialog(null, "Ingrese el nombre de la orientación");
+      JOptionPane.showMessageDialog(null, "Ingrese el nombre del período");
     }
     
     try {
-      if(newOrientation(nameField.getText())) {
+      if(newPeriod(nameField.getText())) {
         manageCourse.changeBoxs();
-        JOptionPane.showMessageDialog(null, "La orientación fue creada correctamente");
+        JOptionPane.showMessageDialog(null, "El período fue creado correctamente");
         dispose();
       } else {
         JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado");
       }
     } catch (ParseException ex) {
-      Logger.getLogger(LoadOrientation.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(LoadPeriod.class.getName()).log(Level.SEVERE, null, ex);
     }
     
     nameField.setText("");
@@ -157,14 +157,14 @@ public class LoadOrientation extends javax.swing.JFrame {
   private javax.swing.JTextField nameField;
   // End of variables declaration//GEN-END:variables
 
-  private boolean orientationAlreadyExist(String orientation) throws ParseException {
+  private boolean periodAlreadyExist(String period) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
     
-    String query = "SELECT * FROM `ORIENTACIONES` WHERE `ORI_NOMBRE`='" + orientation + "' AND `ORI_FECHAFIN`<?;";
+    String query = "SELECT * FROM `PERIODOS` WHERE `PRD_NOMBRE`='" + period + "' AND `PRD_FECHAFIN`<?;";
 
     try {
       connection = bs.getConnection();
@@ -174,7 +174,7 @@ public class LoadOrientation extends javax.swing.JFrame {
       ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
 
       if(rs.next()){
-        updateOrientation(rs.getInt("ORI_COD"));
+        updatePeriod(rs.getInt("PRD_COD"));
         return true;
       }
 
@@ -191,14 +191,14 @@ public class LoadOrientation extends javax.swing.JFrame {
     return false;
   }
   
-  private void updateOrientation(int oricod) throws ParseException {
+  private void updatePeriod(int prdcod) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "UPDATE ORIENTACIONES SET ORI_FECHAFIN=? WHERE ORI_COD=" + oricod + " AND ORI_FECHAFIN < ?;";
+    String query = "UPDATE PERIODOS SET PRD_FECHAFIN=? WHERE PRD_COD=" + prdcod + " AND PRD_FECHAFIN < ?;";
 
     try {           
       connection = bs.getConnection();
@@ -218,8 +218,8 @@ public class LoadOrientation extends javax.swing.JFrame {
     }
   }
 
-  private boolean newOrientation(String orientation) throws ParseException {
-    if(orientationAlreadyExist(orientation)) return true;
+  private boolean newPeriod(String period) throws ParseException {
+    if(periodAlreadyExist(period)) return true;
 
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
@@ -227,12 +227,12 @@ public class LoadOrientation extends javax.swing.JFrame {
     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     java.sql.Date neverDate = new java.sql.Date(sdf.parse("01-01-3000").getTime());
 
-    String query = "INSERT INTO `ORIENTACIONES` (`ORI_NOMBRE`, `ORI_FECHAFIN`) VALUES (?, ?);";
+    String query = "INSERT INTO `PERIODOS` (`PRD_NOMBRE`, `PRD_FECHAFIN`) VALUES (?, ?);";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatemnet = connection.prepareStatement(query);
-      preparedStatemnet.setString(1, orientation);
+      preparedStatemnet.setString(1, period);
       preparedStatemnet.setDate(2, neverDate);
       preparedStatemnet.execute();
 
