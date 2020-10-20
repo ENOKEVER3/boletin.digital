@@ -36,6 +36,7 @@ public class ManageSubject extends javax.swing.JFrame {
     int anocod;
     int curcod;
     int teacherCod;
+    String division;
     
     private String userToAsingUsername;
     
@@ -304,11 +305,12 @@ public class ManageSubject extends javax.swing.JFrame {
     if(teachersBox.getSelectedItem() != "") {
       int teacherCode = (int) teachersCod.get(teachersBox.getSelectedIndex() + 2);
       Subject.deleteSubjectTeacher((int) teachersCod.get(teachersBox.getSelectedIndex() + 2), oricod, anocod, curcod, (int) teachersCod.get(0), (int) teachersCod.get(1));
+      updateTeachersList();
     } else {
       JOptionPane.showMessageDialog(null, "Seleccione un profesor");
     }
     
-    updateTeachersList();
+    
   }//GEN-LAST:event_deleteButtonActionPerformed
 
   private void subjectBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_subjectBoxItemStateChanged
@@ -413,13 +415,13 @@ public class ManageSubject extends javax.swing.JFrame {
     if(checkEmptyFields()) return;
     oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
     anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
-    String division = divisionBox.getSelectedItem().toString();
+    division = divisionBox.getSelectedItem().toString();
     
     curcod = Course.getCurcodByDivsion(oricod, anocod, division);
     
     if(curcod != 0) {
       teachersBox.removeAllItems();
-      teachersCod = Subject.getTeachersCod(oricod, anocod, curcod, subjectBox.getSelectedItem().toString());
+      teachersCod = Subject.getTeachersCod(oricod, anocod, curcod,  subjectBox.getSelectedItem().toString());
       
       for(int i = 2; i < teachersCod.size(); i++) {
         teachersBox.addItem(User.getFullNameByCod((int) teachersCod.get(i)));

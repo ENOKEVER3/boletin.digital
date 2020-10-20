@@ -153,8 +153,8 @@ public class Note {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
       preparedStatement.setDate(1, (java.sql.Date) User.getCategorieStartedDateByUsercod(studentCod, Categorie.getCatcod("Alumno")));
-      preparedStatement.setInt(2, Categorie.getCatcod("Alumno"));
-      preparedStatement.setInt(3, studentCod);
+      preparedStatement.setInt(2, studentCod);
+      preparedStatement.setInt(3, Categorie.getCatcod("Alumno"));
       preparedStatement.setInt(4, oricod);
       preparedStatement.setInt(5, anocod);
       preparedStatement.setInt(6, curcod);
@@ -162,7 +162,7 @@ public class Note {
       preparedStatement.setInt(8, Subject.getForCod(matcod));
       preparedStatement.setInt(9, prdcod);
       preparedStatement.setInt(10, order);
-      preparedStatement.setInt(11, (int) new Date().getYear());
+      preparedStatement.setInt(11, java.time.Year.now().getValue());
       preparedStatement.setInt(12, value);
       preparedStatement.setInt(13, teacherCod);
 
@@ -182,13 +182,13 @@ public class Note {
 
 }
   
-  public static ArrayList getNote(int studentCod, int oricod, int anocod, int curcod, int matcod){
+  public static ArrayList getNote(int studentCod, int oricod, int anocod, int curcod, int matcod, int prdcod){
     ArrayList notes = new ArrayList();
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-    String query = "SELECT * FROM `NOTAS` WHERE `NOT_ALUMNOPERCOD`=? AND `NOT_CURORICOD`=? AND `NOT_CURANOCOD`=? AND `NOT_CURCOD`=? AND `NOT_CURCOD`=?;";
+    String query = "SELECT * FROM `NOTAS` WHERE `NOT_ALUMNOPERCOD`=? AND `NOT_CURORICOD`=? AND `NOT_CURANOCOD`=? AND `NOT_CURCOD`=? AND `NOT_MATCOD`=?  AND `NOT_PRDCOD`=?;";
 
     try {
       connection = bs.getConnection();
@@ -198,6 +198,7 @@ public class Note {
       preparedStatement.setInt(3, anocod);
       preparedStatement.setInt(4, curcod);
       preparedStatement.setInt(5, matcod);
+      preparedStatement.setInt(6, prdcod);
       
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
@@ -212,7 +213,7 @@ public class Note {
         note.setCurcod(rs.getInt("NOT_CURCOD"));
         note.setMatcod(rs.getInt("NOT_MATCOD"));
         note.setForcod(rs.getInt("NOT_FORCOD"));
-        note.setPrdcod(rs.getInt("NOT_PERCOD"));
+        note.setPrdcod(rs.getInt("NOT_PRDCOD"));
         note.setOrder(rs.getInt("NOT_ORDEN"));
         note.setYearDate(rs.getInt("NOT_ANOFECHA"));
         note.setValue(rs.getInt("NOT_VALOR"));
@@ -221,7 +222,16 @@ public class Note {
         notes.add(note);
       }
       
-      if(notes != null) return notes;
+      int notesSize = notes.size();
+      Note zeroNote = new Note();
+      zeroNote.value = 0;
+      
+      for(int i = notesSize; i < 3; i++) {
+        notes.add(zeroNote);
+      }
+      
+      return notes;
+      
     } catch (SQLException e) {
       System.out.println("ERROR: " + e);
     } finally {
@@ -235,16 +245,23 @@ public class Note {
     return null;
   }
   
-  public static boolean updateNote(int studentCod, int oricod, int anocod, int curcod, int matcod, int value) {
+  public static boolean updateNote(int studentCod, int oricod, int yearcod, int curcod, int matcod, int prdcod, int order, int value) {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
-    String query = "UPDATE NOTAS SET NOT_VALUE=? WHERE `NOT_ALUMNOPERCOD`=? AND `NOT_CURORICOD`=? AND `NOT_CURANOCOD`=? AND `NOT_CURCOD`=? AND `NOT_MATCOD`=?;";
+    String query = "UPDATE NOTAS SET NOT_VALOR=? WHERE `NOT_ALUMNOPERCOD`=? AND `NOT_CURORICOD`=? AND `NOT_CURANOCOD`=? AND `NOT_CURCOD`=? AND `NOT_MATCOD`=? AND `NOT_PRDCOD`=? AND `NOT_ORDEN`=?;";
 
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
       preparedStatement.setInt(1, value);
+      preparedStatement.setInt(2, studentCod);
+      preparedStatement.setInt(3, oricod);
+      preparedStatement.setInt(4, yearcod);
+      preparedStatement.setInt(5, curcod);
+      preparedStatement.setInt(6, matcod);
+      preparedStatement.setInt(7, prdcod);
+      preparedStatement.setInt(8, order);
       preparedStatement.execute();
 
       return true;
@@ -261,27 +278,7 @@ public class Note {
   }
   
   public static float getFinalNote(int studentCod, int oricod, int anocod, int curcod) {
-    ArrayList subjects = Subject.getSubjectsCodByCourse(oricod, anocod, curcod);
-    
-    int finalNotesCount = 0;
-    int finalNoteAcum = 0;
-    
-    for(int i = 0; i < finalNotesCount; i++){ 
-      ArrayList notes = getNote(studentCod, oricod, anocod, curcod, (int) subjects.get(i));
-      
-      if(notes == null) continue;
-      
-      int notesSize = notes.size();
-      int noteAcum = 0;
-      
-      for(int j = 0; j < notesSize; j++) {
-        noteAcum += (int) notes.get(j);
-      }
-      
-      finalNoteAcum += noteAcum/notesSize;
-      finalNotesCount++;
-    }
-    
-    return finalNotesCount == 0 ? 0 : (finalNoteAcum/finalNotesCount);
+    //return finalNotesCount == 0 ? 0 : (finalNoteAcum/finalNotesCount);
+    return 0;
   }
 }

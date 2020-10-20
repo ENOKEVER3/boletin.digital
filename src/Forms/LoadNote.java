@@ -7,14 +7,20 @@ package Forms;
 
 import Classes.Period;
 import Classes.Course;
+import Classes.Note;
 import Classes.Period;
 import Classes.Orientation;
 import Classes.Subject;
 import Classes.User;
 import Classes.Year;
 import Utils.Combo;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,6 +36,14 @@ public class LoadNote extends javax.swing.JFrame {
         blockButton();
         changeBoxs();
     }
+    
+    int oricod;
+    int yearcod;
+    int curcod;
+    int matcod;
+    int prdcod;
+    ArrayList students;
+    ArrayList studentsNotes;
     
     Menu menu;
 
@@ -58,6 +72,8 @@ public class LoadNote extends javax.swing.JFrame {
     periodsBox = new javax.swing.JComboBox<>();
     jLabel3 = new javax.swing.JLabel();
     selectButton = new javax.swing.JButton();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    table = new javax.swing.JTable();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -72,6 +88,11 @@ public class LoadNote extends javax.swing.JFrame {
 
     loadButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     loadButton.setText("CARGAR");
+    loadButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        loadButtonActionPerformed(evt);
+      }
+    });
 
     exitLoadNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     exitLoadNote.setText("SALIR");
@@ -157,45 +178,55 @@ public class LoadNote extends javax.swing.JFrame {
       }
     });
 
+    table.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
+
+      },
+      new String [] {
+
+      }
+    ));
+    jScrollPane1.setViewportView(table);
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(loadButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap())
       .addGroup(layout.createSequentialGroup()
         .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(selectButton)
-          .addComponent(jLabel3)
-          .addComponent(jLabel4)
-          .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel2)
-          .addComponent(jLabel1)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel5)
-              .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(searchButton))
+            .addComponent(loadButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel6)
-              .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel12)
-              .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addContainerGap(317, Short.MAX_VALUE))
+            .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(selectButton)
+            .addComponent(jLabel3)
+            .addComponent(jLabel4)
+            .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel2)
+            .addComponent(jLabel1)
+            .addGroup(layout.createSequentialGroup()
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jLabel5)
+                .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel6)
+                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel12)
+                .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(29, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
         .addComponent(jLabel2)
@@ -219,17 +250,19 @@ public class LoadNote extends javax.swing.JFrame {
             .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
         .addComponent(searchButton)
-        .addGap(22, 22, 22)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel3)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(selectButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitLoadNote)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(loadButton))
-        .addContainerGap())
+        .addGap(10, 10, 10))
     );
 
     pack();
@@ -247,22 +280,23 @@ public class LoadNote extends javax.swing.JFrame {
 
   private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
     if(checkEmptyFields()) return;
-    int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
-    int anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
+    oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
+    yearcod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     String division = divisionBox.getSelectedItem().toString();
     
-    int curcod = Course.getCurcodByDivsion(oricod, anocod, division);
+    curcod = Course.getCurcodByDivsion(oricod, yearcod, division);
     
     if(curcod == 0) {
       JOptionPane.showMessageDialog(null, "Los datos del curso son incorrectos");
     } else {
-       if(Subject.getTeachersCod(oricod, anocod, curcod, subjectBox.getSelectedItem().toString()).contains(menu.currentUserCode)) {
-         JOptionPane.showMessageDialog(null, "iupi");
-         enableButton();
-         changeTable();
-       } else {
-         JOptionPane.showMessageDialog(null, "La materia no fue encontrada");
-       }
+      ArrayList teacherscod = Subject.getTeachersCod(oricod, yearcod, curcod, subjectBox.getSelectedItem().toString());
+      matcod = (int) teacherscod.get(0);
+      
+      if(teacherscod.contains(menu.currentUserCode)) {
+        enableButton();
+      } else {
+        JOptionPane.showMessageDialog(null, "La materia no fue encontrada");
+      }
     }
   }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -304,8 +338,55 @@ public class LoadNote extends javax.swing.JFrame {
       return;
     }
     
+    prdcod = periodsBox.getSelectedIndex();
+    
+    try {
+      changeTable();
+    } catch (ParseException ex) {
+      Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+    }
     
   }//GEN-LAST:event_selectButtonActionPerformed
+
+  private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+    table.getCellEditor().stopCellEditing();
+    int studentsSize = students.size();
+    
+    for (int i = 0; i < studentsSize; i++) {
+      ArrayList originalNotes = (ArrayList) studentsNotes.get(i);
+      User currentUser = (User) students.get(i);
+      int currentUsercod = User.getUserCodeByUsername(currentUser.getUsername());
+      for (int j = 0; j < 3; j++) {
+
+        int newNote = (int) table.getModel().getValueAt(i,j+2);
+        
+        if(newNote < 0 || newNote > 10) {
+          JOptionPane.showMessageDialog(null, "Una nota no es válida");
+          continue;
+        }
+        
+        if((int) originalNotes.get(j) != newNote) {
+          if((int) originalNotes.get(j) == 0) 
+            try {
+              Note.createNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote, menu.currentUserCode);
+            } catch (SQLException ex) {
+            Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+          } else {
+            Note.updateNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote);
+          }
+        }
+      }
+      table.getCellEditor();
+    }
+    
+    try {
+      changeTable();
+    } catch (ParseException ex) {
+      Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    JOptionPane.showMessageDialog(null, "cambios guardados");
+  }//GEN-LAST:event_loadButtonActionPerformed
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -318,12 +399,14 @@ public class LoadNote extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
+  private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JButton loadButton;
   private javax.swing.JComboBox orientationBox;
   private javax.swing.JComboBox<String> periodsBox;
   private javax.swing.JButton searchButton;
   private javax.swing.JButton selectButton;
   private javax.swing.JComboBox subjectBox;
+  private javax.swing.JTable table;
   private javax.swing.JComboBox yearBox;
   // End of variables declaration//GEN-END:variables
 
@@ -347,6 +430,7 @@ public class LoadNote extends javax.swing.JFrame {
     loadButton.setEnabled(false);
     periodsBox.setEnabled(false);
     selectButton.setEnabled(false);
+    loadButton.setEnabled(false);
   }
   
   public void enableButton() {
@@ -380,7 +464,66 @@ public class LoadNote extends javax.swing.JFrame {
       periodsBox.setSelectedIndex(0);
   }
 
-  private void changeTable() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  private void changeTable() throws ParseException {
+    students = Course.getStudentsByCourse(curcod);
+    
+    Object[] columnNames = {"Nombre", "Apellido", "Nota 1", "Nota 2", "Nota 3"};
+      
+      DefaultTableModel model = new DefaultTableModel(null, columnNames){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+          if(column == 2 || column == 3 || column == 4) return true;
+          return false;
+        }  
+        
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+              return String.class;
+            case 1:
+              return String.class;
+            case 2:
+              return Integer.class;
+            case 3:
+              return Integer.class;
+            case 4:
+              return Integer.class;
+            default:
+              return Integer.class;
+          }
+        }
+      };
+      
+      table.setModel(model);
+      table.getTableHeader().setReorderingAllowed(false);
+      table.getTableHeader().setResizingAllowed(false);
+      
+      int studentsSize = students.size();
+      
+      studentsNotes = new ArrayList();
+      
+      for (int i = 0; i < studentsSize; i++) {
+        User currentStudent = (User) students.get(i);
+        int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
+        ArrayList notes = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod);  
+        
+        Note n1 = (Note) notes.get(0);
+        Note n2 = (Note) notes.get(1);
+        Note n3 = (Note) notes.get(2);
+        
+        ArrayList note = new ArrayList();
+        
+        note.add(n1.getValue());
+        note.add(n2.getValue());
+        note.add(n3.getValue());
+        
+        studentsNotes.add(note);
+        
+        model.addRow(new Object[]{currentStudent.getName(), currentStudent.getLastname(), n1.getValue(), n2.getValue(), n3.getValue()});
+      }
+      
+      if(students.size() > 0) loadButton.setEnabled(true);
+      else loadButton.setEnabled(false);
   }
 }

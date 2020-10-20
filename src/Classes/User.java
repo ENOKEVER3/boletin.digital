@@ -719,15 +719,15 @@ public class User {
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
       while(rs.next()){
-        int orientation = rs.getInt("CURMATPRO_ORICOD");
-        int year = rs.getInt("CURMATPRO_ANOCOD");
+        String orientation = Orientation.getOrientationName(rs.getInt("CURMATPRO_ORICOD"));
+        String year = Year.getYearName(rs.getInt("CURMATPRO_ANOCOD"));
         String division = Course.getDivision(rs.getInt("CURMATPRO_CURCOD"));
-        int subject = rs.getInt("CURMATPRO_MATCOD");
+        String subject = Subject.getSubjectNameByCode(rs.getInt("CURMATPRO_MATCOD"));
         
-        if(!orientations.contains(orientation)) orientations.add(Orientation.getOrientationName(orientation));
-        if(!years.contains(year)) years.add(Year.getYearName(year));
+        if(!orientations.contains(orientation)) orientations.add(orientation);
+        if(!years.contains(year)) years.add(year);
         if(!divisions.contains(division)) divisions.add(division);
-        if(!subjects.contains(subject)) subjects.add(Subject.getSubjectNameByCode(subject));
+        if(!subjects.contains(subject)) subjects.add(subject);
       }
 
     } catch (SQLException e) {
