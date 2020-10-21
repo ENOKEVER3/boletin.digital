@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
@@ -22,6 +23,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
  * @author lagos
  */
 public class Note {
+
   Date studentStartDat;
   int studentCod;
   int studentCatCod;
@@ -141,7 +143,7 @@ public class Note {
     this.prdcod = prdcod;
   }
   
-  public static boolean createNote(int studentCod, int oricod, int anocod, int curcod, int matcod, int prdcod, int order, int value, int teacherCod) throws SQLException {
+  public static boolean createNote(int studentCod, int oricod, int anocod, int curcod, int matcod, int prdcod, int order, int value, int teacherCod) throws SQLException, ParseException {
     ArrayList notes = new ArrayList();
     
     BasicDataSource bs = Config.setDBParams();
@@ -167,6 +169,7 @@ public class Note {
       preparedStatement.setInt(13, teacherCod);
 
       preparedStatement.execute();
+      checkNewPendingNote(studentCod, oricod, anocod, curcod, matcod, prdcod, order, teacherCod);
       return true;
       
     } catch (SQLException e) {
@@ -179,7 +182,6 @@ public class Note {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-
 }
   
   public static ArrayList getNote(int studentCod, int oricod, int anocod, int curcod, int matcod, int prdcod){
@@ -245,7 +247,7 @@ public class Note {
     return null;
   }
   
-  public static boolean updateNote(int studentCod, int oricod, int yearcod, int curcod, int matcod, int prdcod, int order, int value) {
+  public static boolean updateNote(int studentCod, int oricod, int yearcod, int curcod, int matcod, int prdcod, int order, int value, int teacherCod) throws ParseException {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
 
@@ -263,7 +265,9 @@ public class Note {
       preparedStatement.setInt(7, prdcod);
       preparedStatement.setInt(8, order);
       preparedStatement.execute();
-
+      
+      checkNewPendingNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, order, teacherCod);
+      
       return true;
     } catch (SQLException e) {
       System.out.println("ERROR: " + e);
@@ -277,8 +281,74 @@ public class Note {
     }
   }
   
-  public static float getFinalNote(int studentCod, int oricod, int anocod, int curcod) {
-    //return finalNotesCount == 0 ? 0 : (finalNoteAcum/finalNotesCount);
-    return 0;
+  public static float getFinalSubjectNote(int studentCod, int oricod, int yearcod, int curcod, int subcod) {
+    float acc = 0;
+    int c = 0;
+    
+    ArrayList periods = Period.getPeriodsCods();
+    int periodsSize = periods.size();
+    
+    for (int i = 0; i < periodsSize; i++) {
+      ArrayList note = getNote(studentCod, oricod, yearcod, curcod, subcod, (int) periods.get(i));
+      int notesCount = 3;
+     
+      Note n1 = (Note) note.get(0);
+      Note n2 = (Note) note.get(1);
+      Note n3 = (Note) note.get(2);
+      
+      if(n1.getValue() == 0) notesCount--;
+      if(n2.getValue() == 0) notesCount--;
+      if(n3.getValue() == 0) notesCount--;
+      
+      if (notesCount != 3) continue;
+        
+      acc += ((n1.getValue() + n2.getValue() + n3.getValue()) / notesCount);
+      c++;
+    }
+    
+    return c == 0 ? 0 : (acc/c);
+  }
+  
+  public static float getFinalNote(int studentCod, int oricod, int yearcod, int curcod) {
+    float finalNoteCount = 0;
+    int finalNoteAcum = 0;
+    
+    ArrayList subjects = Subject.getSubjectsCodByCourse(oricod, yearcod, curcod);
+    int subjectsSize = subjects.size();
+    
+    for (int i = 0; i < subjectsSize; i++) {
+      float finalSubjectNote = (float) getFinalSubjectNote(studentCod, oricod, yearcod, curcod, (int) subjects.get(i));
+      if(finalSubjectNote != 0) {
+        finalNoteAcum += finalSubjectNote;
+        finalNoteCount++;
+      }
+    }
+
+    return finalNoteCount == 0 ? 0 : (finalNoteAcum/finalNoteCount);
+  }  
+  
+  private static void checkNewPendingNote(int studentCod, int oricod, int yearcod, int curcod, int matcod, int prdcod, int order, int teacherCod) throws ParseException {
+    if (prdcod != Period.getPeriodCod("PRIMER TRIMESTRE") && prdcod != Period.getPeriodCod("SEGUNDO TRIMESTRE")) {
+      if (order == 2) {
+        float note = getFinalSubjectNote(studentCod, oricod, yearcod, curcod, matcod);
+        if(note == 0) return;
+        
+        if(prdcod == Period.getPeriodCod("TERCER TRIMESTRE")) {
+          if(note < 7) {
+            PendingNote.newPendingNote(studentCod, oricod, yearcod, curcod, matcod, teacherCod, prdcod);
+          } else {
+            PendingNote.removePendingNote(studentCod, oricod, yearcod, curcod, matcod, teacherCod);
+          }
+        } 
+        if (prdcod != Period.getPeriodCod("TERCER TRIMESTRE")) {
+          if(note < 4) {
+            PendingNote.newPendingNote(studentCod, oricod, yearcod, curcod, matcod, teacherCod, prdcod);
+          } else {
+            PendingNote.removePendingNote(studentCod, oricod, yearcod, curcod, matcod, teacherCod);
+          }
+        } 
+        
+      }
+    }
   }
 }

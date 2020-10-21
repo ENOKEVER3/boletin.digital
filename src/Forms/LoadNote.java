@@ -10,6 +10,7 @@ import Classes.Course;
 import Classes.Note;
 import Classes.Period;
 import Classes.Orientation;
+import Classes.PendingNote;
 import Classes.Subject;
 import Classes.User;
 import Classes.Year;
@@ -167,6 +168,12 @@ public class LoadNote extends javax.swing.JFrame {
     });
 
     jLabel6.setText("Orientación:");
+
+    periodsBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        periodsBoxItemStateChanged(evt);
+      }
+    });
 
     jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jLabel3.setText("Seleccione el período:");
@@ -338,7 +345,7 @@ public class LoadNote extends javax.swing.JFrame {
       return;
     }
     
-    prdcod = periodsBox.getSelectedIndex();
+    prdcod = Period.getPeriodCod(periodsBox.getSelectedItem().toString());
     
     try {
       changeTable();
@@ -352,6 +359,8 @@ public class LoadNote extends javax.swing.JFrame {
     table.getCellEditor().stopCellEditing();
     int studentsSize = students.size();
     
+    boolean isNewNote = false;
+    
     for (int i = 0; i < studentsSize; i++) {
       ArrayList originalNotes = (ArrayList) studentsNotes.get(i);
       User currentUser = (User) students.get(i);
@@ -360,23 +369,44 @@ public class LoadNote extends javax.swing.JFrame {
 
         int newNote = (int) table.getModel().getValueAt(i,j+2);
         
+        String period = periodsBox.getSelectedItem().toString() ;
+        
+        if (period != "PRIMER TRIMESTRE" && period != "SEGUNDO TRIMESTRE" && period != "TERCER TRIMESTRE") {
+          if(newNote> 7) {
+            JOptionPane.showMessageDialog(null, "El máximo para un periodo de recuperación es de siete");
+            continue;
+          }
+        }
+        
         if(newNote < 0 || newNote > 10) {
           JOptionPane.showMessageDialog(null, "Una nota no es válida");
           continue;
         }
         
         if((int) originalNotes.get(j) != newNote) {
+          isNewNote = true;
           if((int) originalNotes.get(j) == 0) 
             try {
               Note.createNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote, menu.currentUserCode);
             } catch (SQLException ex) {
             Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (ParseException ex) {
+            Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
           } else {
-            Note.updateNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote);
+            try {
+              Note.updateNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote, menu.currentUserCode);
+            } catch (ParseException ex) {
+              Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         }
       }
       table.getCellEditor();
+    }
+    
+    if(!isNewNote) {
+      JOptionPane.showMessageDialog(null, "No se han agregado notas nuevas");
+      return;
     }
     
     try {
@@ -387,6 +417,10 @@ public class LoadNote extends javax.swing.JFrame {
     
     JOptionPane.showMessageDialog(null, "cambios guardados");
   }//GEN-LAST:event_loadButtonActionPerformed
+
+  private void periodsBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_periodsBoxItemStateChanged
+    loadButton.setEnabled(false);
+  }//GEN-LAST:event_periodsBoxItemStateChanged
 
     
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -427,14 +461,12 @@ public class LoadNote extends javax.swing.JFrame {
   }
   
   public void blockButton() {
-    loadButton.setEnabled(false);
     periodsBox.setEnabled(false);
     selectButton.setEnabled(false);
     loadButton.setEnabled(false);
   }
   
   public void enableButton() {
-    loadButton.setEnabled(true);
     periodsBox.setEnabled(true);
     selectButton.setEnabled(true);
   }
@@ -506,6 +538,14 @@ public class LoadNote extends javax.swing.JFrame {
       for (int i = 0; i < studentsSize; i++) {
         User currentStudent = (User) students.get(i);
         int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
+        
+        if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
+          if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
+            students.remove(currentStudent);
+            return;
+          }
+        }
+        
         ArrayList notes = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod);  
         
         Note n1 = (Note) notes.get(0);

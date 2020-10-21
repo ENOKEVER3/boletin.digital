@@ -58,4 +58,70 @@ public class Period {
     return periods;
   }
   
+  public static ArrayList getPeriodsCods() {
+    ArrayList periods = new ArrayList();
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    String query = "SELECT * FROM `PERIODOS` WHERE `PRD_FECHAFIN` > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      while(rs.next()){
+        int period = rs.getInt("PRD_COD");
+        if(!periods.contains(period)) periods.add(period);
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return periods;
+  }
+
+  public static int getPeriodCod(String period) {
+    ArrayList periods = new ArrayList();
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    String query = "SELECT * FROM `PERIODOS` WHERE `PRD_FECHAFIN` > ? AND `PRD_NOMBRE`='" + period +"';";
+    
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return (int) rs.getInt("PRD_COD");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return 0;
+  }
 }

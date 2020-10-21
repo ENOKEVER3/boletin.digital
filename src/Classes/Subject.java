@@ -389,7 +389,7 @@ public class Subject {
   public static ArrayList getTeachersCod(int oricod, int anocod, int curcod, String subject) {
     ArrayList teacherCods = new ArrayList();
     
-    int matcod = Subject.getSubjectsCodByCourseAndName(oricod, anocod, curcod, subject);
+    int matcod = getSubjectsCodByCourseAndName(oricod, anocod, curcod, subject);
 
     if(matcod != 0) {
       java.sql.Date todayDate = new java.sql.Date(new Date().getTime());

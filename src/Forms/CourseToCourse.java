@@ -9,6 +9,7 @@ import Classes.Course;
 import Classes.Division;
 import Classes.Note;
 import Classes.Orientation;
+import Classes.PendingNote;
 import Classes.User;
 import Classes.Year;
 import Utils.Combo;
@@ -264,18 +265,18 @@ public class CourseToCourse extends javax.swing.JFrame {
     }
     
     int oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
-    int anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
+    int yearcod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     int curcod = Course.getCourseCod(yearBox.getSelectedItem().toString(), orientationBox.getSelectedItem().toString(), divisionBox.getSelectedItem().toString());
     
     try {
       students = Course.getStudentsByCourse(curcod);
       
-      Object[] columnNames = {"Nombre", "Apellido", "Promedio General", "Materias pendientes", "Seleccionado"};
+      Object[] columnNames = {"Nombre", "Apellido", "Promedio General", "Materias Pendientes", "Talleres Pendientes", "Seleccionado"};
       
       DefaultTableModel model = new DefaultTableModel(null, columnNames){
         @Override
         public boolean isCellEditable(int row, int column) {
-          if(column == 4) return true;
+          if(column == 5) return true;
           return false;
         }  
         
@@ -290,8 +291,12 @@ public class CourseToCourse extends javax.swing.JFrame {
               return Integer.class;
             case 3:
               return Integer.class;
-            default:
+            case 4:
+              return Integer.class;
+            case 5:
               return Boolean.class;
+            default:
+              return Integer.class;
           }
         }
       };
@@ -302,7 +307,11 @@ public class CourseToCourse extends javax.swing.JFrame {
       
       students.forEach(student -> {
         User currentStudent = (User) student;
-        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(), Note.getFinalNote(User.getUserCodeByUsername(currentStudent.getUsername()), oricod, anocod, curcod),"", true});
+        int currentStudentCod = User.getUserCodeByUsername(currentStudent.getUsername());
+        
+        ArrayList pendingSubjects = PendingNote.getPendingSubjects(currentStudentCod);
+        
+        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(), Note.getFinalNote(currentStudentCod, oricod, yearcod, curcod), pendingSubjects.get(0), pendingSubjects.get(1), true});
       });
       
       if(students.size() > 0) enableButton();
