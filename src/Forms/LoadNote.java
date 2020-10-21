@@ -356,23 +356,40 @@ public class LoadNote extends javax.swing.JFrame {
   }//GEN-LAST:event_selectButtonActionPerformed
 
   private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
-    table.getCellEditor().stopCellEditing();
+    
+    try {
+      table.getCellEditor().stopCellEditing();
+    } catch(Error e) {
+      JOptionPane.showMessageDialog(null, "Error inesperado :/");
+    }
+    
     int studentsSize = students.size();
     
     boolean isNewNote = false;
     
     for (int i = 0; i < studentsSize; i++) {
+      
       ArrayList originalNotes = (ArrayList) studentsNotes.get(i);
       User currentUser = (User) students.get(i);
       int currentUsercod = User.getUserCodeByUsername(currentUser.getUsername());
+      
+      int n1 = (int) table.getModel().getValueAt(i,2);
+      int n2 = (int) table.getModel().getValueAt(i,3);
+      int n3 = (int) table.getModel().getValueAt(i,4);
+      
+      if((n1 == 0) || (n2 == 0) || (n3 == 0)) {
+        JOptionPane.showMessageDialog(null, "Ingrese todas las notas del alumno: " + currentUser.getName() + " " + currentUser.getLastname());
+        continue;
+      }
+      
       for (int j = 0; j < 3; j++) {
 
         int newNote = (int) table.getModel().getValueAt(i,j+2);
         
         String period = periodsBox.getSelectedItem().toString() ;
         
-        if (period != "PRIMER TRIMESTRE" && period != "SEGUNDO TRIMESTRE" && period != "TERCER TRIMESTRE") {
-          if(newNote> 7) {
+        if (!period.equals("PRIMER TRIMESTRE") && !period.equals("SEGUNDO TRIMESTRE") && !period.equals("TERCER TRIMESTRE")) {
+          if(newNote > 7) {
             JOptionPane.showMessageDialog(null, "El máximo para un periodo de recuperación es de siete");
             continue;
           }
@@ -534,6 +551,7 @@ public class LoadNote extends javax.swing.JFrame {
       int studentsSize = students.size();
       
       studentsNotes = new ArrayList();
+      ArrayList studentsToRemove = new ArrayList();
       
       for (int i = 0; i < studentsSize; i++) {
         User currentStudent = (User) students.get(i);
@@ -541,10 +559,10 @@ public class LoadNote extends javax.swing.JFrame {
         
         if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
           if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
-            students.remove(currentStudent);
-            return;
+            studentsToRemove.add(currentStudent);
+            continue;
           }
-        }
+        }  
         
         ArrayList notes = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod);  
         
@@ -562,6 +580,10 @@ public class LoadNote extends javax.swing.JFrame {
         
         model.addRow(new Object[]{currentStudent.getName(), currentStudent.getLastname(), n1.getValue(), n2.getValue(), n3.getValue()});
       }
+      
+      studentsToRemove.forEach(student -> {
+        students.remove(student);
+      });
       
       if(students.size() > 0) loadButton.setEnabled(true);
       else loadButton.setEnabled(false);
