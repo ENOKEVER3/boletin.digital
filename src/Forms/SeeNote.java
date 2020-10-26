@@ -5,18 +5,48 @@
  */
 package Forms;
 
+import Classes.Period;
+import Classes.Course;
+import Classes.Note;
+import Classes.Period;
+import Classes.Orientation;
+import Classes.PendingNote;
+import Classes.Subject;
+import Classes.User;
+import Classes.Year;
+import Utils.Combo;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author acer
  */
-public class SeeNote extends javax.swing.JFrame {
+public class LoadNote extends javax.swing.JFrame {
 
     /**
-     * Creates new form SeeNote
+     * Creates new form LoadNote
      */
-    public SeeNote() {
+    public LoadNote() {
         initComponents();
+        blockButton();
+        changeBoxs();
     }
+    
+    int oricod;
+    int yearcod;
+    int curcod;
+    int matcod;
+    int prdcod;
+    ArrayList students;
+    ArrayList studentsNotes;
+    
+    Menu menu;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,394 +58,534 @@ public class SeeNote extends javax.swing.JFrame {
   private void initComponents() {
 
     jLabel1 = new javax.swing.JLabel();
+    loadButton = new javax.swing.JButton();
+    exitLoadNote = new javax.swing.JButton();
+    searchButton = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
-    jLabel3 = new javax.swing.JLabel();
-    jComboBox1 = new javax.swing.JComboBox();
+    subjectBox = new javax.swing.JComboBox();
     jLabel4 = new javax.swing.JLabel();
-    jComboBox2 = new javax.swing.JComboBox();
     jLabel5 = new javax.swing.JLabel();
-    jComboBox3 = new javax.swing.JComboBox();
-    jComboBox4 = new javax.swing.JComboBox();
-    jLabel6 = new javax.swing.JLabel();
-    jLabel7 = new javax.swing.JLabel();
-    jComboBox5 = new javax.swing.JComboBox();
-    jLabel8 = new javax.swing.JLabel();
-    jLabel9 = new javax.swing.JLabel();
-    jLabel10 = new javax.swing.JLabel();
-    jLabel11 = new javax.swing.JLabel();
     jLabel12 = new javax.swing.JLabel();
-    jLabel13 = new javax.swing.JLabel();
-    jLabel14 = new javax.swing.JLabel();
-    jLabel15 = new javax.swing.JLabel();
-    jLabel16 = new javax.swing.JLabel();
-    jLabel17 = new javax.swing.JLabel();
-    jLabel18 = new javax.swing.JLabel();
-    jLabel19 = new javax.swing.JLabel();
-    jLabel20 = new javax.swing.JLabel();
-    jLabel21 = new javax.swing.JLabel();
-    jLabel22 = new javax.swing.JLabel();
-    jLabel23 = new javax.swing.JLabel();
-    jLabel24 = new javax.swing.JLabel();
-    jLabel25 = new javax.swing.JLabel();
-    jLabel26 = new javax.swing.JLabel();
-    jLabel27 = new javax.swing.JLabel();
-    jLabel28 = new javax.swing.JLabel();
-    jLabel29 = new javax.swing.JLabel();
-    jLabel30 = new javax.swing.JLabel();
-    jLabel31 = new javax.swing.JLabel();
-    jLabel32 = new javax.swing.JLabel();
-    jLabel33 = new javax.swing.JLabel();
-    jLabel34 = new javax.swing.JLabel();
-    jLabel35 = new javax.swing.JLabel();
-    jLabel36 = new javax.swing.JLabel();
-    jButton1 = new javax.swing.JButton();
-    jLabel37 = new javax.swing.JLabel();
-    jLabel38 = new javax.swing.JLabel();
+    yearBox = new javax.swing.JComboBox();
+    divisionBox = new javax.swing.JComboBox<>();
+    orientationBox = new javax.swing.JComboBox();
+    jLabel6 = new javax.swing.JLabel();
+    periodsBox = new javax.swing.JComboBox<>();
+    jLabel3 = new javax.swing.JLabel();
+    selectButton = new javax.swing.JButton();
+    jScrollPane1 = new javax.swing.JScrollPane();
+    table = new javax.swing.JTable();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
     addWindowListener(new java.awt.event.WindowAdapter() {
-      public void windowActivated(java.awt.event.WindowEvent evt) {
-        formWindowActivated(evt);
+      public void windowClosed(java.awt.event.WindowEvent evt) {
+        formWindowClosed(evt);
       }
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Notas");
+    jLabel1.setText("Carga de notas");
 
-    jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-    jLabel2.setText("Datos del alumno:");
+    loadButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    loadButton.setText("CARGAR");
+    loadButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        loadButtonActionPerformed(evt);
+      }
+    });
 
-    jLabel3.setText("Año:");
+    exitLoadNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    exitLoadNote.setText("SALIR");
+    exitLoadNote.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exitLoadNoteActionPerformed(evt);
+      }
+    });
 
-    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    searchButton.setText("BUSCAR");
+    searchButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        searchButtonActionPerformed(evt);
+      }
+    });
 
-    jLabel4.setText("Orientación:");
+    jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    jLabel2.setText("Indique la materia:");
 
-    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
+    subjectBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        subjectBoxItemStateChanged(evt);
+      }
+    });
+    subjectBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        subjectBoxActionPerformed(evt);
+      }
+    });
 
-    jLabel5.setText("División:");
+    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    jLabel4.setText("Indique el curso:");
 
-    jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jLabel5.setText("Año:");
 
-    jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    jLabel12.setText("División");
 
-    jLabel6.setText("Alumno:");
+    yearBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                    ", "Primero", "Segundo", "Tercero", "Cuarto", "Quinto", "Sexto", "Séptimo" }));
+    yearBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        yearBoxItemStateChanged(evt);
+      }
+    });
+    yearBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        yearBoxActionPerformed(evt);
+      }
+    });
 
-    jLabel7.setText("Materia:");
+    divisionBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        divisionBoxItemStateChanged(evt);
+      }
+    });
+    divisionBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        divisionBoxActionPerformed(evt);
+      }
+    });
 
-    jComboBox5.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+    orientationBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                             ", "General", "Informática", "Electromecánica" }));
+    orientationBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        orientationBoxItemStateChanged(evt);
+      }
+    });
+    orientationBox.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        orientationBoxActionPerformed(evt);
+      }
+    });
 
-    jLabel8.setText("_________________________________________________________________________");
+    jLabel6.setText("Orientación:");
 
-    jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-    jLabel9.setText("Periodo 1");
+    periodsBox.addItemListener(new java.awt.event.ItemListener() {
+      public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        periodsBoxItemStateChanged(evt);
+      }
+    });
 
-    jLabel10.setText("Nota 1:");
+    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    jLabel3.setText("Seleccione el período:");
 
-    jLabel11.setText("Nota 2:");
+    selectButton.setText("SELECCIONAR");
+    selectButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        selectButtonActionPerformed(evt);
+      }
+    });
 
-    jLabel12.setText("Nota 3:");
+    table.setModel(new javax.swing.table.DefaultTableModel(
+      new Object [][] {
 
-    jLabel13.setText("-");
+      },
+      new String [] {
 
-    jLabel14.setText("-");
-
-    jLabel15.setText("-");
-
-    jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-    jLabel16.setText("Promedio:");
-
-    jLabel17.setText("-");
-
-    jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel18.setText("Periodos:");
-
-    jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-    jLabel19.setText("Periodo 2");
-
-    jLabel20.setText("Nota 1:");
-
-    jLabel21.setText("-");
-
-    jLabel22.setText("Nota 2:");
-
-    jLabel23.setText("-");
-
-    jLabel24.setText("Nota 3:");
-
-    jLabel25.setText("-");
-
-    jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-    jLabel26.setText("Promedio:");
-
-    jLabel27.setText("-");
-
-    jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-    jLabel28.setText("Periodo 3");
-
-    jLabel29.setText("Nota 1:");
-
-    jLabel30.setText("-");
-
-    jLabel31.setText("Nota 2:");
-
-    jLabel32.setText("-");
-
-    jLabel33.setText("Nota 3:");
-
-    jLabel34.setText("-");
-
-    jLabel35.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-    jLabel35.setText("Promedio:");
-
-    jLabel36.setText("-");
-
-    jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    jButton1.setText("SALIR");
-
-    jLabel37.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-    jLabel37.setText("Promedio anual:");
-
-    jLabel38.setText("-");
+      }
+    ));
+    jScrollPane1.setViewportView(table);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(23, 23, 23)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(118, 118, 118)
-                .addComponent(jLabel38))
-              .addComponent(jLabel37))
-            .addGap(247, 247, 247)
-            .addComponent(jButton1))
+            .addComponent(loadButton)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel28)
-            .addComponent(jLabel19)
-            .addComponent(jLabel18)
-            .addComponent(jLabel9)
-            .addComponent(jLabel8)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(selectButton)
+            .addComponent(jLabel3)
+            .addComponent(jLabel4)
+            .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel2)
             .addComponent(jLabel1)
             .addGroup(layout.createSequentialGroup()
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jLabel5)
+                .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel3))
-              .addGap(18, 18, 18)
+                .addComponent(jLabel6)
+                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel4))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel5))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel6))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel7)
-                .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(layout.createSequentialGroup()
-              .addGap(4, 4, 4)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel10)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel13))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel20)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel21))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel29)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel30)))
-              .addGap(32, 32, 32)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel11)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel14))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel22)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel23))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel31)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel32)))
-              .addGap(35, 35, 35)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel12)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel15))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel24)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel25))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel33)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel34)))
-              .addGap(31, 31, 31)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel35)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel36))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel16)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel17))
-                .addGroup(layout.createSequentialGroup()
-                  .addComponent(jLabel26)
-                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                  .addComponent(jLabel27))))))
-        .addContainerGap(23, Short.MAX_VALUE))
+                .addComponent(jLabel12)
+                .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap(29, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(29, 29, 29)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel3)
-          .addComponent(jLabel4)
-          .addComponent(jLabel5)
-          .addComponent(jLabel6)
-          .addComponent(jLabel7))
+        .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jLabel4)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jComboBox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel5)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel12)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(jLabel6)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
-        .addComponent(jLabel8)
-        .addGap(27, 27, 27)
-        .addComponent(jLabel18)
-        .addGap(18, 18, 18)
-        .addComponent(jLabel9)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel10)
-          .addComponent(jLabel11)
-          .addComponent(jLabel12)
-          .addComponent(jLabel13)
-          .addComponent(jLabel14)
-          .addComponent(jLabel15)
-          .addComponent(jLabel16)
-          .addComponent(jLabel17))
-        .addGap(35, 35, 35)
-        .addComponent(jLabel19)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel20)
-          .addComponent(jLabel21)
-          .addComponent(jLabel22)
-          .addComponent(jLabel23)
-          .addComponent(jLabel24)
-          .addComponent(jLabel25)
-          .addComponent(jLabel26)
-          .addComponent(jLabel27))
-        .addGap(29, 29, 29)
-        .addComponent(jLabel28)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel29)
-          .addComponent(jLabel30)
-          .addComponent(jLabel31)
-          .addComponent(jLabel32)
-          .addComponent(jLabel33)
-          .addComponent(jLabel34)
-          .addComponent(jLabel35)
-          .addComponent(jLabel36))
+        .addComponent(searchButton)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel3)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(selectButton)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-            .addComponent(jLabel38)
-            .addGap(48, 48, 48))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(23, 23, 23)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel37)
-              .addComponent(jButton1))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+          .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(loadButton))
+        .addGap(10, 10, 10))
     );
 
     pack();
     setLocationRelativeTo(null);
   }// </editor-fold>//GEN-END:initComponents
 
-  private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    changeBoxs();
-  }//GEN-LAST:event_formWindowActivated
+  private void exitLoadNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitLoadNoteActionPerformed
+    menu.setVisible(true);
+    dispose();
+  }//GEN-LAST:event_exitLoadNoteActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+  private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+    menu.setVisible(true);
+  }//GEN-LAST:event_formWindowClosed
+
+  private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
+    if(checkEmptyFields()) return;
+    oricod = Orientation.getOrientationcod(orientationBox.getSelectedItem().toString());
+    yearcod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
+    String division = divisionBox.getSelectedItem().toString();
     
+    curcod = Course.getCurcodByDivsion(oricod, yearcod, division);
+    
+    if(curcod == 0) {
+      JOptionPane.showMessageDialog(null, "Los datos del curso son incorrectos");
+    } else {
+      ArrayList teacherscod = Subject.getTeachersCod(oricod, yearcod, curcod, subjectBox.getSelectedItem().toString());
+      matcod = (int) teacherscod.get(0);
+      
+      if(teacherscod.contains(menu.currentUserCode)) {
+        enableButton();
+      } else {
+        JOptionPane.showMessageDialog(null, "La materia no fue encontrada");
+      }
+    }
+  }//GEN-LAST:event_searchButtonActionPerformed
 
+  private void subjectBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_subjectBoxItemStateChanged
+    blockButton();
+  }//GEN-LAST:event_subjectBoxItemStateChanged
+
+  private void subjectBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectBoxActionPerformed
+
+  }//GEN-LAST:event_subjectBoxActionPerformed
+
+  private void yearBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_yearBoxItemStateChanged
+    blockButton();
+  }//GEN-LAST:event_yearBoxItemStateChanged
+
+  private void yearBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_yearBoxActionPerformed
+
+  }//GEN-LAST:event_yearBoxActionPerformed
+
+  private void divisionBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_divisionBoxItemStateChanged
+    blockButton();
+  }//GEN-LAST:event_divisionBoxItemStateChanged
+
+  private void divisionBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_divisionBoxActionPerformed
+
+  }//GEN-LAST:event_divisionBoxActionPerformed
+
+  private void orientationBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_orientationBoxItemStateChanged
+    blockButton();
+  }//GEN-LAST:event_orientationBoxItemStateChanged
+
+  private void orientationBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orientationBoxActionPerformed
+
+  }//GEN-LAST:event_orientationBoxActionPerformed
+
+  private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
+    if(periodsBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Seleccione un período");
+      return;
+    }
+    
+    prdcod = Period.getPeriodCod(periodsBox.getSelectedItem().toString());
+    
+    try {
+      changeTable();
+    } catch (ParseException ex) {
+      Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+  }//GEN-LAST:event_selectButtonActionPerformed
+
+  private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+    
+    try {
+      table.getCellEditor().stopCellEditing();
+    } catch(Error e) {
+      JOptionPane.showMessageDialog(null, "Error inesperado :/");
+    }
+    
+    int studentsSize = students.size();
+    
+    boolean isNewNote = false;
+    
+    for (int i = 0; i < studentsSize; i++) {
+      
+      ArrayList originalNotes = (ArrayList) studentsNotes.get(i);
+      User currentUser = (User) students.get(i);
+      int currentUsercod = User.getUserCodeByUsername(currentUser.getUsername());
+      
+      int n1 = (int) table.getModel().getValueAt(i,2);
+      int n2 = (int) table.getModel().getValueAt(i,3);
+      int n3 = (int) table.getModel().getValueAt(i,4);
+      
+      if((n1 == 0) || (n2 == 0) || (n3 == 0)) {
+        JOptionPane.showMessageDialog(null, "Ingrese todas las notas del alumno: " + currentUser.getName() + " " + currentUser.getLastname());
+        continue;
+      }
+      
+      for (int j = 0; j < 3; j++) {
+
+        int newNote = (int) table.getModel().getValueAt(i,j+2);
+        
+        String period = periodsBox.getSelectedItem().toString() ;
+        
+        if (!period.equals("PRIMER TRIMESTRE") && !period.equals("SEGUNDO TRIMESTRE") && !period.equals("TERCER TRIMESTRE")) {
+          if(newNote > 7) {
+            JOptionPane.showMessageDialog(null, "El máximo para un periodo de recuperación es de siete");
+            continue;
+          }
+        }
+        
+        if(newNote < 0 || newNote > 10) {
+          JOptionPane.showMessageDialog(null, "Una nota no es válida");
+          continue;
+        }
+        
+        if((int) originalNotes.get(j) != newNote) {
+          isNewNote = true;
+          if((int) originalNotes.get(j) == 0) 
+            try {
+              Note.createNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote, menu.currentUserCode);
+            } catch (SQLException ex) {
+            Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (ParseException ex) {
+            Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+          } else {
+            try {
+              Note.updateNote(currentUsercod, oricod, yearcod, curcod, matcod, prdcod, j, newNote, menu.currentUserCode);
+            } catch (ParseException ex) {
+              Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        }
+      }
+      table.getCellEditor();
+    }
+    
+    if(!isNewNote) {
+      JOptionPane.showMessageDialog(null, "No se han agregado notas nuevas");
+      return;
+    }
+    
+    try {
+      changeTable();
+    } catch (ParseException ex) {
+      Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    JOptionPane.showMessageDialog(null, "cambios guardados");
+  }//GEN-LAST:event_loadButtonActionPerformed
+
+  private void periodsBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_periodsBoxItemStateChanged
+    loadButton.setEnabled(false);
+  }//GEN-LAST:event_periodsBoxItemStateChanged
+
+    
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
-  private javax.swing.JComboBox jComboBox1;
-  private javax.swing.JComboBox jComboBox2;
-  private javax.swing.JComboBox jComboBox3;
-  private javax.swing.JComboBox jComboBox4;
-  private javax.swing.JComboBox jComboBox5;
+  private javax.swing.JComboBox<String> divisionBox;
+  private javax.swing.JButton exitLoadNote;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel10;
-  private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel12;
-  private javax.swing.JLabel jLabel13;
-  private javax.swing.JLabel jLabel14;
-  private javax.swing.JLabel jLabel15;
-  private javax.swing.JLabel jLabel16;
-  private javax.swing.JLabel jLabel17;
-  private javax.swing.JLabel jLabel18;
-  private javax.swing.JLabel jLabel19;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel20;
-  private javax.swing.JLabel jLabel21;
-  private javax.swing.JLabel jLabel22;
-  private javax.swing.JLabel jLabel23;
-  private javax.swing.JLabel jLabel24;
-  private javax.swing.JLabel jLabel25;
-  private javax.swing.JLabel jLabel26;
-  private javax.swing.JLabel jLabel27;
-  private javax.swing.JLabel jLabel28;
-  private javax.swing.JLabel jLabel29;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel30;
-  private javax.swing.JLabel jLabel31;
-  private javax.swing.JLabel jLabel32;
-  private javax.swing.JLabel jLabel33;
-  private javax.swing.JLabel jLabel34;
-  private javax.swing.JLabel jLabel35;
-  private javax.swing.JLabel jLabel36;
-  private javax.swing.JLabel jLabel37;
-  private javax.swing.JLabel jLabel38;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
-  private javax.swing.JLabel jLabel7;
-  private javax.swing.JLabel jLabel8;
-  private javax.swing.JLabel jLabel9;
+  private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JButton loadButton;
+  private javax.swing.JComboBox orientationBox;
+  private javax.swing.JComboBox<String> periodsBox;
+  private javax.swing.JButton searchButton;
+  private javax.swing.JButton selectButton;
+  private javax.swing.JComboBox subjectBox;
+  private javax.swing.JTable table;
+  private javax.swing.JComboBox yearBox;
   // End of variables declaration//GEN-END:variables
 
+  private boolean checkEmptyFields() {
+    if(subjectBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la materia");
+    } else if(yearBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique el año");
+    } else if(orientationBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la orientación");
+    } else if(divisionBox.getSelectedIndex() == 0) {
+      JOptionPane.showMessageDialog(null, "Indique la división");
+    } else {
+      return false;
+    }
+    
+    return true;
+  }
+  
+  public void blockButton() {
+    periodsBox.setEnabled(false);
+    selectButton.setEnabled(false);
+    loadButton.setEnabled(false);
+  }
+  
+  public void enableButton() {
+    periodsBox.setEnabled(true);
+    selectButton.setEnabled(true);
+  }
+  
   private void changeBoxs() {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    ArrayList data = User.getTeacherData(menu.currentUserCode);
+    
+    ArrayList orientations = (ArrayList) data.get(0);
+    ArrayList years = (ArrayList) data.get(1);
+    ArrayList divisions = (ArrayList) data.get(2);
+    ArrayList subjects = (ArrayList) data.get(3);
+    
+    Combo.setComboBoxItems(orientations, orientationBox);
+    Combo.setComboBoxItems(years, yearBox);
+    Combo.setComboBoxItems(divisions, divisionBox);
+    Combo.setComboBoxItems(subjects, subjectBox);
+    
+    Combo.setComboBoxItems(Period.getPeriods(), periodsBox);
+  }
+  
+  public void cleanFields() {
+      yearBox.setSelectedIndex(0);
+      orientationBox.setSelectedIndex(0);
+      divisionBox.setSelectedIndex(0);
+      subjectBox.setSelectedIndex(0);
+      periodsBox.setSelectedIndex(0);
+  }
+
+  private void changeTable() throws ParseException {
+    students = Course.getStudentsByCourse(curcod);
+    
+    Object[] columnNames = {"Nombre", "Apellido", "Nota 1", "Nota 2", "Nota 3"};
+      
+      DefaultTableModel model = new DefaultTableModel(null, columnNames){
+        @Override
+        public boolean isCellEditable(int row, int column) {
+          if(column == 2 || column == 3 || column == 4) return true;
+          return false;
+        }  
+        
+        @Override
+        public Class getColumnClass(int column) {
+          switch (column) {
+            case 0:
+              return String.class;
+            case 1:
+              return String.class;
+            case 2:
+              return Integer.class;
+            case 3:
+              return Integer.class;
+            case 4:
+              return Integer.class;
+            default:
+              return Integer.class;
+          }
+        }
+      };
+      
+      table.setModel(model);
+      table.getTableHeader().setReorderingAllowed(false);
+      table.getTableHeader().setResizingAllowed(false);
+      
+      int studentsSize = students.size();
+      
+      studentsNotes = new ArrayList();
+      ArrayList studentsToRemove = new ArrayList();
+      
+      for (int i = 0; i < studentsSize; i++) {
+        User currentStudent = (User) students.get(i);
+        int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
+        
+        if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
+          if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
+            studentsToRemove.add(currentStudent);
+            continue;
+          }
+        }  
+        
+        ArrayList notes = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod);  
+        
+        Note n1 = (Note) notes.get(0);
+        Note n2 = (Note) notes.get(1);
+        Note n3 = (Note) notes.get(2);
+        
+        ArrayList note = new ArrayList();
+        
+        note.add(n1.getValue());
+        note.add(n2.getValue());
+        note.add(n3.getValue());
+        
+        studentsNotes.add(note);
+        
+        model.addRow(new Object[]{currentStudent.getName(), currentStudent.getLastname(), n1.getValue(), n2.getValue(), n3.getValue()});
+      }
+      
+      studentsToRemove.forEach(student -> {
+        students.remove(student);
+      });
+      
+      if(students.size() > 0) loadButton.setEnabled(true);
+      else loadButton.setEnabled(false);
   }
 }
