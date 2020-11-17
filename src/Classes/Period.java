@@ -92,7 +92,7 @@ public class Period {
     return periods;
   }
 
-  public static int getPeriodCod(String period) {
+  public static int getPeriodCod(String period, boolean ever) {
     ArrayList periods = new ArrayList();
     
     BasicDataSource bs = Config.setDBParams();
@@ -100,11 +100,12 @@ public class Period {
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     
     String query = "SELECT * FROM `PERIODOS` WHERE `PRD_FECHAFIN` > ? AND `PRD_NOMBRE`='" + period +"';";
+    if(ever) query = "SELECT * FROM `PERIODOS` WHERE `PRD_NOMBRE`='" + period +"';";
     
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
@@ -123,5 +124,37 @@ public class Period {
     }
 
     return 0;
+  }
+  
+  public static String getPeriodName(int percod) {
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    String query = "SELECT * FROM `PERIODOS` WHERE `PRD_FECHAFIN` > ? AND `PRD_COD`='" + percod +"';";
+    
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return (String) rs.getString("PRD_NOMBRE");
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return null;
   }
 }

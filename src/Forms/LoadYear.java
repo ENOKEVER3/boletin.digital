@@ -5,13 +5,8 @@
  */
 package Forms;
 
-import Classes.Course;
 import Classes.Orientation;
-import Classes.Subject;
 import static Classes.Subject.errorCode;
-import static Classes.Subject.getForcod;
-import static Classes.Subject.getName;
-import Classes.Year;
 import Utils.Combo;
 import Utils.Config;
 import java.sql.Connection;
@@ -292,6 +287,6 @@ public class LoadYear extends javax.swing.JFrame {
   }
 
   private void changeBoxs() {
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
   }
 }

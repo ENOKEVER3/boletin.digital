@@ -105,7 +105,7 @@ public class RegisterFirstGrade extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-    Utils.Combo.setComboBoxItems(Division.getDivisions(), combo);
+    Utils.Combo.setComboBoxItems(Division.getDivisions(false), combo);
   }//GEN-LAST:event_formWindowActivated
 
   private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -123,7 +123,7 @@ public class RegisterFirstGrade extends javax.swing.JFrame {
     int anocod = Year.getYearcod("Primero", oricod);
 
     try {
-      if(Course.registerStudentInCourse(percod, oricod, anocod, Course.getCurcodByDivsion(oricod, anocod, combo.getSelectedItem().toString()))) {
+      if(Course.registerStudentInCourse(percod, oricod, anocod, Course.getCurcodByDivsion(oricod, anocod, combo.getSelectedItem().toString(), false))) {
         JOptionPane.showMessageDialog(null, "El alumno fue registrado correctamente");
       } else {
         JOptionPane.showMessageDialog(null, "Se produjo un error inesperado");

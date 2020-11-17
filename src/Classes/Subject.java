@@ -218,18 +218,19 @@ public class Subject {
     }
   }
   
-  public static ArrayList getSubjects() {
+  public static ArrayList getSubjects(boolean ever) {
     ArrayList subjects = new ArrayList(); 
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     String query = "SELECT * FROM `MATERIAS` WHERE `MAT_FECHAFIN` > ?;";
-
+    if(ever) query = "SELECT * FROM `MATERIAS`;";
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
@@ -386,19 +387,26 @@ public class Subject {
   
   
   // two first items of the arraylist are the matcod and the forcod for optization reasons
-  public static ArrayList getTeachersCod(int oricod, int anocod, int curcod, String subject) {
+  public static ArrayList getTeachersCod(int oricod, int anocod, int curcod, String subject, boolean ever, int promoyear) {
     ArrayList teacherCods = new ArrayList();
     
-    int matcod = getSubjectsCodByCourseAndName(oricod, anocod, curcod, subject);
+    int matcod = getSubjectsCodByCourseAndName(curcod, subject, ever);
 
     if(matcod != 0) {
       java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
 
       BasicDataSource bs = Config.setDBParams();
       Connection connection = null;
-
+      
       String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FECHAFIN` > ?;";
-
+      
+      if(ever) query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=?;";
+      
+      if(promoyear != 0) {
+        if(ever) query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_ANOFECHA`=?;";
+        else query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_ORICOD`=? AND `CURMATPRO_ANOCOD`=? AND `CURMATPRO_CURCOD`=? AND `CURMATPRO_MATCOD`=? AND `CURMATPRO_FECHAFIN` > ? AND `CURMATPRO_ANOFECHA`=?;";
+      }
+      
         try {
           connection = bs.getConnection();
           PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -406,7 +414,9 @@ public class Subject {
           preparedStatement.setInt(2, anocod);
           preparedStatement.setInt(3, curcod);
           preparedStatement.setInt(4, (int) matcod);
-          preparedStatement.setDate(5, todayDate);
+          if(!ever) preparedStatement.setDate(5, todayDate);
+          if(!ever && promoyear != 0) preparedStatement.setInt(6, promoyear);
+          if(ever && promoyear != 0) preparedStatement.setInt(5, promoyear);
           preparedStatement.execute();
           ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
@@ -764,32 +774,33 @@ public class Subject {
     return 0;
   }
 
-  private static int getSubjectsCodByCourseAndName(int oricod, int anocod, int curcod, String subject) {
-    ArrayList cods = new ArrayList();
-    
+  public static int getSubjectsCodByCourseAndName(int curcod, String subject, boolean ever) {
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
-    String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_ORICOD`=? AND `CURMAT_ANOCOD`=? AND `CURMAT_CURCOD`=? AND `CURMAT_FECHAFIN` > ?;";
+    ArrayList codes = getSubjectcodsByName(subject);
+    int codesSize = codes.size();
     
+    for(int i = 0; i < codesSize; i++) {
+      
+      String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_CURCOD`=? AND `CURMAT_MATCOD`=? AND `CURMAT_FECHAFIN` > ?;";
+      if(ever) query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_CURCOD`=? AND `CURMAT_MATCOD`=?;";
       try {
         connection = bs.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setInt(1, oricod);
-        preparedStatement.setInt(2, anocod);
-        preparedStatement.setInt(3, curcod);
-        preparedStatement.setDate(4, todayDate);
+
+        preparedStatement.setInt(1, curcod);
+        preparedStatement.setInt(2, (int) codes.get(i));
+        if(!ever) preparedStatement.setDate(3, todayDate);
         preparedStatement.execute();
         ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
-        while(rs.next()){
-          int matcod = rs.getInt("CURMAT_MATCOD");
-          
-          if(subject.equals(Subject.getSubjectNameByCode(matcod))) return matcod;
+        if(rs.next()){
+          return (int) rs.getInt("CURMAT_MATCOD");
         }
-        
+
       } catch(SQLException ex) {
         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
       } finally {
@@ -799,8 +810,79 @@ public class Subject {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
           }
       }
+    }
     
     return 0;
+  }
+
+  private static ArrayList getSubjectcodsByName(String name) {
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+
+    ArrayList codes = new ArrayList();
+    
+    String query = "SELECT * FROM `MATERIAS` WHERE `MAT_NOMBRE`='" + name + "' AND 'MAT_FECHAFIN' > ?;";
+
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setDate(1, todayDate);
+      preparedStatemnet.execute();
+      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+
+      while(rs.next()){
+        int cod = rs.getInt("MAT_COD");
+        if(!codes.contains(cod)) codes.add(cod);
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+
+    return codes;
+  }
+
+  public static boolean isInCourse(int matcod, int curcod, boolean ever) {
+     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_CURCOD`=? AND `CURMAT_MATCOD`=? AND `CURMAT_FECHAFIN` > ?;";
+    if (ever) query = "SELECT * FROM `CURSOS_MATERIAS` WHERE `CURMAT_CURCOD`=? AND `CURMAT_MATCOD`=?;";
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+      preparedStatement.setInt(1, curcod);
+      preparedStatement.setInt(2, matcod);
+      if (!ever) preparedStatement.setDate(3, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      if(rs.next()){
+        return true;
+      }
+
+    } catch(SQLException ex) {
+      Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+      if(connection != null) try {
+          connection.close();
+        } catch (SQLException ex) {
+          Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    return false;
   }
   
 }

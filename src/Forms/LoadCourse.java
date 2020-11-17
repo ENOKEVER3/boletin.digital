@@ -182,7 +182,7 @@ public class LoadCourse extends javax.swing.JFrame {
        
     String div = divisionBox.getSelectedItem().toString();
    
-    if(Course.getCurcodByDivsion(oricod, yearcod, div) !=0 ){
+    if(Course.getCurcodByDivsion(oricod, yearcod, div, false) !=0 ){
       JOptionPane.showMessageDialog(null, "El curso ya existe");
       return;
     }
@@ -251,8 +251,8 @@ public class LoadCourse extends javax.swing.JFrame {
     }
 
   void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox);
   }
 }

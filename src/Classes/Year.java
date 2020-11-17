@@ -86,18 +86,19 @@ public class Year {
     return 0;
   }
   
-  public static ArrayList getYears() {
+  public static ArrayList getYears(boolean ever) {
     ArrayList years = new ArrayList(); 
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     String query = "SELECT * FROM `ANOS` WHERE `ANO_FECHAFIN` > ?;";
-
+    if(ever) query = "SELECT * FROM `ANOS`;";
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 

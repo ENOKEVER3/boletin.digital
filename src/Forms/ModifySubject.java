@@ -9,7 +9,6 @@ import Classes.Orientation;
 import Classes.Subject;
 import Classes.Year;
 import Utils.Combo;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -371,8 +370,8 @@ public class ModifySubject extends javax.swing.JFrame {
   }
 
   void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
     Combo.setComboBoxItems(Subject.getTypes(), typeBox);
   }
 

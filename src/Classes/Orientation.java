@@ -22,18 +22,19 @@ import org.apache.commons.dbcp2.BasicDataSource;
  * @author lagos
  */
 public class Orientation {
-  public static ArrayList getOrientations() {
+  public static ArrayList getOrientations(boolean ever) {
     ArrayList orientations = new ArrayList(); 
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     String query = "SELECT * FROM `ORIENTACIONES` WHERE `ORI_FECHAFIN` > ?;";
-
+    if(ever) query = "SELECT * FROM `ORIENTACIONES`;";
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 

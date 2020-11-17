@@ -291,7 +291,7 @@ public class DeleteYear extends javax.swing.JFrame {
   }
 
   private void changeBoxs() {
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
   }
 }

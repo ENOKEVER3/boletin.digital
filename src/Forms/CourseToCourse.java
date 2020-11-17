@@ -288,7 +288,7 @@ public class CourseToCourse extends javax.swing.JFrame {
             case 1:
               return String.class;
             case 2:
-              return Integer.class;
+              return String.class;
             case 3:
               return Integer.class;
             case 4:
@@ -311,7 +311,7 @@ public class CourseToCourse extends javax.swing.JFrame {
         
         ArrayList pendingSubjects = PendingNote.getPendingSubjects(currentStudentCod);
         
-        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(), Note.getFinalNote(currentStudentCod, oricod, yearcod, curcod), pendingSubjects.get(0), pendingSubjects.get(1), true});
+        model.addRow(new Object[]{currentStudent.getName(),currentStudent.getLastname(), String.format("%.2f", Note.getFinalNote(currentStudentCod, oricod, yearcod, curcod)), pendingSubjects.get(0), pendingSubjects.get(1), true});
       });
       
       if(students.size() > 0) enableButton();
@@ -398,12 +398,12 @@ public class CourseToCourse extends javax.swing.JFrame {
   }
 
   void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
-    Combo.setComboBoxItems(Year.getYears(), yearBox2);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox2);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox2);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox2);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox2);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox2);
   }
   
   /**

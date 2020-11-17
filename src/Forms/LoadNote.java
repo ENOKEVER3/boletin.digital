@@ -5,7 +5,6 @@
  */
 package Forms;
 
-import Classes.Period;
 import Classes.Course;
 import Classes.Note;
 import Classes.Period;
@@ -111,7 +110,7 @@ public class LoadNote extends javax.swing.JFrame {
     });
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Indique la materia:");
+    jLabel2.setText("Seleccione la materia:");
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     subjectBox.addItemListener(new java.awt.event.ItemListener() {
@@ -291,12 +290,12 @@ public class LoadNote extends javax.swing.JFrame {
     yearcod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     String division = divisionBox.getSelectedItem().toString();
     
-    curcod = Course.getCurcodByDivsion(oricod, yearcod, division);
+    curcod = Course.getCurcodByDivsion(oricod, yearcod, division, false);
     
     if(curcod == 0) {
       JOptionPane.showMessageDialog(null, "Los datos del curso son incorrectos");
     } else {
-      ArrayList teacherscod = Subject.getTeachersCod(oricod, yearcod, curcod, subjectBox.getSelectedItem().toString());
+      ArrayList teacherscod = Subject.getTeachersCod(oricod, yearcod, curcod, subjectBox.getSelectedItem().toString(), false, 0);
       matcod = (int) teacherscod.get(0);
       
       if(teacherscod.contains(menu.currentUserCode)) {
@@ -345,7 +344,7 @@ public class LoadNote extends javax.swing.JFrame {
       return;
     }
     
-    prdcod = Period.getPeriodCod(periodsBox.getSelectedItem().toString());
+    prdcod = Period.getPeriodCod(periodsBox.getSelectedItem().toString(), false);
     
     try {
       changeTable();
@@ -356,6 +355,10 @@ public class LoadNote extends javax.swing.JFrame {
   }//GEN-LAST:event_selectButtonActionPerformed
 
   private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+    String period = periodsBox.getSelectedItem().toString() ;
+    
+    boolean isThirdPeriod = false;
+    if(period.equals("TERCER TRIMESTRE")) isThirdPeriod = true;
     
     try {
       table.getCellEditor().stopCellEditing();
@@ -366,6 +369,7 @@ public class LoadNote extends javax.swing.JFrame {
     int studentsSize = students.size();
     
     boolean isNewNote = false;
+    boolean invalidNote = false;
     
     for (int i = 0; i < studentsSize; i++) {
       
@@ -376,27 +380,29 @@ public class LoadNote extends javax.swing.JFrame {
       int n1 = (int) table.getModel().getValueAt(i,2);
       int n2 = (int) table.getModel().getValueAt(i,3);
       int n3 = (int) table.getModel().getValueAt(i,4);
+      int n4 = (int) table.getModel().getValueAt(i,5);
+      int n5 = (int) table.getModel().getValueAt(i, isThirdPeriod == true ? 6 : 5);  // esto no tiene sentido pero elijo creer que sí
       
-      if((n1 == 0) || (n2 == 0) || (n3 == 0)) {
+      if((n1 == 0) || (n2 == 0) || (n3 == 0) || (n4 == 0) || (n5 == 0)) {
         JOptionPane.showMessageDialog(null, "Ingrese todas las notas del alumno: " + currentUser.getName() + " " + currentUser.getLastname());
         continue;
       }
       
-      for (int j = 0; j < 3; j++) {
+      for (int j = 0; j < (isThirdPeriod == true ? 5 : 4); j++) {
 
         int newNote = (int) table.getModel().getValueAt(i,j+2);
         
-        String period = periodsBox.getSelectedItem().toString() ;
-        
         if (!period.equals("PRIMER TRIMESTRE") && !period.equals("SEGUNDO TRIMESTRE") && !period.equals("TERCER TRIMESTRE")) {
           if(newNote > 7) {
-            JOptionPane.showMessageDialog(null, "El máximo para un periodo de recuperación es de siete");
+            invalidNote = true;
+            table.getModel().setValueAt(0, i, j+2);
             continue;
           }
         }
         
         if(newNote < 0 || newNote > 10) {
-          JOptionPane.showMessageDialog(null, "Una nota no es válida");
+          table.getModel().setValueAt(0, i, j+2);
+          invalidNote = true;
           continue;
         }
         
@@ -416,7 +422,7 @@ public class LoadNote extends javax.swing.JFrame {
               Logger.getLogger(LoadNote.class.getName()).log(Level.SEVERE, null, ex);
             }
           }
-        }
+        } 
       }
       table.getCellEditor();
     }
@@ -433,6 +439,10 @@ public class LoadNote extends javax.swing.JFrame {
     }
     
     JOptionPane.showMessageDialog(null, "cambios guardados");
+    
+    if(invalidNote) {
+      JOptionPane.showMessageDialog(null, "Las notas invalidas no fueron agregadas");
+    }
   }//GEN-LAST:event_loadButtonActionPerformed
 
   private void periodsBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_periodsBoxItemStateChanged
@@ -490,7 +500,7 @@ public class LoadNote extends javax.swing.JFrame {
   
   private void changeBoxs() {
     
-    ArrayList data = User.getTeacherData(menu.currentUserCode);
+    ArrayList data = User.getTeacherData(menu.currentUserCode, false);
     
     ArrayList orientations = (ArrayList) data.get(0);
     ArrayList years = (ArrayList) data.get(1);
@@ -515,77 +525,82 @@ public class LoadNote extends javax.swing.JFrame {
 
   private void changeTable() throws ParseException {
     students = Course.getStudentsByCourse(curcod);
+    String period = periodsBox.getSelectedItem().toString();
     
-    Object[] columnNames = {"Nombre", "Apellido", "Nota 1", "Nota 2", "Nota 3"};
+    boolean isThirdPeriod = false;
+    
+    if(period.equals("TERCER TRIMESTRE")) isThirdPeriod = true;
+    
+    Object[] columnNames = {"Nombre", "Apellido", "Nota 1", "Nota 2", "Nota 3", "Nota Final"};
+    Object[] columnNames2 = {"Nombre", "Apellido", "Nota 1", "Nota 2", "Nota 3", "Nota Integrador", "Nota Final"};
       
-      DefaultTableModel model = new DefaultTableModel(null, columnNames){
-        @Override
-        public boolean isCellEditable(int row, int column) {
-          if(column == 2 || column == 3 || column == 4) return true;
-          return false;
-        }  
-        
-        @Override
-        public Class getColumnClass(int column) {
-          switch (column) {
-            case 0:
-              return String.class;
-            case 1:
-              return String.class;
-            case 2:
-              return Integer.class;
-            case 3:
-              return Integer.class;
-            case 4:
-              return Integer.class;
-            default:
-              return Integer.class;
-          }
+    DefaultTableModel model = new DefaultTableModel(null, isThirdPeriod == false ? columnNames : columnNames2){
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        if(column < 2) return false;
+        return true;
+      }  
+
+      @Override
+      public Class getColumnClass(int column) {
+        switch (column) {
+          case 0:
+            return String.class;
+          case 1:
+            return String.class;
+          default:
+            return Integer.class;
         }
-      };
-      
-      table.setModel(model);
-      table.getTableHeader().setReorderingAllowed(false);
-      table.getTableHeader().setResizingAllowed(false);
-      
-      int studentsSize = students.size();
-      
-      studentsNotes = new ArrayList();
-      ArrayList studentsToRemove = new ArrayList();
-      
-      for (int i = 0; i < studentsSize; i++) {
-        User currentStudent = (User) students.get(i);
-        int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
-        
-        if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
-          if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
-            studentsToRemove.add(currentStudent);
-            continue;
-          }
-        }  
-        
-        ArrayList notes = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod);  
-        
-        Note n1 = (Note) notes.get(0);
-        Note n2 = (Note) notes.get(1);
-        Note n3 = (Note) notes.get(2);
-        
-        ArrayList note = new ArrayList();
-        
-        note.add(n1.getValue());
-        note.add(n2.getValue());
-        note.add(n3.getValue());
-        
-        studentsNotes.add(note);
-        
-        model.addRow(new Object[]{currentStudent.getName(), currentStudent.getLastname(), n1.getValue(), n2.getValue(), n3.getValue()});
+      }
+    };
+
+    table.setModel(model);
+    table.getTableHeader().setReorderingAllowed(false);
+    table.getTableHeader().setResizingAllowed(false);
+
+    int studentsSize = students.size();
+
+    studentsNotes = new ArrayList();
+    ArrayList studentsToRemove = new ArrayList();
+
+    for (int i = 0; i < studentsSize; i++) {
+      User currentStudent = (User) students.get(i);
+      int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
+
+      if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
+        if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
+          studentsToRemove.add(currentStudent);
+          continue;
+        }
+      }  
+
+      int n1 = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, 0);
+      int n2 = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, 1);
+      int n3 = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, 2);
+      int n4 = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, 3);
+      int n5 = Note.getNote(studentCod, oricod, yearcod, curcod, matcod, prdcod, 4);
+
+      ArrayList note = new ArrayList();
+
+      note.add(n1);
+      note.add(n2);
+      note.add(n3);
+      note.add(n4);
+     
+      if(isThirdPeriod) {   
+        note.add(n5);
       }
       
-      studentsToRemove.forEach(student -> {
-        students.remove(student);
-      });
+      studentsNotes.add(note);
+
+      model.addRow(new Object[]{currentStudent.getName(), currentStudent.getLastname(), n1, n2, n3, n4, isThirdPeriod == true ? n5 : null});
+    }
       
-      if(students.size() > 0) loadButton.setEnabled(true);
-      else loadButton.setEnabled(false);
+    studentsToRemove.forEach(student -> {
+      students.remove(student);
+    });
+
+    if(students.size() > 0) loadButton.setEnabled(true);
+    else loadButton.setEnabled(false);
   }
 }

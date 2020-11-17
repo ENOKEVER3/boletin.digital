@@ -47,16 +47,21 @@ public class Course {
       this.division = division;
   }
   
-  public static int getCurcodByDivsion(int oricod, int anocod, String division) {
+  public static int getCurcodByDivsion(int oricod, int anocod, String division, boolean ever) {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    
     String query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + oricod + "' AND `CUR_ANOCOD`='" + anocod + "' AND `CUR_DIVISION`='" + division + "' AND `CUR_FECHAFIN` > ?;";
-
+    
+    if(ever) {
+      query = "SELECT * FROM `CURSOS` WHERE `CUR_ORICOD`='" + oricod + "' AND `CUR_ANOCOD`='" + anocod + "' AND `CUR_DIVISION`='" + division + "';";
+    }
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
@@ -729,5 +734,49 @@ public class Course {
     }
     
     return "";
+  }
+  
+  public static ArrayList getStudentsByCourseAndYear(int curcod, int year) {
+    ArrayList students = new ArrayList();
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_CURCOD`=? AND `CURMATALU_ANOFECHA`=?;";
+    
+    try {                                                          
+
+      java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+      
+      connection = bs.getConnection();
+      PreparedStatement preparedStatemnet = connection.prepareStatement(query);
+      preparedStatemnet.setInt(1, curcod);
+      preparedStatemnet.setInt(2, year);
+      preparedStatemnet.execute();
+
+      ResultSet rs = (ResultSet) preparedStatemnet.getResultSet();
+      
+      ArrayList studentsCods = new ArrayList(); 
+      
+      while(rs.next()) {
+        int usercod = rs.getInt("CURMATALU_ALUMNOPERCOD");
+        User student = User.getUser(usercod);
+        if (!studentsCods.contains(usercod)) {
+          students.add(student);
+          studentsCods.add(usercod);
+        }
+      }
+      
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e.getMessage());
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }   
+   
+    return students;
   }
 }

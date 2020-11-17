@@ -182,7 +182,7 @@ public class DeleteCourse extends javax.swing.JFrame {
         
     String div = divisionBox.getSelectedItem().toString();
    
-    int curcod = Course.getCurcodByDivsion(oricod, yearcod, div);
+    int curcod = Course.getCurcodByDivsion(oricod, yearcod, div, false);
     
     if(curcod == 0 ){
       JOptionPane.showMessageDialog(null, "El curso no existe");
@@ -242,8 +242,8 @@ public class DeleteCourse extends javax.swing.JFrame {
     }
 
   void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox);
   }
 }

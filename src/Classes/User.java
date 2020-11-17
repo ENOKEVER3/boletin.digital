@@ -693,7 +693,7 @@ public class User {
     return (boolean) User.getUserCategoriesByUsercode(percod).contains(Categorie.getCatcod(categorie));
   }
   
-  public static ArrayList getTeacherData(int teacherCode) {
+  public static ArrayList getTeacherData(int teacherCode, boolean ever) {
     boolean isTeacher = User.isCategorie(teacherCode, "Profesor");
     if(!isTeacher) {
       JOptionPane.showMessageDialog(null, "El usuario no es profesor");
@@ -709,12 +709,13 @@ public class User {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
-    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_FECHAFIN` > ? AND `CURMATPRO_PERCOD`='" + teacherCode + "';";
-
+    String query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`='" + teacherCode + "' AND `CURMATPRO_FECHAFIN`>?;";
+    if(ever) query = "SELECT * FROM `CURSOSMATERIAS_PROFESORES` WHERE `CURMATPRO_PERCOD`='" + teacherCode + "'";
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 
@@ -723,6 +724,62 @@ public class User {
         String year = Year.getYearName(rs.getInt("CURMATPRO_ANOCOD"));
         String division = Course.getDivision(rs.getInt("CURMATPRO_CURCOD"));
         String subject = Subject.getSubjectNameByCode(rs.getInt("CURMATPRO_MATCOD"));
+        
+        if(!orientations.contains(orientation)) orientations.add(orientation);
+        if(!years.contains(year)) years.add(year);
+        if(!divisions.contains(division)) divisions.add(division);
+        if(!subjects.contains(subject)) subjects.add(subject);
+      }
+
+    } catch (SQLException e) {
+      System.out.println("ERROR: " + e);
+    } finally {
+      if(connection != null) try {
+        connection.close();
+      } catch (SQLException ex) {
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
+    
+    data.add(orientations);
+    data.add(years);
+    data.add(divisions);
+    data.add(subjects);
+    
+    return data; 
+  }
+  
+  public static ArrayList getStudentData(int studentCode, boolean ever) {
+    boolean isStudent = User.isCategorie(studentCode, "Alumno");
+    if(!isStudent) {
+      JOptionPane.showMessageDialog(null, "El usuario no es alumno");
+      return null;
+    }
+    
+    ArrayList data = new ArrayList();
+    ArrayList orientations = new ArrayList(); 
+    ArrayList years = new ArrayList();
+    ArrayList divisions = new ArrayList();
+    ArrayList subjects = new ArrayList(); 
+    
+    BasicDataSource bs = Config.setDBParams();
+    Connection connection = null;
+    java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
+    String query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOPERCOD`='" + studentCode + "' AND `CURMATALU_FECHAFIN`>?;";
+    if(ever) query = "SELECT * FROM `CURSOSMATERIAS_ALUMNOS` WHERE `CURMATALU_ALUMNOPERCOD`='" + studentCode + "';";
+    
+    try {
+      connection = bs.getConnection();
+      PreparedStatement preparedStatement = connection.prepareStatement(query);
+      if(!ever) preparedStatement.setDate(1, todayDate);
+      preparedStatement.execute();
+      ResultSet rs = (ResultSet) preparedStatement.getResultSet();
+
+      while(rs.next()){
+        String orientation = Orientation.getOrientationName(rs.getInt("CURMATALU_CURORICOD"));
+        String year = Year.getYearName(rs.getInt("CURMATALU_CURANOCOD"));
+        String division = Course.getDivision(rs.getInt("CURMATALU_CURCOD"));
+        String subject = Subject.getSubjectNameByCode(rs.getInt("CURMATALU_MATCOD"));
         
         if(!orientations.contains(orientation)) orientations.add(orientation);
         if(!years.contains(year)) years.add(year);

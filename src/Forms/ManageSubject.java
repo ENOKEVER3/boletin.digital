@@ -398,10 +398,10 @@ public class ManageSubject extends javax.swing.JFrame {
   }
 
   private void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Subject.getSubjects(), subjectBox);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Subject.getSubjects(false), subjectBox);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox);
   }
   
   public void cleanFields() {
@@ -417,11 +417,11 @@ public class ManageSubject extends javax.swing.JFrame {
     anocod = Year.getYearcod(yearBox.getSelectedItem().toString(), oricod);
     division = divisionBox.getSelectedItem().toString();
     
-    curcod = Course.getCurcodByDivsion(oricod, anocod, division);
+    curcod = Course.getCurcodByDivsion(oricod, anocod, division, false);
     
     if(curcod != 0) {
       teachersBox.removeAllItems();
-      teachersCod = Subject.getTeachersCod(oricod, anocod, curcod,  subjectBox.getSelectedItem().toString());
+      teachersCod = Subject.getTeachersCod(oricod, anocod, curcod,  subjectBox.getSelectedItem().toString(), false, 0);
       
       for(int i = 2; i < teachersCod.size(); i++) {
         teachersBox.addItem(User.getFullNameByCod((int) teachersCod.get(i)));

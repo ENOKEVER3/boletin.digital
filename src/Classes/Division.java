@@ -22,18 +22,19 @@ import org.apache.commons.dbcp2.BasicDataSource;
  * @author lagos
  */
 public class Division {
-  public static ArrayList getDivisions() {
+  public static ArrayList getDivisions(boolean ever) {
     ArrayList divisions = new ArrayList(); 
     
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
     String query = "SELECT * FROM `DIVISIONES` WHERE `DIV_FECHAFIN` > ?;";
-
+    if(ever) query = "SELECT * FROM `DIVISIONES`;";
+    
     try {
       connection = bs.getConnection();
       PreparedStatement preparedStatement = connection.prepareStatement(query);
-      preparedStatement.setDate(1, todayDate);
+      if(!ever) preparedStatement.setDate(1, todayDate);
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();
 

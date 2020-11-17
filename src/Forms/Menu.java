@@ -5,6 +5,7 @@
  */
 package Forms;
 
+import Classes.Categorie;
 import Classes.User;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -88,6 +89,11 @@ public class Menu extends javax.swing.JFrame {
     seeCoursesButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     seeCoursesButton.setText("CURSOS");
     seeCoursesButton.setEnabled(false);
+    seeCoursesButton.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        seeCoursesButtonActionPerformed(evt);
+      }
+    });
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jLabel2.setText("Cargar:");
@@ -276,7 +282,25 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_loadSubjectsButtonActionPerformed
 
   private void seeMarksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeMarksButtonActionPerformed
-    // TODO add your handling code here:
+    ArrayList categories = User.getUserCategoriesByUsercode(currentUserCode);
+    
+    String firstcat = (String) Categorie.getCatName((int) categories.get(0));
+    
+    if(categories.size() == 1 && !firstcat.equals("Preceptor")) {
+      SeeNote seeNote = new SeeNote();
+      seeNote.menu = this;
+      seeNote.userType = firstcat;
+      seeNote.setVisible(true);
+      seeNote.changeBoxs();
+      this.setVisible(false);
+      return;
+    } 
+    
+    SelectCategorie selectCategorie = new SelectCategorie();
+    selectCategorie.updateCombo(categories);
+    selectCategorie.menu = this;
+    selectCategorie.seeNote = true;
+    selectCategorie.setVisible(true);
   }//GEN-LAST:event_seeMarksButtonActionPerformed
 
   private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -295,6 +319,28 @@ public class Menu extends javax.swing.JFrame {
     loadNote.setVisible(true);
     loadNote.menu = this;
   }//GEN-LAST:event_loadMarksButtonActionPerformed
+
+  private void seeCoursesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seeCoursesButtonActionPerformed
+    ArrayList categories = User.getUserCategoriesByUsercode(currentUserCode);
+    
+    String firstcat = (String) Categorie.getCatName((int) categories.get(0));
+    
+    if(categories.size() == 1) {
+      SeeCourse seeCourse = new SeeCourse();
+      seeCourse.menu = this;
+      seeCourse.userType = firstcat;
+      seeCourse.changeBoxs();
+      seeCourse.setVisible(true);
+      this.setVisible(false);
+      return;
+    } 
+    
+    SelectCategorie selectCategorie = new SelectCategorie();
+    selectCategorie.seeCourse = true;
+    selectCategorie.updateCombo(categories);
+    selectCategorie.menu = this;
+    selectCategorie.setVisible(true);
+  }//GEN-LAST:event_seeCoursesButtonActionPerformed
 
     /**
      * @param args the command line arguments

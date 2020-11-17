@@ -473,7 +473,7 @@ public class ManageCourse extends javax.swing.JFrame {
     this.setVisible(false);
     Modify modify = new Modify();
     modify.setVisible(true);
-    modify.list = Orientation.getOrientations();
+    modify.list = Orientation.getOrientations(false);
     modify.manageCourse = this;
     modify.table = "ORIENTACIONES";
   }//GEN-LAST:event_jButton4ActionPerformed
@@ -482,7 +482,7 @@ public class ManageCourse extends javax.swing.JFrame {
     this.setVisible(false);
     Modify modify = new Modify();
     modify.setVisible(true);
-    modify.list = Division.getDivisions();
+    modify.list = Division.getDivisions(false);
     modify.manageCourse = this;
     modify.table = "DIVISIONES";
   }//GEN-LAST:event_jButton5ActionPerformed
@@ -585,9 +585,9 @@ public class ManageCourse extends javax.swing.JFrame {
   }
 
   void changeBoxs() {
-    Combo.setComboBoxItems(Year.getYears(), yearBox);
-    Combo.setComboBoxItems(Orientation.getOrientations(), orientationBox);
-    Combo.setComboBoxItems(Division.getDivisions(), divisionBox);
+    Combo.setComboBoxItems(Year.getYears(false), yearBox);
+    Combo.setComboBoxItems(Orientation.getOrientations(false), orientationBox);
+    Combo.setComboBoxItems(Division.getDivisions(false), divisionBox);
   }
   
   public void cleanFields() {
