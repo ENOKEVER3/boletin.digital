@@ -12,6 +12,10 @@ The system is developed in Java using Netbeans as IDE which helps among other th
 
 We are working on a demo to show what has been achieved so far
 
+## Promo Video (in spanish)
+
+youtube promo video: https://youtu.be/PUMi7lxCXTE
+
 ## Team
 
 * Cagnoni Sofía
