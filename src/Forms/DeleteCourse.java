@@ -96,7 +96,7 @@ public class DeleteCourse extends javax.swing.JFrame {
     jLabel6.setText("División:");
 
     jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("Determine los siguientes datos:");
+    jLabel3.setText("Determine los datos del curso");
 
     jLabel4.setText("Año:");
 
@@ -105,8 +105,15 @@ public class DeleteCourse extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(21, 21, 21)
+        .addGap(0, 0, Short.MAX_VALUE)
+        .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap())
+      .addGroup(layout.createSequentialGroup()
+        .addGap(56, 56, 56)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(loadSubject)
+            .addGap(244, 244, 244))
           .addComponent(jLabel6)
           .addComponent(jLabel1)
           .addComponent(jLabel3)
@@ -118,23 +125,19 @@ public class DeleteCourse extends javax.swing.JFrame {
             .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel5)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(loadSubject)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .addComponent(jLabel5))))
+        .addContainerGap(60, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(19, 19, 19)
+        .addContainerGap(32, Short.MAX_VALUE)
         .addComponent(jLabel1)
+        .addGap(18, 18, 18)
+        .addComponent(jLabel3)
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel3)
-            .addGap(18, 18, 18)
             .addComponent(jLabel4)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -146,10 +149,10 @@ public class DeleteCourse extends javax.swing.JFrame {
         .addComponent(jLabel6)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addComponent(loadSubject)
-          .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(18, 18, 18)
+        .addComponent(loadSubject)
+        .addGap(26, 26, 26)
+        .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
 

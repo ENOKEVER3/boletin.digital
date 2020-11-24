@@ -43,7 +43,6 @@ public class Menu extends javax.swing.JFrame {
   private void initComponents() {
 
     jButton5 = new javax.swing.JButton();
-    jLabel1 = new javax.swing.JLabel();
     jLabel3 = new javax.swing.JLabel();
     seeMarksButton = new javax.swing.JButton();
     seeCoursesButton = new javax.swing.JButton();
@@ -56,6 +55,9 @@ public class Menu extends javax.swing.JFrame {
     manageCoursesButton = new javax.swing.JButton();
     exitMenu = new javax.swing.JButton();
     jButton1 = new javax.swing.JButton();
+    jLabel5 = new javax.swing.JLabel();
+    jSeparator2 = new javax.swing.JSeparator();
+    jSeparator4 = new javax.swing.JSeparator();
 
     jButton5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     jButton5.setText("CURSOS");
@@ -71,11 +73,8 @@ public class Menu extends javax.swing.JFrame {
       }
     });
 
-    jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-    jLabel1.setText("Menú");
-
-    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("Ver:");
+    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel3.setText("Mostrar");
 
     seeMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     seeMarksButton.setText("NOTAS ");
@@ -95,8 +94,8 @@ public class Menu extends javax.swing.JFrame {
       }
     });
 
-    jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Cargar:");
+    jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel2.setText("Cargar");
 
     loadMarksButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     loadMarksButton.setText("NOTAS");
@@ -116,7 +115,7 @@ public class Menu extends javax.swing.JFrame {
       }
     });
 
-    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel4.setText("Administrar:");
 
     manageSubjectsButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -165,73 +164,85 @@ public class Menu extends javax.swing.JFrame {
       }
     });
 
+    jLabel5.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+    jLabel5.setText("MENÚ PRINCIPAL");
+    jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
+        .addContainerGap(174, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(exitMenu))
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(163, 163, 163)
-                .addComponent(jLabel1))
-              .addGroup(layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+            .addComponent(exitMenu)
+            .addContainerGap())
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(jSeparator4)
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(jLabel4)
+                  .addComponent(jSeparator2)
                   .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                      .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                      .addComponent(seeMarksButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(loadMarksButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(manageCoursesButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(seeMarksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                      .addComponent(seeCoursesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(manageSubjectsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                      .addComponent(loadSubjectsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(seeCoursesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jLabel2)
+                .addGroup(layout.createSequentialGroup()
+                  .addComponent(loadMarksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(loadSubjectsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addComponent(manageUsersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-            .addGap(0, 71, Short.MAX_VALUE)))
-        .addContainerGap())
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                  .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(manageCoursesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(manageSubjectsButton)))))
+            .addGap(190, 190, 190))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(jLabel5)
+            .addGap(166, 166, 166))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(23, 23, 23)
-        .addComponent(jLabel1)
-        .addGap(18, 18, 18)
+        .addGap(36, 36, 36)
+        .addComponent(jLabel5)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
         .addComponent(jLabel3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(seeMarksButton)
           .addComponent(seeCoursesButton))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(17, 17, 17)
         .addComponent(jLabel2)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(loadMarksButton)
           .addComponent(loadSubjectsButton))
-        .addGap(18, 18, 18)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jLabel4)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(manageSubjectsButton)
-          .addComponent(manageCoursesButton))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(manageUsersButton)
-          .addComponent(jButton1))
-        .addGap(14, 14, 14)
+          .addComponent(manageCoursesButton)
+          .addComponent(manageSubjectsButton))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(manageUsersButton))
+        .addGap(31, 31, 31)
         .addComponent(exitMenu)
-        .addGap(6, 6, 6))
+        .addContainerGap())
     );
 
     pack();
@@ -350,10 +361,12 @@ public class Menu extends javax.swing.JFrame {
   private javax.swing.JButton exitMenu;
   private javax.swing.JButton jButton1;
   private javax.swing.JButton jButton5;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
+  private javax.swing.JLabel jLabel5;
+  private javax.swing.JSeparator jSeparator2;
+  private javax.swing.JSeparator jSeparator4;
   private javax.swing.JButton loadMarksButton;
   private javax.swing.JButton loadSubjectsButton;
   private javax.swing.JButton manageCoursesButton;

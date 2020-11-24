@@ -44,7 +44,6 @@ public class UserList extends javax.swing.JFrame {
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
-    jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     jLabel6 = new javax.swing.JLabel();
@@ -63,6 +62,7 @@ public class UserList extends javax.swing.JFrame {
     categorieBox = new javax.swing.JComboBox<>();
     jLabel11 = new javax.swing.JLabel();
     jButton2 = new javax.swing.JButton();
+    jSeparator1 = new javax.swing.JSeparator();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -88,8 +88,6 @@ public class UserList extends javax.swing.JFrame {
         jButton1ActionPerformed(evt);
       }
     });
-
-    jLabel3.setText("Usuarios encontrados:");
 
     jLabel4.setText("Nombre:");
 
@@ -141,6 +139,9 @@ public class UserList extends javax.swing.JFrame {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jButton2))
           .addGroup(layout.createSequentialGroup()
             .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +152,7 @@ public class UserList extends javax.swing.JFrame {
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
-                .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 364, Short.MAX_VALUE))
+                .addComponent(nameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
@@ -171,67 +172,47 @@ public class UserList extends javax.swing.JFrame {
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel10)
                 .addGap(33, 33, 33)
-                .addComponent(genderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                  .addComponent(jLabel11))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(categorieBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(lastnameField)
-                  .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
-                .addGap(42, 42, 42)
-                .addComponent(jButton1))
-              .addGroup(layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(jToggleButton1))
-                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                      .addComponent(jLabel3)
-                      .addGap(18, 18, 18))
-                    .addComponent(usernameBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-            .addGap(0, 0, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(jButton2)))
+                .addComponent(genderLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         .addContainerGap())
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addGap(0, 0, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addComponent(usernameBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(jLabel1)
+          .addComponent(jLabel2)
+          .addComponent(jLabel11)
+          .addComponent(categorieBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(lastnameField)
+          .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+          .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+          .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addGap(141, 141, 141))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(24, 24, 24)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel1))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(jLabel2)
-              .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(32, 32, 32)
-            .addComponent(jButton1)))
+        .addGap(27, 27, 27)
+        .addComponent(jLabel1)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(categorieBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel11))
-        .addGap(31, 31, 31)
-        .addComponent(jLabel3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jLabel11)
+        .addGap(1, 1, 1)
+        .addComponent(categorieBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(29, 29, 29)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addComponent(usernameBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jToggleButton1)
-        .addGap(34, 34, 34)
+        .addGap(26, 26, 26)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel6)
           .addComponent(usernameLabel))
@@ -259,7 +240,7 @@ public class UserList extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel10)
           .addComponent(genderLabel))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+        .addGap(34, 34, 34)
         .addComponent(jButton2)
         .addContainerGap())
     );
@@ -296,9 +277,7 @@ public class UserList extends javax.swing.JFrame {
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     String name = nameField.getText();
     String lastname = lastnameField.getText();
-    
-    if (categorieBox.getSelectedIndex() > 0);
-    
+       
     if(name.isEmpty() && lastname.isEmpty()) {
       JOptionPane.showMessageDialog(null, "Complete alguno de los campos");
       return;
@@ -306,6 +285,8 @@ public class UserList extends javax.swing.JFrame {
     
     ArrayList usersnames = new ArrayList();
     usersnames = User.searchUsersUsername(name, lastname, Categorie.getCatcod((String) categorieBox.getSelectedItem()));
+    
+    cleanLabels();
     
     usernameBox.removeAllItems();
     
@@ -333,13 +314,13 @@ public class UserList extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel10;
   private javax.swing.JLabel jLabel11;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JLabel jLabel8;
   private javax.swing.JLabel jLabel9;
+  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JToggleButton jToggleButton1;
   private javax.swing.JTextField lastnameField;
   private javax.swing.JLabel lastnameLabel;
@@ -366,5 +347,16 @@ public class UserList extends javax.swing.JFrame {
     otherEmailLabel.setText(user.getOptionalEmail());
     phoneLabel.setText(String.valueOf(user.getPhone()));
     genderLabel.setText(user.getGender());
+  }
+  
+  private void cleanLabels() {
+
+    usernameLabel.setText("");
+    nameLabel.setText("");
+    lastnameLabel.setText("");
+    emailLabel.setText("");
+    otherEmailLabel.setText("");
+    phoneLabel.setText("");
+    genderLabel.setText("");
   }
 }

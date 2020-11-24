@@ -291,7 +291,7 @@ public class ManageUser extends javax.swing.JFrame {
     }//GEN-LAST:event_emailFieldActionPerformed
 
     private void changeManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeManageUserActionPerformed
-      dispose();  
+      this.setVisible(false);
       ModifyUser modifyUser = new ModifyUser();
       modifyUser.setVisible(true);
       modifyUser.menuInstance = menuInstance;  
@@ -321,6 +321,7 @@ public class ManageUser extends javax.swing.JFrame {
             try {   
                 setCategories();
                 JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+                cleanFields();    
                 if(studentCheckBox.isSelected()) {
                   if(!(JOptionPane.showConfirmDialog(null, "Desea inscribir al alumno en primer año?") == 0)) return;
                   RegisterFirstGrade registerFirstGrade = new RegisterFirstGrade();

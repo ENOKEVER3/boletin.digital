@@ -55,7 +55,6 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     subjectBox = new javax.swing.JComboBox();
-    jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
     orientationBox = new javax.swing.JComboBox();
@@ -92,7 +91,7 @@ public class ManageSubject extends javax.swing.JFrame {
     jLabel1.setText("Administración de materias");
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Indique la materia:");
+    jLabel2.setText("Materia:");
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     subjectBox.addItemListener(new java.awt.event.ItemListener() {
@@ -105,9 +104,6 @@ public class ManageSubject extends javax.swing.JFrame {
         subjectBoxActionPerformed(evt);
       }
     });
-
-    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel4.setText("Indique el curso:");
 
     jLabel5.setText("Año:");
 
@@ -154,7 +150,7 @@ public class ManageSubject extends javax.swing.JFrame {
       }
     });
 
-    jLabel3.setText("Profesores asociados:");
+    jLabel3.setText("Profesores:");
 
     deleteButton.setText("ELIMINAR");
     deleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -190,67 +186,58 @@ public class ManageSubject extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
+            .addContainerGap(289, Short.MAX_VALUE)
+            .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel4)
                   .addComponent(jLabel1)
-                  .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addComponent(jLabel7)
+                  .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(jLabel2)
                   .addGroup(layout.createSequentialGroup()
-                    .addGap(119, 119, 119)
-                    .addComponent(jButton3))
-                  .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                      .addComponent(jLabel5)
+                      .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                      .addComponent(jButton3))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                      .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                          .addComponent(jLabel5)
-                          .addComponent(yearBox, 0, 91, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                          .addComponent(jLabel6)
-                          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                      .addComponent(jLabel2))
+                      .addComponent(jLabel6)
+                      .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                       .addComponent(jLabel12)
                       .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
               .addGroup(layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(jLabel3))
-              .addGroup(layout.createSequentialGroup()
                 .addGap(104, 104, 104)
-                .addComponent(teachersBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(0, 0, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jSeparator1)
-              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(exitManageSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                  .addComponent(jLabel3)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(teachersBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                      .addComponent(deleteButton)
+                      .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                      .addComponent(addButton))))))
+            .addGap(0, 0, Short.MAX_VALUE)))
         .addContainerGap())
-      .addGroup(layout.createSequentialGroup()
-        .addGap(144, 144, 144)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(addButton)
-          .addComponent(deleteButton))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(61, 61, 61))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGap(16, 16, 16)
         .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(13, 13, 13)
         .addComponent(jLabel7)
-        .addGap(18, 18, 18)
+        .addGap(31, 31, 31)
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(jLabel4)
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
@@ -265,19 +252,19 @@ public class ManageSubject extends javax.swing.JFrame {
             .addComponent(jLabel6)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(33, 33, 33)
+        .addGap(18, 18, 18)
         .addComponent(jButton3)
-        .addGap(18, 18, 18)
-        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
+        .addGap(29, 29, 29)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(13, 13, 13)
         .addComponent(jLabel3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(teachersBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(deleteButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(addButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(deleteButton)
+          .addComponent(addButton))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
         .addComponent(exitManageSubject)
         .addContainerGap())
     );
@@ -370,7 +357,6 @@ public class ManageSubject extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel13;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;

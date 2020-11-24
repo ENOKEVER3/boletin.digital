@@ -49,7 +49,7 @@ public class DeleteYear extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jLabel1 = new javax.swing.JLabel();
+    jLabel3 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     jButton1 = new javax.swing.JButton();
     jToggleButton1 = new javax.swing.JToggleButton();
@@ -57,6 +57,9 @@ public class DeleteYear extends javax.swing.JFrame {
     orientationBox = new javax.swing.JComboBox<>();
     yearBox = new javax.swing.JComboBox();
     jLabel5 = new javax.swing.JLabel();
+
+    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    jLabel3.setText("Determine los datos del curso");
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -69,10 +72,8 @@ public class DeleteYear extends javax.swing.JFrame {
       }
     });
 
-    jLabel1.setText("Nueva año");
-
-    jLabel2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-    jLabel2.setText("Años");
+    jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    jLabel2.setText("Eliminar Año");
 
     jButton1.setText("ELIMINAR");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -100,45 +101,44 @@ public class DeleteYear extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addGap(22, 22, 22)
+      .addGroup(layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addContainerGap())
+      .addGroup(layout.createSequentialGroup()
+        .addGap(47, 47, 47)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel2)
-          .addComponent(jLabel1)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(layout.createSequentialGroup()
-              .addComponent(jButton1)
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-              .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel4)
-                .addComponent(jLabel5))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel4)
+              .addComponent(jLabel5))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(orientationBox, 0, 222, Short.MAX_VALUE)))))
-        .addContainerGap(28, Short.MAX_VALUE))
+                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addComponent(jButton1)))
+          .addComponent(jLabel2))
+        .addContainerGap(49, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
+        .addGap(32, 32, 32)
         .addComponent(jLabel2)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        .addGap(32, 32, 32)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jLabel4)
-          .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel5))
-        .addGap(23, 23, 23)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton1)
-          .addComponent(jToggleButton1))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(15, 15, 15)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel5))
+            .addGap(18, 18, 18)
+            .addComponent(jButton1)))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+        .addComponent(jToggleButton1)
         .addContainerGap())
     );
 
@@ -189,8 +189,8 @@ public class DeleteYear extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton jButton1;
-  private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JToggleButton jToggleButton1;

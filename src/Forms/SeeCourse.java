@@ -6,8 +6,10 @@
 package Forms;
 
 import Classes.Course;
+import Classes.Division;
 import Classes.Orientation;
 import Classes.Promo;
+import Classes.Subject;
 import Classes.User;
 import Classes.Year;
 import Utils.Combo;
@@ -58,7 +60,6 @@ public class SeeCourse extends javax.swing.JFrame {
     searchButton = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
     promoBox = new javax.swing.JComboBox();
-    jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     jLabel12 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
@@ -77,7 +78,7 @@ public class SeeCourse extends javax.swing.JFrame {
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Ver cursos");
+    jLabel1.setText("Mostrar Curso");
 
     exitLoadNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     exitLoadNote.setText("SALIR");
@@ -95,7 +96,7 @@ public class SeeCourse extends javax.swing.JFrame {
     });
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Seleccione el año:");
+    jLabel2.setText("Período:");
 
     promoBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     promoBox.addItemListener(new java.awt.event.ItemListener() {
@@ -108,9 +109,6 @@ public class SeeCourse extends javax.swing.JFrame {
         promoBoxActionPerformed(evt);
       }
     });
-
-    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel4.setText("Indique el curso:");
 
     jLabel5.setText("Año:");
 
@@ -175,7 +173,6 @@ public class SeeCourse extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4)
             .addComponent(promoBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel2)
             .addComponent(jLabel1)
@@ -193,7 +190,7 @@ public class SeeCourse extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(22, Short.MAX_VALUE))
+        .addContainerGap(18, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,9 +201,7 @@ public class SeeCourse extends javax.swing.JFrame {
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(promoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jLabel4)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel5)
@@ -222,11 +217,11 @@ public class SeeCourse extends javax.swing.JFrame {
             .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
         .addComponent(searchButton)
-        .addGap(39, 39, 39)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addGap(18, 18, 18)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(22, Short.MAX_VALUE))
     );
 
     pack();
@@ -301,7 +296,6 @@ public class SeeCourse extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JScrollPane jScrollPane1;
@@ -335,8 +329,13 @@ public class SeeCourse extends javax.swing.JFrame {
     
     if(userType.equals("Alumno")) {
       data = User.getStudentData(menu.currentUserCode, true);
-    } else {
+    } else if(userType.equals("Profesor")) {
       data = User.getTeacherData(menu.currentUserCode, true);
+    } else {
+      data.add(Orientation.getOrientations(true));
+      data.add(Year.getYears(true));
+      data.add(Division.getDivisions(true));
+      data.add(Subject.getSubjects(true));
     }
     
     ArrayList orientations = (ArrayList) data.get(0);

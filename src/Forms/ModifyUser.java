@@ -83,7 +83,6 @@ public class ModifyUser extends javax.swing.JFrame {
     confirmPasswordField = new javax.swing.JPasswordField();
     jLabel5 = new javax.swing.JLabel();
     usernameLabel = new javax.swing.JLabel();
-    deleteUser = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -97,7 +96,7 @@ public class ModifyUser extends javax.swing.JFrame {
     jLabel1.setText("Modificar usuario");
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Nombre de usuario:");
+    jLabel2.setText("Usuario:");
 
     jLabel9.setText("Nombre:");
 
@@ -105,7 +104,6 @@ public class ModifyUser extends javax.swing.JFrame {
 
     jLabel11.setText("Correo:");
 
-    jLabel12.setForeground(new java.awt.Color(204, 0, 0));
     jLabel12.setText("Correo 2:");
 
     otherEmailField.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +147,7 @@ public class ModifyUser extends javax.swing.JFrame {
       }
     });
 
-    jButton1.setText("LISTA  DE USUARIOS");
+    jButton1.setText("LISTA");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton1ActionPerformed(evt);
@@ -171,119 +169,98 @@ public class ModifyUser extends javax.swing.JFrame {
 
     jLabel14.setText("Categoría:");
 
-    jLabel3.setForeground(new java.awt.Color(255, 0, 51));
     jLabel3.setText("Contraseña:");
 
-    jLabel4.setForeground(new java.awt.Color(255, 0, 51));
     jLabel4.setText("Confirmar Contraseña");
 
-    jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
     jLabel5.setText("Usuario:");
 
-    usernameLabel.setText("    ");
-
-    deleteUser.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    deleteUser.setText("ELIMINAR");
-    deleteUser.setEnabled(false);
-    deleteUser.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        deleteUserActionPerformed(evt);
-      }
-    });
+    usernameLabel.setText("  ");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(10, 10, 10)
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(exitModifyUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(10, 10, 10))
+      .addGroup(layout.createSequentialGroup()
+        .addGap(21, 21, 21)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jSeparator1)
+          .addComponent(saveModifyUser)
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(jLabel15)
+              .addComponent(jLabel13)
+              .addComponent(phoneField)
+              .addComponent(genderBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(studentCheckBox)
+              .addComponent(teacherCheckBox)
+              .addComponent(preceptorCheckBox)
+              .addComponent(adminCheckBox)))
+          .addComponent(jLabel10)
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel1)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(usernameUserToFindField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(0, 1, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addComponent(deleteUser)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(saveModifyUser)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(exitModifyUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap())
-      .addGroup(layout.createSequentialGroup()
-        .addContainerGap()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-            .addGroup(layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jLabel15)
-                .addComponent(jLabel13)
-                .addComponent(phoneField)
-                .addComponent(genderBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(studentCheckBox)
-                .addComponent(teacherCheckBox)
-                .addComponent(preceptorCheckBox)
-                .addComponent(adminCheckBox)))
-            .addComponent(jLabel10)
-            .addGroup(layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel11)
-                .addComponent(jLabel3))
-              .addGap(18, 18, 18)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel4)
-                .addComponent(jLabel12)
-                .addComponent(otherEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel14)))
-            .addGroup(layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(lastnameField)
-                .addComponent(nameField)
-                .addComponent(jLabel9)
-                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addGap(18, 18, 18)
-              .addComponent(confirmPasswordField)))
+              .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel11))
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel12)
+              .addComponent(otherEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel14)))
+          .addComponent(jLabel3)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel5)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(usernameLabel)))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(lastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel9)
+              .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(jLabel4)
+              .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+          .addComponent(jLabel1)
+          .addComponent(jLabel2)
+          .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+              .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(usernameUserToFindField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addGap(0, 28, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jLabel1)
-        .addGap(27, 27, 27)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel2)
-          .addComponent(usernameUserToFindField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jToggleButton1))
+        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(28, 28, 28)
+        .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jButton1)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(usernameUserToFindField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jButton1))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(jToggleButton1)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jLabel5)
-          .addComponent(usernameLabel))
-        .addGap(12, 12, 12)
+          .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel3)
           .addComponent(jLabel4))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -323,11 +300,10 @@ public class ModifyUser extends javax.swing.JFrame {
             .addComponent(preceptorCheckBox)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(adminCheckBox)))
-        .addGap(46, 46, 46)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitModifyUser)
-          .addComponent(saveModifyUser)
-          .addComponent(deleteUser))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+        .addComponent(saveModifyUser)
+        .addGap(13, 13, 13)
+        .addComponent(exitModifyUser)
         .addContainerGap())
     );
 
@@ -428,22 +404,6 @@ public class ModifyUser extends javax.swing.JFrame {
       // TODO add your handling code here:
     }//GEN-LAST:event_studentCheckBoxActionPerformed
 
-  private void deleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserActionPerformed
-    String username = usernameUserToFindField.getText();
-    if (username.equals("")) {
-      JOptionPane.showMessageDialog(null, "Ingrese el nombre del usuario a eliminar");
-      return;
-    }
-    int usercod = User.getUserCodeByUsername(username);
-    if (usercod == 0) {
-      JOptionPane.showMessageDialog(null, "El usuario no existe");
-      return;
-    }
-    if(!(JOptionPane.showConfirmDialog(null, "Está seguro de eliminarlo?") == 0)) return;
-    
-    //User.delete(usercod);
-  }//GEN-LAST:event_deleteUserActionPerformed
-
   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
     UserList userList = new UserList();
     userList.setVisible(true);
@@ -458,7 +418,6 @@ public class ModifyUser extends javax.swing.JFrame {
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JCheckBox adminCheckBox;
   private javax.swing.JPasswordField confirmPasswordField;
-  private javax.swing.JButton deleteUser;
   private javax.swing.JTextField emailField;
   private javax.swing.JButton exitModifyUser;
   private javax.swing.JComboBox genderBox;

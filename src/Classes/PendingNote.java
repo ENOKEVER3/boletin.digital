@@ -181,13 +181,13 @@ public class PendingNote {
     }
   }
 
-  public static boolean hasPendingSubject(int studentCod, int oricod, int yearcod, int curcod, int matcod, int teacherCod) {
+  public static boolean hasPendingSubject(int studentCod, int oricod, int yearcod, int curcod, int matcod) {
     BasicDataSource bs = Config.setDBParams();
     Connection connection = null;
     
     java.sql.Date todayDate = new java.sql.Date(new Date().getTime());
 
-    String query = "SELECT * FROM `PENDIENTES` WHERE `PEN_CURORICOD`=? AND `PEN_CURANOCOD`=? AND `PEN_CURCOD`=? AND `PEN_MATCOD`=? AND `PEN_ALUMNOPERCOD`=? AND `PEN_PROFCOD`=?;";
+    String query = "SELECT * FROM `PENDIENTES` WHERE `PEN_CURORICOD`=? AND `PEN_CURANOCOD`=? AND `PEN_CURCOD`=? AND `PEN_MATCOD`=? AND `PEN_ALUMNOPERCOD`=?;";
 
     try {
       connection = bs.getConnection();
@@ -197,7 +197,6 @@ public class PendingNote {
       preparedStatement.setInt(3, curcod);
       preparedStatement.setInt(4, matcod);
       preparedStatement.setInt(5, studentCod);
-      preparedStatement.setInt(6, teacherCod);
       
       preparedStatement.execute();
       ResultSet rs = (ResultSet) preparedStatement.getResultSet();

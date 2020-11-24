@@ -44,7 +44,6 @@ public class LoadSubject extends javax.swing.JFrame {
     jLabel1 = new javax.swing.JLabel();
     jLabel2 = new javax.swing.JLabel();
     nameField = new javax.swing.JTextField();
-    jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
     jLabel5 = new javax.swing.JLabel();
@@ -72,10 +71,7 @@ public class LoadSubject extends javax.swing.JFrame {
     jLabel1.setText("Cargar materia");
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Indique el nombre de la materia que desee cargar:");
-
-    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("Determine los siguientes datos:");
+    jLabel2.setText("Nombre:");
 
     jLabel4.setText("Año:");
 
@@ -98,7 +94,7 @@ public class LoadSubject extends javax.swing.JFrame {
       }
     });
 
-    loadSubject.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    loadSubject.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     loadSubject.setText("CARGAR");
     loadSubject.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,6 +111,7 @@ public class LoadSubject extends javax.swing.JFrame {
 
     jLabel6.setText("Categoria:");
 
+    jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jButton1.setText("NUEVA");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +119,7 @@ public class LoadSubject extends javax.swing.JFrame {
       }
     });
 
+    jButton3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     jButton3.setText("EDITAR");
     jButton3.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +127,7 @@ public class LoadSubject extends javax.swing.JFrame {
       }
     });
 
-    exitLoadSubject1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    exitLoadSubject1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
     exitLoadSubject1.setText("MODIFICAR");
     exitLoadSubject1.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -144,76 +142,71 @@ public class LoadSubject extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
-            .addGap(21, 21, 21)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(jLabel4)
-                    .addGap(0, 0, Short.MAX_VALUE))
-                  .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(jLabel5)))
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE))
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                  .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(loadSubject)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(69, 69, 69)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(47, 47, 47))
+              .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(loadSubject)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(exitLoadSubject1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel4)
+                      .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                      .addComponent(jLabel5)
+                      .addComponent(orientationBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                  .addComponent(jLabel6)
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton3))
+                  .addComponent(jLabel1)
+                  .addComponent(nameField))
+                .addGap(0, 74, Short.MAX_VALUE)))))
         .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(19, 19, 19)
+        .addGap(30, 30, 30)
         .addComponent(jLabel1)
-        .addGap(25, 25, 25)
+        .addGap(18, 18, 18)
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(28, 28, 28)
-        .addComponent(jLabel3)
-        .addGap(23, 23, 23)
+        .addGap(11, 11, 11)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel6)
-            .addGap(26, 26, 26))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+              .addComponent(jLabel4)
+              .addComponent(jLabel5))
+            .addGap(32, 32, 32))
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-            .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButton1)
-            .addComponent(jButton3)))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+            .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitLoadSubject)
-          .addComponent(exitLoadSubject1)
-          .addComponent(loadSubject))
+          .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(jButton1)
+          .addComponent(jButton3))
+        .addGap(39, 39, 39)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(loadSubject)
+          .addComponent(exitLoadSubject1))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+        .addComponent(exitLoadSubject)
         .addContainerGap())
     );
 
@@ -329,7 +322,6 @@ public class LoadSubject extends javax.swing.JFrame {
   private javax.swing.JButton jButton3;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
-  private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;

@@ -62,7 +62,6 @@ public class LoadNote extends javax.swing.JFrame {
     searchButton = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
     subjectBox = new javax.swing.JComboBox();
-    jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     jLabel12 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
@@ -74,6 +73,7 @@ public class LoadNote extends javax.swing.JFrame {
     selectButton = new javax.swing.JButton();
     jScrollPane1 = new javax.swing.JScrollPane();
     table = new javax.swing.JTable();
+    jSeparator1 = new javax.swing.JSeparator();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -84,7 +84,7 @@ public class LoadNote extends javax.swing.JFrame {
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Carga de notas");
+    jLabel1.setText("Cargar Notas");
 
     loadButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     loadButton.setText("CARGAR");
@@ -110,7 +110,7 @@ public class LoadNote extends javax.swing.JFrame {
     });
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Seleccione la materia:");
+    jLabel2.setText("Materia:");
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     subjectBox.addItemListener(new java.awt.event.ItemListener() {
@@ -123,9 +123,6 @@ public class LoadNote extends javax.swing.JFrame {
         subjectBoxActionPerformed(evt);
       }
     });
-
-    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel4.setText("Indique el curso:");
 
     jLabel5.setText("Año:");
 
@@ -201,46 +198,47 @@ public class LoadNote extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(layout.createSequentialGroup()
             .addComponent(loadButton)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 625, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(selectButton)
-            .addComponent(jLabel3)
-            .addComponent(jLabel4)
-            .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel2)
-            .addComponent(jLabel1)
-            .addGroup(layout.createSequentialGroup()
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(jLabel5)
-                .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(searchButton))
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel6)
-                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel12)
-                .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(29, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(selectButton)
+              .addComponent(jLabel3)
+              .addComponent(jLabel2)
+              .addComponent(jLabel1)
+              .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
+                    .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchButton))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+              .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(286, 286, 286)))
+        .addContainerGap(19, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addContainerGap(34, Short.MAX_VALUE)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
         .addComponent(jLabel2)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jLabel4)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel5)
@@ -256,19 +254,21 @@ public class LoadNote extends javax.swing.JFrame {
             .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
         .addComponent(searchButton)
+        .addGap(16, 16, 16)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel3)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(selectButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(loadButton))
-        .addGap(10, 10, 10))
+        .addGap(17, 17, 17))
     );
 
     pack();
@@ -457,10 +457,10 @@ public class LoadNote extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JButton loadButton;
   private javax.swing.JComboBox orientationBox;
   private javax.swing.JComboBox<String> periodsBox;
@@ -568,7 +568,7 @@ public class LoadNote extends javax.swing.JFrame {
       int studentCod = User.getUserCodeByUsername(currentStudent.getUsername());
 
       if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
-        if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
+        if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod)) {
           studentsToRemove.add(currentStudent);
           continue;
         }

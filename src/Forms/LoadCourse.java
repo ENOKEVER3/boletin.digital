@@ -47,7 +47,6 @@ public class LoadCourse extends javax.swing.JFrame {
     divisionBox = new javax.swing.JComboBox<>();
     jLabel1 = new javax.swing.JLabel();
     jLabel6 = new javax.swing.JLabel();
-    jLabel3 = new javax.swing.JLabel();
     jLabel4 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -92,11 +91,9 @@ public class LoadCourse extends javax.swing.JFrame {
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
     jLabel1.setText("Cargar curso");
+    jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
     jLabel6.setText("División:");
-
-    jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("Determine los siguientes datos:");
 
     jLabel4.setText("Año:");
 
@@ -105,25 +102,25 @@ public class LoadCourse extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(21, 21, 21)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(jLabel6)
-          .addComponent(jLabel1)
-          .addComponent(jLabel3)
-          .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel4)
-              .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(87, 87, 87)
+            .addComponent(jLabel1))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(52, 52, 52)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+              .addComponent(orientationBox, 0, 178, Short.MAX_VALUE)
               .addComponent(jLabel5)
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(loadSubject)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+              .addComponent(jLabel4)
+              .addComponent(jLabel6)
+              .addComponent(yearBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(divisionBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(99, 99, 99)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+              .addComponent(loadSubject, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+              .addComponent(exitLoadSubject, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        .addContainerGap(53, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,26 +128,22 @@ public class LoadCourse extends javax.swing.JFrame {
         .addGap(19, 19, 19)
         .addComponent(jLabel1)
         .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel3)
-            .addGap(18, 18, 18)
-            .addComponent(jLabel4)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(jLabel5)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addComponent(jLabel4)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(jLabel5)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+        .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jLabel6)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(8, 8, 8)
         .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(exitLoadSubject)
-          .addComponent(loadSubject))
-        .addContainerGap())
+        .addGap(30, 30, 30)
+        .addComponent(loadSubject)
+        .addGap(11, 11, 11)
+        .addComponent(exitLoadSubject)
+        .addContainerGap(28, Short.MAX_VALUE))
     );
 
     pack();
@@ -221,7 +214,6 @@ public class LoadCourse extends javax.swing.JFrame {
   private javax.swing.JComboBox<String> divisionBox;
   private javax.swing.JButton exitLoadSubject;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;

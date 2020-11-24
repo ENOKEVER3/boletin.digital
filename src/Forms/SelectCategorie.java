@@ -43,7 +43,7 @@ public class SelectCategorie extends javax.swing.JFrame {
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
 
-    jLabel5.setText("Seleccione la categoria con la que quiere ingresar:");
+    jLabel5.setText("Categoria:");
 
     jButton1.setText("SELECCIONAR");
     jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -52,7 +52,7 @@ public class SelectCategorie extends javax.swing.JFrame {
       }
     });
 
-    jButton2.setText("SALIR");
+    jButton2.setText("VOLVER");
     jButton2.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         jButton2ActionPerformed(evt);
@@ -64,31 +64,29 @@ public class SelectCategorie extends javax.swing.JFrame {
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap(47, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(36, 36, 36)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(jLabel5)
+              .addComponent(jButton1))
+            .addGap(0, 56, Short.MAX_VALUE))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(jLabel5)
-            .addGap(54, 54, 54))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(45, 45, 45))))
-      .addGroup(layout.createSequentialGroup()
-        .addGap(136, 136, 136)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGap(0, 0, Short.MAX_VALUE))
+            .addContainerGap(206, Short.MAX_VALUE)
+            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addGap(35, 35, 35)
+        .addGap(23, 23, 23)
         .addComponent(jLabel5)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(jButton1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(18, 18, 18)
         .addComponent(jButton2)
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );

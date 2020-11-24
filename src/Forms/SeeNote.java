@@ -64,7 +64,6 @@ public class SeeNote extends javax.swing.JFrame {
     searchButton = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
     subjectBox = new javax.swing.JComboBox();
-    jLabel4 = new javax.swing.JLabel();
     jLabel5 = new javax.swing.JLabel();
     jLabel12 = new javax.swing.JLabel();
     yearBox = new javax.swing.JComboBox();
@@ -78,6 +77,7 @@ public class SeeNote extends javax.swing.JFrame {
     table = new javax.swing.JTable();
     jLabel7 = new javax.swing.JLabel();
     promoBox = new javax.swing.JComboBox();
+    jSeparator1 = new javax.swing.JSeparator();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -88,7 +88,7 @@ public class SeeNote extends javax.swing.JFrame {
     });
 
     jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    jLabel1.setText("Ver notas");
+    jLabel1.setText("Mostrar Notas");
 
     exitLoadNote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     exitLoadNote.setText("SALIR");
@@ -106,7 +106,7 @@ public class SeeNote extends javax.swing.JFrame {
     });
 
     jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel2.setText("Seleccione la materia:");
+    jLabel2.setText("Materia:");
 
     subjectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     subjectBox.addItemListener(new java.awt.event.ItemListener() {
@@ -119,9 +119,6 @@ public class SeeNote extends javax.swing.JFrame {
         subjectBoxActionPerformed(evt);
       }
     });
-
-    jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel4.setText("Indique el curso:");
 
     jLabel5.setText("Año:");
 
@@ -176,7 +173,7 @@ public class SeeNote extends javax.swing.JFrame {
     });
 
     jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel3.setText("Seleccione el período:");
+    jLabel3.setText("Período");
 
     selectButton.setText("SELECCIONAR");
     selectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +196,7 @@ public class SeeNote extends javax.swing.JFrame {
     jScrollPane1.setViewportView(table);
 
     jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-    jLabel7.setText("Seleccione la fecha:");
+    jLabel7.setText("Período");
 
     promoBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "                         ", "Matemática", "Lengua" }));
     promoBox.addItemListener(new java.awt.event.ItemListener() {
@@ -220,27 +217,14 @@ public class SeeNote extends javax.swing.JFrame {
       .addGroup(layout.createSequentialGroup()
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(selectButton)
           .addComponent(jLabel3)
-          .addComponent(jLabel4)
           .addComponent(jLabel1)
-          .addGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(jLabel5)
-              .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(searchButton))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel6)
-              .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(jLabel12)
-              .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(549, 549, 549)
+            .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(jLabel2)
@@ -248,15 +232,30 @@ public class SeeNote extends javax.swing.JFrame {
             .addGap(24, 24, 24)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(promoBox, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(jLabel7))))
+              .addComponent(jLabel7)))
+          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(jLabel5)
+                .addComponent(yearBox, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchButton))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel6)
+                .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel12)
+                .addComponent(divisionBox, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         .addContainerGap(20, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addContainerGap()
         .addComponent(jLabel1)
-        .addGap(18, 18, 18)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel2)
           .addComponent(jLabel7))
@@ -265,8 +264,6 @@ public class SeeNote extends javax.swing.JFrame {
           .addComponent(subjectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(promoBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-        .addComponent(jLabel4)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
             .addComponent(jLabel5)
@@ -282,15 +279,17 @@ public class SeeNote extends javax.swing.JFrame {
             .addComponent(orientationBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
         .addComponent(searchButton)
+        .addGap(14, 14, 14)
+        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(jLabel3)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addComponent(periodsBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addGap(10, 10, 10)
         .addComponent(selectButton)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
         .addComponent(exitLoadNote, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addContainerGap())
     );
@@ -410,11 +409,11 @@ public class SeeNote extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel12;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
-  private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JLabel jLabel7;
   private javax.swing.JScrollPane jScrollPane1;
+  private javax.swing.JSeparator jSeparator1;
   private javax.swing.JComboBox orientationBox;
   private javax.swing.JComboBox<String> periodsBox;
   private javax.swing.JComboBox promoBox;
@@ -526,8 +525,7 @@ public class SeeNote extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel(null, isThirdPeriod == false ? columnNames : columnNames2){
       @Override
       public boolean isCellEditable(int row, int column) {
-        if(column < 2) return false;
-        return true;
+        return false;
       }  
 
       @Override
@@ -558,7 +556,7 @@ public class SeeNote extends javax.swing.JFrame {
       
       if(userType.equals("Profesor")) {
         if(!periodsBox.getSelectedItem().toString().equals("PRIMER TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("SEGUNDO TRIMESTRE") && !periodsBox.getSelectedItem().toString().equals("TERCER TRIMESTRE")) {
-          if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod, menu.currentUserCode)) {
+          if(!PendingNote.hasPendingSubject(studentCod, oricod, yearcod, curcod, matcod)) {
             studentsToRemove.add(currentStudent);
             continue;
           }
