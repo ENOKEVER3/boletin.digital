@@ -26,7 +26,3 @@ youtube promo video: https://youtu.be/PUMi7lxCXTE
 ## Contributing
 
 The project is not looking for contributors but any suggestion can be made with a pull-request
-
-## Finally
-
-Thank you for reading the project, you can support it by giving a star and a check. If you have any questions you can send an email to (lagosmanual@gmail.com).
